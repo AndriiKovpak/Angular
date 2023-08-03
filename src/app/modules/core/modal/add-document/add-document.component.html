@@ -1,0 +1,111 @@
+<div class="modal-header">
+  <span><i class="fa fa-file-text  fa-2x Document" aria-hidden="true"></i></span>
+  <h1 class="modal-title" *ngIf="data.type !='edit'" >{{'AddDocument'|translate}}</h1>
+  <h1 class="modal-title" *ngIf="data.type =='edit'" >Update Document</h1>
+
+  <button type="button" class="btn-close invisible" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form [formGroup]="Typedata" >
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row addDoc_form">
+        <div class="col-md-12 col-sm-12 mb-3">
+          <label for="type" class="form-label">{{'Type'|translate}} <a class="add-icon record_icon_bx" title="add"
+              data-toggle="tooltip"><i class="fa fa-plus-circle" aria-hidden="true"
+                (click)="openModalLocationforAdd()"></i></a> </label>
+          <mat-form-field appearance="fill">
+            <!-- <mat-label>{{'Type'|translate}}</mat-label> -->
+            <mat-select [(ngModel)]="selectedDocumentType" matInput id="inputType" formControlName="Type"
+              [ngClass]="{ 'is-invalid': f.Type.touched && f.Type.errors }">
+              <mat-option *ngFor="let option of documentTypes" [value]="option.id">
+                {{option.name}}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="f.Type.touched && f.Type.errors" class="invalid-feedback">
+              <div *ngIf="f.Type.errors.required"> {{'Typeisrequired'|translate}}</div>
+            </div>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+          <label for="date" class="form-label">{{'Date'|translate}}</label>
+          <input *ngIf="data" type="date" class="form-control" value="{{ getDate| date:'yyyy-MM-dd' }}">
+          <input *ngIf="!data" type="date" class="form-control" formControlName="date"
+            [ngClass]="{ 'is-invalid': f.date.touched && f.date.errors }" id="date">
+          <div *ngIf="f.date.touched && f.date.errors" class="invalid-feedback">
+            <div *ngIf="f.date.errors.required"> {{'Dateisrequired'|translate}}</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+          <label for="docs_name" class="form-label">{{'DocumentName'|translate}}</label>
+          <input type="text" class="form-control" id="docs_name" formControlName="documentName"
+            [ngClass]="{ 'is-invalid': f.documentName.touched && f.documentName.errors }">
+          <div *ngIf="f.documentName.touched && f.documentName.errors" class="invalid-feedback">
+            <div *ngIf="f.documentName.errors.required"> Document Name is required</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+            <div *ngIf="images && images.length > 0" class="k-edit-label kEdit_label">
+              <div *ngFor="let item of images">
+                <a *ngIf="item" class="file-icon" (click)="downloadFile(item)"
+                  ><i aria-hidden="true" class="fa fa-file-pdf-o pdf"></i
+                ></a>
+                <!-- <a *ngIf="item" class="file-icon"(click)="removeFile(item)"
+                  ><i aria-hidden="true" class="far fa-times"></i
+                ></a> -->
+              </div>
+            </div>
+          <div class="text-inside drag-drop">
+            <ngx-file-drag-drop #uploadPDF [formControl]="fileControl" activeBorderColor="#3F51B5" accept=".pdf"
+              (valueChanged)="onValueChange($any($event))">
+              {{'Draganddropyourfiles'|translate}}.
+            </ngx-file-drag-drop>
+            <div class="invalid-feedback" *ngIf="checkFileUpload"> {{'Documentisrequired'|translate}}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" (click)="submit()" class="btn btn-secondary" *ngIf="data.type != 'edit'" >{{'Add'|translate}}</button>
+    <button type="button"  (click)="submit()" class="btn btn-secondary"  *ngIf="data.type == 'edit'" >Update</button>
+
+    <button type="button" class="btn btn-primary" (click)="ModalClose()">{{'Cancel'|translate}}</button>
+  </div>
+</form>
+
+<!-- Modal For New Location Field ADD -->
+
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addLocDivUpd>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          Add Custom File Type
+        </h2>
+        <button type="button" class="btn-close" (click)="closeLocationAdd();saveLocationadd.value=''"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #saveLocationadd
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+          </div>
+        </div>
+      </div>
+      <div class="btn-sec modal-footer">
+        <button class="Update-btn" mat-raised-button color="primary" (click)="addLocationField(saveLocationadd.value);saveLocationadd.value=''">
+          {{'Add'|translate}}
+        </button>
+        <button class="Discard-btn m-0" mat-raised-button (click)="closeLocationAdd();saveLocationadd.value=''">
+            {{'Cancel'|translate}}
+        </button>
+    </div>
+    </div>
+
+  </div>
+</div>

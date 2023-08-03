@@ -1,0 +1,9 @@
+<div mat-dialog-title class="dialog-title">
+  <div class="row">
+    <h2 class="modal_title col-md-11">{{data.title|translate}}</h2>
+    <div class="col-md-1">
+      <i class="far fa-times-circle cross_far" aria-hidden="true" (click)="onCancel()"></i>
+    </div>
+  </div>
+</div>
+<iframe *ngIf="data" width="100%" height="800" [src]="transform()"></iframe>

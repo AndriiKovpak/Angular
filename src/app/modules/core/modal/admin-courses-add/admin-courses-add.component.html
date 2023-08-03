@@ -1,0 +1,144 @@
+<div class="container">
+  <div class="add-title">
+    <h1 *ngIf="data?.language !== 'spanish'" mat-dialog-title style="color: #fa8060">
+      {{ buttontext }}
+      <span *ngIf="buttontext !== 'Update'">{{ "New" | translate }}</span>
+      {{ "Record" | translate }}
+    </h1>
+    <h1 *ngIf="data?.language == 'spanish'" mat-dialog-title style="color: #fa8060">
+      Spanish
+    </h1>
+  </div>
+  <div class="angFormStyle addNewRecordModal">
+    <form [formGroup]="CourseForm" (ngSubmit)="Save()">
+      <div class="addRecord_bx mb-3">
+        <mat-grid-list cols="1" rowHeight="85px">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <mat-label>{{'TestLanguage'|translate}}</mat-label>
+                <mat-select [(value)]="selectedLang" (selectionChange)="changeLang()">
+                  <mat-option value="en">English</mat-option>
+                  <mat-option value="es">Español</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="Name" placeholder="{{ 'Name' | translate }}"
+                  [ngClass]="{ 'is-invalid': f.Name.touched && f.Name.errors }" />
+                <mat-error *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+                  <div *ngIf="f.Name.errors.required">
+                    {{ "Nameisrequired" | translate }}
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <textarea class="form-control" rows="3" matInput formControlName="Description"
+                  placeholder="{{ 'Description' | translate }}"></textarea>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="data?.language !== 'spanish'" class="drag_drop_bx mb-3">
+            <div class="k-edit-label kEdit_label">
+              <label> Image (Add PNG or JPG file)</label>
+              <a *ngIf="Image" class="file-icon" (click)="viewPhoto()"><i aria-hidden="true"
+                  class="fa fa-picture-o pdf"></i></a>
+            </div>
+            <div class="text-inside drag-drop">
+              <ngx-file-drag-drop #uploadImage uniqueFileNames="true" [formControl]="fileControl2"
+                activeBorderColor="#3F51B5" accept=".png,.jpg" (valueChanged)="onValueChange($any($event), 'image')">
+                {{ "Draganddrop" | translate }}
+              </ngx-file-drag-drop>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="drag_drop_bx mb-3">
+            <label>Handouts (Add PDF or PPT files) </label>
+            <ng-container *ngIf="handouts && handouts.length > 0">
+              <div class="k-edit-label kEdit_label">
+                <div *ngFor="let item of handouts">
+                  <a *ngIf="item" class="file-icon" (click)="downloadHandout(item)"><i aria-hidden="true"
+                      class="fa fa-file-pdf-o pdf"></i></a>
+                  <a *ngIf="item" class="file-icon" (click)="removeHandout(item)"><i aria-hidden="true"
+                      class="far fa-times"></i></a>
+                </div>
+              </div>
+            </ng-container>
+            <div class="text-inside drag-drop">
+              <ngx-file-drag-drop #uploadPDF uniqueFileNames="true" [formControl]="fileControl"
+                activeBorderColor="#3F51B5" accept=".pdf,.ppt,.pptx"
+                (valueChanged)="onValueChange($any($event), 'pdf')">
+                {{ "Draganddrop" | translate }}
+              </ngx-file-drag-drop>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside training_time">
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="Video" placeholder="Video Code">
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div class="text-inside training_time">
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="CourseLink" placeholder="Course Link">
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile *ngIf="data?.language !== 'spanish'">
+            <div class="text-inside training_time">
+              <mat-form-field>
+                <input class="form-control" type="number" matInput formControlName="training" min="0" step="15"
+                  placeholder="{{ 'TotalTrainingTime' | translate }}
+                                ({{ 'Minutes' | translate }})" />
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <!-- <mat-grid-tile
+            class="drag_drop_bx"
+            *ngIf="purchasedSpanish && data?.language !== 'spanish' || lang != 'es' "
+          >
+            <div class="mb-1">
+              <label class="checkbox_label"
+                ><input type="checkbox" (change)="handleSelected($event)" />Add
+                Alternative Language Course</label
+              >
+            </div> -->
+          <!-- <mat-form-field>
+              <input type="text" matInput style="display: none" />
+              <select
+                *ngIf="showDropdown"
+                class="form-control"
+                #mySelect
+                (change)="onOptionsSelected(mySelect.value)"
+                name="cars"
+                id="cars"
+              >
+                <option value="">Select Language</option>
+                <option value="spanish">Spanish</option>
+              </select>
+            </mat-form-field> -->
+          <!-- </mat-grid-tile> -->
+        </mat-grid-list>
+      </div>
+      <div class="btn-sec">
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">
+          {{ buttontext }}
+        </button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="closeModal()">
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

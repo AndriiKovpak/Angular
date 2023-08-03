@@ -1,0 +1,150 @@
+<!-- Sub header  -->
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+    <div class="container">
+      <div class="top-row">
+        <div class="row align-items-center">
+          <div class="col-md-6 col-7">
+            <div class="navbar-header">
+              <a class="navbar-brand" routerLink="/landing/home" class="nav-link" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact:
+                              true}">
+                <b class="logo-icon">
+                  <img src="../../../../assets/images/myfa.png" alt="homepage" class="dark-logo">
+                </b>
+              </a>
+              <a class="nav-toggler waves-effect waves-light d-block d-md-none">
+                <i class="ti-menu ti-close"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6 col-6 flex-row" style="display: flex">
+            <div class="top_bar_dropdown ms-auto me-4 mt-2">
+              <div>
+                <div class="dropdown">
+                  <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa fa-globe"></i>{{currentLanguage}}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li *ngFor="let language of language" (click)="switchLang(language)"><a class="dropdown-item">
+                        {{ language }}</a></li>
+                  </ul>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="navbar_collapse">
+              <ul class="navbar-nav float-left mr-auto"></ul>
+              <ul *ngIf="!loggedIn" class="navbar-nav justify-content-end order_mobile_view">
+                <li class="user-name">
+                  <h6 class="text-right mt-2"><a routerLink="/login">Log in <i class="fal fa-sign-in-alt"
+                        aria-hidden="true"></i></a></h6>
+                </li>
+              </ul>
+              <ul *ngIf="loggedIn" class="navbar-nav justify-content-end order_mobile_view">
+                <li class="user-name text-start mx-2">
+                  <h5 class="text-start mx-2">
+                    <a (click)="navigate()" >{{'Hello'|translate}}, {{(userInfo$ | async)?.displayUserName}}</a>
+                  </h5>
+                  <h6 class="text-start">
+                    <button class="nav-link btn btn-link text-start mx-2"
+                      (click)="changePassword()">{{'ChangePassword'|translate}}</button>
+                    <button class="nav-link btn btn-link text-start mx-2" (click)='logout()'>{{'Logout'|translate}}</button>
+                  </h6>
+                </li>
+                <div class="user-icon">
+                  <a *ngIf="!disableProfileClick" [routerLink]="['/companyadmin/profile']"
+                    routerLinkActive="router-link-active">
+                    <img [src]="userInfo.profileImage" (error)="onError($event)" class="profile-rounded" alt="" />
+                  </a>
+                  <img *ngIf="disableProfileClick" [src]="userInfo.profileImage" (error)="onError($event)"
+                    class="profile-rounded" alt="" />
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="sub-header">
+  <div class="container">
+    <div class="d-flex justify-content-between">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon navbar-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a routerLink="home" class="nav-link">
+                  <span class="nav-text-color" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                    <fa-icon [icon]="['fas','home']"></fa-icon> {{'Home'|translate}}
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <span routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}"
+                  class="nav-link dropdown-toggle nav-text-color" id="navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <fa-icon class="navbar-icon" [icon]="['fas','chalkboard-teacher']"></fa-icon>
+                  <a routerLink="products" class="nav-text-color navbar-dropdown-button" href="#">
+                    <span (click)="$event.stopPropagation(); $event.preventDefault();"> {{'Products'|translate}}</span>
+                  </a>
+                </span>
+                <ul class="dropdown-menu myex-navbar-dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item nav-link" routerLink="products/calibration">
+                      <span class="nav-text-color" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                        <fa-icon class="navbar-icon" [icon]="['fas','briefcase']"></fa-icon> {{'Calibration'|translate}}
+                      </span>
+                    </a></li>
+                  <li><a class="dropdown-item nav-link" routerLink="products/e-learning">
+                      <span class="nav-text-color" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                        <fa-icon class="navbar-icon" [icon]="['fas', 'graduation-cap']"></fa-icon>
+                        {{'E-Learning'|translate}}
+                      </span>
+                    </a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/buy" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                    true}">
+                  <span class="nav-text-color">
+                    <fa-icon [icon]="['fas','shopping-cart']"></fa-icon> {{'Pricing'|translate}}
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="about" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                    true}">
+                  <span class="nav-text-color">
+                    <fa-icon [icon]="['fas','plane-departure']"></fa-icon> {{'About'|translate}}
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="contact-us" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                    true}">
+                  <span class="nav-text-color">
+                    <fa-icon [icon]="['fas','headset']"></fa-icon> {{'Contact'|translate}}
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="mobile_div">
+        <span style="padding-top: 5px;color: #FA8060;font-size:18px;display: inline-block;"
+          class="mobile-display">224-662-1070</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sub header end -->

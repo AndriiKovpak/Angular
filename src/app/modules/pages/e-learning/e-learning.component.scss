@@ -1,0 +1,186 @@
+.single-grid-course {
+	padding: 275px 0 20px 0px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	margin-bottom: 0;
+	height: 350px;
+	background-size: cover !important;
+
+	h2 {
+		font-size: 24px;
+		color: #fff;
+		border-left: 5px solid #FA8060;
+		padding: 5px 8px;
+	}
+}
+
+.single-grid-main {
+	background: url('../../../../assets/images/E-BG-NEW.png')no-repeat;
+	padding: 50px 0;
+	background-size: cover;
+}
+
+.crs-description {
+	p {
+		border-bottom: 1px solid #00375334;
+		color: #566A74;
+		font-size: 14px;
+		line-height: 20px;
+		padding: 0 0 10px 5px;
+		height: 100px;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+
+	&.botm {
+		background: #fff;
+		box-shadow: none;
+		margin-bottom: 0;
+	}
+}
+
+.crs-prc {
+	h5 {
+		float: left;
+		width: 50%;
+		font-size: 15px;
+		color: #003753;
+	}
+
+	h6 {
+		width: 50%;
+		float: left;
+		color: #566A74;
+		font-size: 15px;
+	}
+}
+
+.crs-prc {
+	align-items: baseline;
+	vertical-align: middle;
+	width: 40%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+.crs-prc-btm {
+	align-items: baseline;
+	vertical-align: middle;
+	width: 60%;
+	float: left;
+	text-align: right;
+}
+
+.course-content {
+	img {
+		width: 100%;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+}
+
+img {
+	vertical-align: middle;
+	border-style: none;
+}
+
+.crs-description {
+	&.botm {
+		h3 {
+			color: #566A74;
+			font-size: 26px;
+		}
+	}
+
+	p {
+		border-bottom: 1px solid #00375334;
+		color: #566A74;
+		font-size: 14px;
+		line-height: 20px;
+		padding: 0 0 10px 5px;
+		height: 100px;
+		overflow: hidden;
+		overflow-y: scroll;
+	}
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+.bg-gray-full {
+	padding: 50px 0;
+	background: #F7F8F9;
+	overflow: hidden;
+}
+
+.course-content {
+	img {
+		width: 100%;
+		height: 100%;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		max-height: 12rem;
+		object-fit: cover;
+	}
+}
+
+img {
+	vertical-align: middle;
+	border-style: none;
+}
+
+.row {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin-right: -15px;
+	margin-left: -15px;
+}
+
+.crs-description {
+	&.botm {
+		h3 {
+			color: #566A74;
+			font-size: 26px;
+			color: #566A74;
+			font-size: 26px;
+		}
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	margin-bottom: 0.5rem;
+	font-family: inherit;
+	font-weight: 700;
+	line-height: 1.2;
+	color: inherit;
+}
+
+.world-cls img {
+	width: 100%;
+}
+
+.e-learn-bootom {
+	.e-lear-bottom-img {
+		img {
+			float: right;
+			position: relative;
+			left: 2%;
+			margin-top: -20%;
+		}
+	}
+}

@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card padd_15">
+                <form class="contact-form invite" [formGroup]="form" (ngSubmit)="Save()">
+                    <div class="form-group mb-2">
+                        <label for="leftHeading" class="control-label">{{'Body'|translate}}</label>
+                         <div class="editor_sec_div">
+                            <angular-editor [placeholder]="'Enter text here...'" formControlName="editorData" [config]="config"></angular-editor>
+                            <div *ngIf="f.editorData.touched && f.editorData.errors" class="invalid-feedback">
+                                <div *ngIf="f.editorData.errors.required"> {{'BodyIsRequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row m-0 py-2">
+                        <button Primary="true" class="custmBtns block h_50">{{'Save'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

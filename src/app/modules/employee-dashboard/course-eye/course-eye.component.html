@@ -1,0 +1,52 @@
+<div class="content pb_0">
+
+    <div class="container" *ngIf="selectedCourseId">
+        <ng-container *ngIf="selectedCourseId?.credentialID > 0">
+            <div class="row px-5 pt-4">
+                <h1>{{courseFound.name[lang]}}</h1>
+                <p style="color:#fa8060"><strong>{{selectedCourseId.nextDueDateOverride | date:"MM/dd/yyyy"}}</strong><i
+                        class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    {{selectedCourseId.strDeuOverDueDate }}</p>
+
+            </div>
+        </ng-container>
+        <div class="course-main">
+            <div class="row px-5">
+                <div class="col-md-9 ">
+                    <ng-container *ngIf="courseFound && courseFound.courseID > 0 && courseFound.videoID ">
+                        <iframe [src]="returnLink(courseFound.videoID[lang])" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            height="400" width="100%" style="border-style:solid;border-radius:.5em;"
+                            allowfullscreen></iframe>
+                    </ng-container>
+                </div>
+                <div class="col-md-3 py-2">
+                    <div class="card py-4 course-button-div">
+                        <a [routerLink]="[dashboardlink]" class="card-link course-button" style="color: #566A74;"><i
+                                class="fa fa-hand-o-left px-2 color-of-selected"
+                                aria-hidden="true"></i>{{'BackToDashboard'|translate}}</a><br />
+
+                        <ng-container *ngIf="courseFound && courseFound.courseID > 0 && courseFound.handoutLink[lang] ">
+                            <div (click)="openDialog()" class="card-link  course-button"><i
+                                    class="fa fa-book px-2 color-of-selected"
+                                    aria-hidden="true"></i>{{'ViewHandout'|translate}}</div><br />
+                        </ng-container>
+                        <ng-container *ngIf="courseFound && courseFound.isCustomCourse > 0 && courseFound.courseLink">
+                            <a href={{courseFound.courseLink[lang]}} class="card-link  course-button "><i
+                                    class="fa fa-link px-2 color-of-selected"
+                                    aria-hidden="true"></i>{{'CourseLink'|translate}}</a><br />
+                        </ng-container>
+                        <a [routerLink]="['/employee-home/takeTest', selectedCourseId.companyCourseID]"
+                            class="card-link course-button "><i
+                                class="fas fa-spell-check px-2 color-of-selected"></i>{{'TakeTest'|translate}}</a><br />
+                        <ng-container>
+                            <div (click)="syncToExsafety()" class="card-link  course-button"><i
+                                    class="fas fa-sync px-2 color-of-selected"
+                                    aria-hidden="true"></i>{{'SyncToExsafety'|translate}}</div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,285 @@
+<div class="admin_dash_sec">
+  <div class="container">
+    <div class="row gap_10">
+      <div class="col-md-4 col-xl-3">
+        <app-side-bar></app-side-bar>
+      </div>
+      <div class="col-md-8 col-xl-9">
+        <div class="card">
+          <div class="form-row mt-0 pt-2" style="padding-left: 5px">
+            <!-- {{'Tests'|translate}} -->
+            <h4 class="card-title red-color empty-space"></h4>
+          </div>
+          <div class="row m-0 mb-2 gap_10 px-2">
+            <div class="col-md-5">
+              <div class="textStart input-group">
+                <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search"
+                    aria-hidden="true"></i></span>
+                <!-- (blur)="filter($event)" -->
+                <input type="text" placeholder="Search" class="searchInput form-control"
+                  (keyup.enter)="filter($event)" />
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <button type="button" (click)="openModal()" class="block add_btn">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                {{ "Add" | translate }}</button
+              >&nbsp;
+            </div>
+            <div class="col-md-4 text-center">
+              <label class="view_list_bx">View
+                <button (click)="list('10')" class="filter_btn">10</button>
+                <button class="filter_btn" (click)="list('15')">15</button><button (click)="list(0)" class="filter_btn">
+                  All
+                </button></label>
+            </div>
+            <div class="col-md-1 text-end">
+              <a class="file-icon pdf m-0" (click)="downloadPdfwithCheck('Tests')"><i class="fal fa-file-pdf fa-2x"
+                  aria-hidden="true"></i></a>
+            </div>
+          </div>
+          <div class="table-responsive tree_table_scroll" id="contentToConvert">
+            <table class="table tree_table_data">
+              <thead>
+                <tr>
+                  <th scope="col">Course Name</th>
+                  <th scope="col" class="col_w_140">Test Questions</th>
+                  <th scope="col" class="col_w_90"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3" class="p-0">
+                    <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl">
+                      <!-- This is the tree node template for leaf nodes -->
+                      <mat-tree-node class="mat_tree_ans" *matTreeNodeDef="let node" matTreeNodePadding>
+                        <div class="tree_node_div">
+                          <!-- use a disabled button to provide padding for tree leaf -->
+
+                          <div *ngIf="node.isFirstAnswer" (click)="nodeCheck(node)" class="d-block w-100 Ans_txt">
+                            <b>Answer</b>
+                          </div>
+                          <div *ngIf="!node.isFirstAnswer" (click)="nodeCheck(node)" class="d-block w-100 Ans_txt">
+                            <b></b>
+                          </div>
+
+                          <!-- <span *ngIf="node.isAnswerCorrect" >(Correct)</span> -->
+                          <div *ngIf="node.level == 1" class="d-block w-100 Ques_txt">
+                            <b>Question</b>
+                          </div>
+                          <div class="d-flex">
+                            <i class="fa fa-trash m-0" aria-hidden="true" (click)="nodeCheck(node)"></i>
+                            <button *ngIf="node.level == 1" class="me-2 matTreeIcon" (click)="AddAnswer(node)"
+                              mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                              <mat-icon class="mat-icon-rtl-mirror">
+                                {{
+                                treeControl.isExpanded(node)
+                                ? "expand_more"
+                                : "chevron_right"
+                                }}
+                              </mat-icon>
+                            </button>
+
+                            <input class="form-check-input" *ngIf="node.level == 2" [checked]="node.isAnswerCorrect"
+                              (change)="
+                                handleSelected($event, node.testQuestionAnsId)
+                              " type="checkbox" />
+                            <span *ngIf="
+                                showAnswerNode(
+                                  node.level,
+                                  node.testQuestionAnsId
+                                )
+                              ">
+                              {{ node.name }}</span>
+                            <!-- <span *ngIf="node.level==2 && !addAnswer"> {{node.name}}</span> -->
+
+                            <span *ngIf="
+                            showDataForLastNode
+                              ">{{ node.name }}</span>
+
+                            <div class="add_q_div" *ngIf="
+                                SaveAnswerTextBox &&
+                                AnswerBoxWithId == node.testQuestionId
+                              ">
+                              <input type="text" #answer placeholder="Add answer " (blur)="
+                                  SaveAnswerForQuestion(
+                                    answer.value,
+                                    node,
+                                    'new'
+                                  )
+                                " class="form-control ms-2" value="" />
+                              <button type="button" (click)="RemoveSaveAnswerTextBox()" class="cross_btns_b">
+                                <i class="fal fa-times-circle"></i>
+                              </button>
+                            </div>
+
+
+                            <div class="add_q_div" *ngIf="!addingAnswer &&
+                                addAnswer &&
+                                testQuestionAnsId == node.testQuestionAnsId
+                              ">
+                              <input type="text" value="{{ node.name }}" #ans placeholder="Add answer" (blur)="
+                                  SaveAnswerForQuestion(ans.value, node, 'old')
+                                " class="form-control ms-2" value="" />
+                              <button type="button" (click)="RemoveTextBox()" class="cross_btns_b">
+                                <i class="fal fa-times-circle"></i>
+                              </button>
+                            </div>
+
+                            <div class="add_q_div edit_q_data" *ngIf="
+                                testQuestionId == node.testQuestionId &&
+                                node.level == 1 &&
+                                !addQuestion
+                              ">
+                              <input type="text" class="form-control ms-2" value="{{ node.name }}" #oldQuestion (blur)="
+                                  SaveQuestion(oldQuestion.value, 'old', node)
+                                " />
+                              <button type="button" (click)="removeTextBox()" class="cross_btns_b">
+                                <i class="fal fa-times-circle"></i>
+                              </button>
+                            </div>
+
+
+                          </div>
+
+                        </div>
+
+                        <div class="add_new_item" *ngIf="node.isLastAnswer">
+                          <button class="ms-2 add_data_btn" *ngIf="node.isLastAnswer" mat-icon-button (click)="addNewItem(node)">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                          <div class="add_q_div" *ngIf="addingAnswer && addAnswer && testQuestionAnsId == 0 && node.isLastAnswer">
+                            <input type="text" #ans placeholder="Add answer" (blur)="
+                                SaveAnswerForQuestion(ans.value, node, 'new')
+                              " class="form-control ms-2" value="" />
+                            <button type="button" (click)="RemoveTextBox()" class="cross_btns_b">
+                              <i class="fal fa-times-circle"></i>
+                            </button>
+                          </div>
+                        </div>
+
+
+
+
+                        <button *ngIf="node.level == 1" type="button" (click)="editNode(node)" class="btn edit_btn">
+                          <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                          {{ "Edit" | translate }}
+                        </button>
+                        <button *ngIf="node.level == 2" type="button" (click)="editNode(node)" class="btn edit_btn">
+                          <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                          {{ "Edit" | translate }}
+                        </button>
+                      </mat-tree-node>
+                      <!-- This is the tree node template for expandable nodes -->
+                      <mat-tree-node class="mat_tree_ans" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <div class="tree_node_div">
+                          <div *ngIf="node.level == 1" class="d-block w-100 Ques_txt">
+                            <b>Question</b>
+                          </div>
+                          <div class="d-flex">
+                            <i class="fa fa-trash m-0" aria-hidden="true" (click)="nodeCheck(node)"></i>
+                            <button class="me-2 matTreeIcon" (click)="getNODE(node)" mat-icon-button matTreeNodeToggle
+                              [attr.aria-label]="'Toggle ' + node.name">
+                              <mat-icon class="mat-icon-rtl-mirror">
+                                {{
+                                treeControl.isExpanded(node)
+                                ? "expand_more"
+                                : "chevron_right"
+                                }}
+                              </mat-icon>
+                            </button>
+
+                            <!-- {{node.name}} {{testQuestionId !== node.testQuestionId}}
+                             testQuestionId !== node.testQuestionId &&-->
+                            <span *ngIf="
+                            !addQuestion &&
+                                node.level == 1
+                              ">{{ node.name }}</span>
+                            <div class="add_q_div edit_q_data" *ngIf="
+                                testQuestionId == node.testQuestionId &&
+                                node.level == 1 &&
+                                !addQuestion
+                              ">
+                              <input type="text" class="form-control ms-2" value="{{ node.name }}" #oldQuestion (blur)="
+                                  SaveQuestion(oldQuestion.value, 'old', node)
+                                " />
+                              <button type="button" (click)="removeTextBox()" class="cross_btns_b">
+                                <i class="fal fa-times-circle"></i>
+                              </button>
+                            </div>
+
+
+                            <div class="add_q_div" *ngIf="
+                                testQuestionId == node.testQuestionId &&
+                                node.level == 1 &&
+                                addQuestion && !node.isLastQuestion
+                              ">
+                              <input type="text" class="form-control ms-2" #NewQuestion (blur)="
+                                  SaveQuestion(NewQuestion.value, 'new', node)
+                                " placeholder="Add Question" value="" />
+                              <button type="button" (click)="removeTextBox()" class="cross_btns_b">
+                                <i class="fal fa-times-circle"></i>
+                              </button>
+                            </div>
+
+                            <div class="add_new_item add_q" *ngIf="node.isLastQuestion">
+                              <button class="ms-2"  mat-icon-button (click)="addNewItem(node)">
+                                <mat-icon>add</mat-icon>
+                              </button>
+                              <div class="add_q_div" *ngIf="
+                                    testQuestionId == node.testQuestionId &&
+                                    node.level == 1 &&
+                                    addQuestion
+                                  ">
+                                  <input type="text" class="form-control ms-2" #NewQuestion (blur)="
+                                      SaveQuestion(NewQuestion.value, 'new', node)
+                                    " placeholder="Add Question" value="" />
+                                  <button type="button" (click)="removeTextBox()" class="cross_btns_b">
+                                    <i class="fal fa-times-circle"></i>
+                                  </button>
+                                </div>
+                            </div>
+
+                            <span *ngIf="node.level == 0">{{ node.name }}</span>
+                            <!--
+                          <span *ngIf="testQuestionId == node.testQuestionId && node.level==1" class="data_values" ><input type="text" class="form-control" value="{{node.name}}"></span> -->
+
+
+                          </div>
+                        </div>
+                        <div class="add_new_item add_q">
+
+                          <!-- <button class="ms-2" mat-icon-button *ngIf="node.level !== 0" (click)="addNewItem(node)">
+
+                            <mat-icon>add</mat-icon>
+                          </button> -->
+                        </div>
+
+                        <span *ngIf="testId !== node.testId" class="data_values"><b>{{ node.numberOfQuestion
+                            }}</b></span>
+                        <span *ngIf="testId == node.testId && node.level == 0" class="data_values add_q_div"><input
+                            type="number" class="form-control" #Question (blur)="UpdateTestName(Question.value, node)"
+                            value="{{ node.numberOfQuestion }}" /><button type="button" (click)="closeTextBox()"
+                            class="cross_btns_b">
+                            <i class="fal fa-times-circle"></i></button></span>
+
+                        <button type="button" (click)="editNode(node)" class="btn edit_btn">
+                          <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                          {{ "Edit" | translate }}
+                        </button>
+                      </mat-tree-node>
+                    </mat-tree>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                      aria-label="Select page of periodic elements">
+                  </mat-paginator> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

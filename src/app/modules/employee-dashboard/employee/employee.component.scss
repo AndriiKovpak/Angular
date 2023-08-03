@@ -1,0 +1,64 @@
+.example-chip-list {
+    width: 100%;
+  }
+  .example-tree-invisible {
+    display: none;
+  }
+
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+
+  /*
+   * This padding sets alignment of the nested nodes.
+   */
+  .example-tree .mat-nested-tree-node div[role=group] {
+    padding-left: 40px;
+  }
+
+  /*
+   * Padding for leaf nodes.
+   * Leaf nodes need to have padding so as to align with other non-leaf nodes
+   * under the same parent.
+   */
+
+   /* Styles for tab labels */
+::ng-deep .mat-tab-label {
+  color: #EC451A !important;
+}
+
+/* Styles for the active tab label */
+::ng-deep .mat-tab-label.mat-tab-label-active {
+  color: #EC451A !important;
+  font-weight: 700;
+}
+
+.mat_grid_list {
+  max-height: none;
+  overflow-x: hidden;
+}
+
+.angFormStyle {
+  mat-label {
+    font-size: small;
+    color: grey;
+  }
+
+  select {
+    appearance: none;
+    background-color: #eeeff2;
+    margin-bottom: 5px;
+    padding: 12px 10px 12px 10px;
+  }
+
+  .inner-input {
+    top: 0 !important;
+  }
+
+  ::ng-deep .mat-form-field-label-wrapper::after {
+    display: none !important;
+  }
+}

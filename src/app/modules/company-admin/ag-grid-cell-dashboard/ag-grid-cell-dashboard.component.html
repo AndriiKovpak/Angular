@@ -1,0 +1,70 @@
+<div class="content pb_0">
+
+  <div class="container">
+
+    <app-middle-layout></app-middle-layout>
+    <div class="row licenses_row" style="padding-bottom:30px;">
+      <div class="col-md-3 col-xl-2">
+        <div class="block black">
+          <div class="heading">
+            {{'TotalLicenses'| translate}}
+          </div>
+          <div class="num">{{userStats?.numberOfLicenses}}</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-xl-2">
+        <div class="block black">
+          <div class="heading">
+            {{'ConsumedLicenses'|translate}}
+          </div>
+          <div class="num">{{userStats?.numberOfLicensesActive}}</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-xl-2">
+        <div class="block black">
+          <div class="heading">
+            {{'SafetySensitive'|translate}}
+          </div>
+          <div class="num">{{userStats?.safetySensitiveEmployees}}</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-xl-2">
+        <div class="block black">
+          <div class="heading">
+            {{'EmployeesOverdue'|translate}}
+          </div>
+          <div class="num">{{userStats?.usersWithCoursesOverdue }}</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-xl-2">
+        <div class="block black">
+          <div class="heading">
+            {{'AMTAwardEligibility'|translate}}
+          </div>
+          <div class="num">{{userStats?.usersEligibleForATMAwards}}</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-xl-2">
+        <div class="block black">
+          <div class="heading">
+            {{'SubscriptionRenewal'|translate}}
+          </div>
+          <div class="num">{{userStats?.subscriptionRenewalDate |
+            date: 'MM/dd/yyyy' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard_data_table" *ngIf="rowData && rowData.length > 0">
+      <ag-grid-angular #agGrid style=" height: 500px;" id="myGrid" class="ag-theme-alpine" [columnDefs]="columnDefs"
+        [frameworkComponents]="frameworkComponents" [rowData]="rowData" (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    <div class="pagination-bottom">
+      <div class="text-end">
+        <app-pagination [totalRecords]="count" [recordsPerPage]="10" (onPageChange)="displayActivePage($event)">
+        </app-pagination>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

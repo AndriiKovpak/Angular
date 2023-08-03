@@ -1,0 +1,109 @@
+<div class="card">
+  <div class="sidebar admin-menu-left cutm_sidebar">
+      <div class="top-row pl-4 navbar navbar-dark">
+          <a class="navbar-brand" href="">MyEX</a>
+          <button class="navbar-toggler">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      </div>
+      <ul class="nav flex-column admin dashboard">
+          <li class="nav-item" [ngClass]="{'active-side-option': '/admin/dashboard-admin' == checkClass()}" >
+              <a class="nav-link" routerLink="/admin/dashboard-admin"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                true}">
+                  <i class="fas fa-tachometer-alt" aria-hidden="true"></i> {{'Dashboard'|translate}}
+              </a>
+          </li>
+          <li class="nav-item"   [ngClass]="{'active-side-option': '/admin/users' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/users"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                true}">
+                  <i class="fa fa-users" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                      true}" aria-hidden="true"></i> {{'Users'|translate}}
+              </a>
+          </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/companies' == checkClass()}">
+              <a class="nav-link"   routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                  true}" routerLink="/admin/companies">
+                  <i class="fa fa-list" aria-hidden="true"></i>  {{'Companies'|translate}}
+              </a>
+          </li>
+          <li class="nav-item" [ngClass]="{'active-side-option': '/admin/courses' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/courses">
+                  <i class="fas fa-book" aria-hidden="true"></i> {{'Coursess'|translate}}
+              </a>
+          </li>
+          <!-- <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/test' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/test">
+                  <i class="fa fa-tasks" aria-hidden="true"></i> {{'Tests'|translate}}
+              </a>
+          </li> -->
+          <!-- <li class="nav-item" [ngClass]="{'active-side-option': '/admin/test-questions-answers' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/test-questions-answers"> <i class="fa fa-share-alt" aria-hidden="true"></i>
+                  {{'ShareCourses'|translate}}
+
+              </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="openModal()" >
+                <i class="fa fa-share-alt"
+                    aria-hidden="true"></i>Share Courses
+            </a>
+        </li>
+        <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/Custom-Certificate' == checkClass()}">
+          <a class="nav-link" routerLink="/admin/Custom-Certificate">
+            <i class="fa fa-certificate"
+            aria-hidden="true"></i>Custom Certificate
+    </a>
+      </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/home' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/home">
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                  {{'Home'| translate}}
+              </a>
+          </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/calibration' == checkClass()}">
+            <a class="nav-link" routerLink="/admin/calibration">
+                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                {{'Calibration'| translate}}
+            </a>
+        </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/e-learning-heading' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/e-learning-heading">
+                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                  {{'E'|translate}}-{{'Learning'|translate}}
+              </a>
+          </li>
+          <li class="nav-item" [ngClass]="{'active-side-option': '/admin/AboutUs' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/AboutUs">
+                  <i class="fa fa-address-card" aria-hidden="true"></i>
+                  {{'About'|translate}}
+              </a>
+          </li>
+          <li class="nav-item" [ngClass]="{'active-side-option': '/admin/contact' == checkClass()}">
+              <a class="nav-link"  routerLink="/admin/contact">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  {{'Contact'|translate}}
+              </a>
+          </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/terms-of-use' == checkClass()}"  >
+              <a class="nav-link" routerLink="/admin/terms-of-use">
+                  <i class="fas fa-file-alt" aria-hidden="true"></i>
+                  {{'TermsofUse'|translate}}
+              </a>
+          </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/privacy-policy' == checkClass()}"  >
+              <a class="nav-link" routerLink="/admin/privacy-policy">
+                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                {{'PrivacyPolicy'|translate}}
+            </a>
+          </li>
+          <li class="nav-item"  [ngClass]="{'active-side-option': '/admin/users-history' == checkClass()}">
+              <a class="nav-link" routerLink="/admin/users-history">
+                  <i class="fa fa-history" aria-hidden="true"></i>
+                  {{'History'|translate}}
+              </a>
+          </li>
+
+          <!-- </AuthorizeView> -->
+      </ul>
+  </div>
+</div>

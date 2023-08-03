@@ -1,0 +1,1179 @@
+
+<div class="content pb_0">
+  <div class="container">
+    <app-middle-layout-calibration></app-middle-layout-calibration>
+    <div class="row">
+      <div class="col-sm-12 col-md-12" style="text-align: right;">
+        <button type="button" (click)="openShoppingModal()"
+          class="btn button-border mb-3 mt-2 pt-1">{{'ShoppingCart'|translate}}</button>
+      </div>
+      <div class="col-lg-6">
+        <div class="data-management card p-3">
+          <div class="card-content">
+            <h5>{{'DataManagement'|translate}}</h5>
+            <form [formGroup]="DataManagementForm">
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+
+                      <mat-panel-title>
+                        <strong> Gauge {{'Status'|translate}}
+                        </strong>
+                      </mat-panel-title>
+                      <mat-panel-description style="display: contents;">
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                      <div class="col-md-3 mb-2">
+                        <button mat-button class="add-btn">
+                          <i class="fa fa-plus-circle" (click)="openGaugeStatusModal();"></i>
+                        </button>
+                      </div>
+
+                    </div>
+
+                    <div class="row" *ngFor="let status of statusList">
+                      <div class="col-md-9 mb-2 text-start">{{status.name}}</div>
+                      <div class="col-md-3 mb-2 text-end">
+                        <a class="email" title="Edit" data-toggle="tooltip">
+                          <i class="far fa-pencil-alt" aria-hidden="true" (click)="editStatus(status.id)"></i>
+                        </a>
+                        <a title="Delete">
+                          <i class="fa fa-trash-o data-management-delete" aria-hidden="true" (click)="deleteGaugeStatus(status.id)"></i>
+                        </a>
+                      </div>
+                    </div>
+
+                  </mat-expansion-panel>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <strong> {{'Supplier'|translate}}</strong>
+                      </mat-panel-title>
+                      <mat-panel-description style="display: contents;">
+
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                      <div class="col-md-3 mb-2">
+                        <button mat-button class="add-btn">
+                          <i class="fa fa-plus-circle" (click)="openModaladdSupplier()"></i>
+                        </button>
+                      </div>
+
+                    </div>
+                    <div class="row" *ngFor="let status of getSupplierListWithoutUserList">
+                      <div class="col-md-9 mb-2 text-start">{{status.name}} </div>
+                      <div class="col-md-3 mb-2 text-end">
+                        <a class="email" title="Edit" data-toggle="tooltip">
+                          <i class="far fa-pencil-alt" aria-hidden="true" (click)="editSupplier(status.id)"></i></a>
+                        <a title="Delete"><i class="fa fa-trash-o data-management-delete" aria-hidden="true"
+                            (click)="deleteSupplier(status.id)"></i></a>
+                      </div>
+                    </div>
+
+
+
+                    <!-- <option *ngFor="let standard of standardList" [value]="standard.id">
+                                            <b>{{standard.name}}</b>
+                                        </option> -->
+                  </mat-expansion-panel>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <strong> {{'Standard'|translate}} </strong>
+                      </mat-panel-title>
+                      <mat-panel-description style="display: contents;">
+
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                      <div class="col-md-3 mb-2">
+                        <button mat-button class="add-btn">
+                          <i class="fa fa-plus-circle" (click)="OpenStandardModal()"></i>
+                        </button>
+                      </div>
+
+                    </div>
+                    <div class="row" *ngFor="let standard of standardList">
+                      <div class="col-md-9 mb-2 text-start">{{standard.name}}</div>
+                      <div class="col-md-3 mb-2 text-end">
+                        <a class="email" title="Edit" data-toggle="tooltip"><i class="far fa-pencil-alt"
+                            aria-hidden="true" (click)="editStandard(standard.id)"></i></a> <a title="Delete"><i
+                            class="fa fa-trash-o data-management-delete" aria-hidden="true" (click)="deleteGaugeStandard(standard.id)"></i></a>
+                      </div>
+                    </div>
+
+
+                    <!-- <option *ngFor="let standard of standardList" [value]="standard.id">
+                                            <b>{{standard.name}}</b>
+                                        </option> -->
+                  </mat-expansion-panel>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <strong> {{'Owner'|translate}} </strong>
+                      </mat-panel-title>
+                      <mat-panel-description style="display: contents;">
+
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row mb-2">
+                      <div class="col-md-6">
+                        <button mat-button class="add-btn">
+                          <i class="fa fa-plus-circle" (click)="openModalOwnerforUpdate();"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row" *ngFor="let Owner of OwnerList">
+                      <div class="col-md-9 mb-2 text-start">{{Owner.name}}</div>
+                      <div class="col-md-3 mb-2 text-end">
+                        <a class="email" title="Edit" data-toggle="tooltip"><i class="far fa-pencil-alt m-0"
+                            aria-hidden="true" (click)="editOwner(Owner.id)"></i></a> <a title="Delete"><i
+                            class="fa fa-trash-o data-management-delete" aria-hidden="true" (click)="deleteGaugeOwner(Owner.id)"></i></a>
+                      </div>
+                    </div>
+
+                    <!-- <option *ngFor="let Owner of OwnerList" [value]="Owner.id">
+                                            <b>{{Owner.name}}</b>
+                                        </option> -->
+                  </mat-expansion-panel>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <strong> {{'Manufacturer'|translate}} </strong>
+                      </mat-panel-title>
+                      <mat-panel-description style="display: contents;">
+
+                      </mat-panel-description>
+
+
+
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                      <div class="col-md-3 mb-2">
+                        <button mat-button class="add-btn">
+                          <i class="fa fa-plus-circle" (click)="OpenAddManufacturerModal()"></i>
+                        </button>
+                      </div>
+
+                    </div>
+                    <div class="row" *ngFor="let Manufacturer of ManufacturerList">
+                      <div class="col-md-9 mb-2 text-start">{{Manufacturer.name}}</div>
+                      <div class="col-md-3 mb-2 text-end">
+                        <a class="email" title="Edit" data-toggle="tooltip"><i class="far fa-pencil-alt"
+                            aria-hidden="true" (click)="editmnf(Manufacturer.id)"></i></a> <a title="Delete"><i
+                            class="fa fa-trash-o data-management-delete" aria-hidden="true"
+                            (click)="deleteGaugeManufacturer(Manufacturer.id)"></i></a>
+                      </div>
+                    </div>
+
+                    <!-- <option *ngFor="let Owner of OwnerList" [value]="Owner.id">
+                                            <b>{{Owner.name}}</b>
+                                        </option> -->
+                  </mat-expansion-panel>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <strong> {{'Location'|translate}} </strong>
+                      </mat-panel-title>
+                      <mat-panel-description style="display: contents;">
+
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row mb-2">
+                      <div class="col-md-6">
+                        <button mat-button class="add-btn">
+                          <i class="fa fa-plus-circle" (click)="openModalLocationforAdd()"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row" *ngFor="let Location of LocationList">
+                      <div class="col-md-9 mb-2 text-start">{{Location.name}}</div>
+                      <div class="col-md-3 mb-2 text-end">
+                        <a class="email" title="Edit" data-toggle="tooltip" (click)="editLocation(Location.id)"><i
+                            class="far fa-pencil-alt" aria-hidden="true"></i></a> <a title="Delete"><i
+                            class="fa fa-trash-o data-management-delete" aria-hidden="true" (click)="deleteGaugeLocation(Location.id)"></i></a>
+                      </div>
+                    </div>
+
+                    <!-- <option *ngFor="let Location of LocationList" [value]="Location.id">
+                                            <b>{{Location.name}}</b>
+                                        </option> -->
+                  </mat-expansion-panel>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card row gx-1 mb-3">
+          <div class="card-content col-sm-12">
+
+            <div class="right-side p-3">
+              <div class="card-content">
+                <h5>{{'Accounts'|translate}}</h5>
+                <form>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label for="notification" class="form-label label_bold">Company Name
+                      </label>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="flex_div">
+                        <div class="account-field">
+                          <mat-form-field appearance="fill">
+                            <input matInput #CompanyName disabled value="{{companyOfUser.name}}" type="text" id="email"
+                              (blur)="onBlurMethod(CompanyName.value)">
+                          </mat-form-field>
+                          <a class="link-action inner-input" title="Edit" (click)="onNameEdit()">
+                            <i class="fa fa-edit red-color" aria-hidden="true" *ngIf="editShow"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row report-col">
+                      <div class="col-md-4">
+                        <label for="notification" class="form-label label_bold">{{'EmailNotification'|translate}}
+                        </label>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="account-field" style="float: right;">
+                          <mat-slide-toggle [checked]="emailNotifications" (change)="updateEmailCompanyByuser($event)">
+                          </mat-slide-toggle>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+
+                        <div class="row">
+                          <div class="col-md-4"><label for="frequency"
+                              class="form-label label_bold">{{'Frequency'|translate}}</label></div>
+                          <div class="col-md-8 freq_select">
+                            <mat-form-field>
+                              <mat-select [(value)]="fequancyValue" (selectionChange)="getStatus($event)">
+                                <mat-option value="1">{{'Weekly'|translate}}</mat-option>
+                                <mat-option value="2">{{'Biweekly'|translate}}</mat-option>
+                                <mat-option value="3">{{'Monthly'|translate}}</mat-option>
+                                <mat-option value="4">{{'Quarterly'|translate}}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!-- <label for="frequency" class="form-label">Frequency</label> -->
+                        <!-- <select class="form-control">
+                                                            <option selected>Standard</option>
+                                                            <option value="1">Weekely</option>
+                                                            <option value="2">Monthly</option>
+                                                        </select>  -->
+
+                        <label for="frequency" class="form-label label_bold">{{'GaugesDueIn'|translate}} </label><input
+                          type="number" #number value="{{this.gaugeDueIn.days}}"
+                          (change)="getChangeDueDays(number.value)" class="gaugeduein">
+                        {{'days'|translate}}
+
+                      </div>
+                    </div>
+                    <!-- <div class="col-sm-6 col-md-6">
+                                            <div class="form-check form-switch email-btn">
+                                                <label for="notification" class="form-label">Email Notification
+                                                </label>
+
+                                                <mat-slide-toggle></mat-slide-toggle>
+
+                                            </div>
+
+                                        </div> -->
+                    <!-- <div class="col-sm-6 col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4"><label for="frequency"
+                                                        class="form-label">Frequency</label></div>
+                                                <div class="col-md-8"> <select class="form-control">
+                                                        <option selected>Weekly</option>
+                                                        <option value="1">Biweekly</option>
+                                                        <option value="2">Monthly</option>
+                                                        <option value="2">Quarterly</option>
+                                                        <option value="2">Yearly</option>
+                                                    </select></div>
+                                            </div>
+                                            <!-- <label for="frequency" class="form-label">Frequency</label> -->
+                    <!-- <select class="form-control">
+                                                    <option selected>Standard</option>
+                                                    <option value="1">Weekely</option>
+                                                    <option value="2">Monthly</option>
+                                                </select>
+
+                                            Gauges Due In <input type="number" class="gaugeduein">
+                                            days
+                                        </div> -->
+                  </div>
+                </form>
+              </div>
+            </div><br />
+          </div>
+        </div>
+        <div class="card p-3 row gx-1">
+          <div class="card-content col-sm-12">
+            <div class="right-side-bottom">
+              <h5>{{'StatusReport'|translate}}</h5>
+              <Form [formGroup]="StatusReport">
+                <div class="row mb-5 g-1">
+                  <div class="col-sm-4 col-md-4 mb-3 mt-0 freq_select">
+                    <label for="report" class="form-label">&nbsp;</label>
+                    <!-- <select class="form-control" formControlName="StandardReport"
+                                            [ngClass]="{ 'is-invalid': g.StandardReport.touched && g.StandardReport.errors }"
+                                            [value]="" (change)="changeWebsite($event)">
+                                            <option value="">{{'Choose'|translate}}</option>
+                                            <option *ngFor="let status of statusList" [value]="status.id">
+                                                {{status.name}}</option>
+                                        </select> -->
+                    <mat-form-field appearance="fill">
+                      <mat-label>Status</mat-label>
+                      <mat-select multiple formControlName="StandardReport"
+                        [ngClass]="{ 'is-invalid': g.StandardReport.touched && g.StandardReport.errors }" [value]=""
+                        (selectionChange)="changeWebsite($event)">
+                        <mat-option *ngFor="let status of statusList" [value]="status.id">{{status.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <!-- <option value="1">Biweekly</option>
+                                                    <option value="2">Monthly</option>
+                                                    <option value="2">Quarterly</option>
+                                                    <option value="2">Yearly</option> -->
+
+                    <mat-error *ngIf="g.StandardReport.touched && g.StandardReport.errors" class="invalid-feedback">
+                      <div *ngIf="g.StandardReport.errors.required">
+                        {{'StandardReportRequired'|translate}}</div>
+                    </mat-error>
+                  </div>
+                  <div class="col-sm-4 col-md-4 mb-3 mt-0 freq_select">
+
+                    <label for="date" class="form-label">&nbsp;</label>
+                    <!-- <input type="date" class="form-control" id="date" formControlName="ReportReview"
+                                            [ngClass]="{ 'is-invalid': g.ReportReview.touched && g.ReportReview.errors }"> -->
+                    <!-- <select class="form-control" [value]="" (change)="selectAllStatus($event)">
+                                            <option value="All"> {{'All'|translate}}</option>
+                                            <option value="DateRange">{{'DateRange'|translate}}</option>
+                                        </select> -->
+
+
+                    <mat-form-field appearance="fill">
+                      <mat-label>Select</mat-label>
+                      <mat-select [value]="" (selectionChange)="selectAllStatus($event)">
+                        <mat-option value="All"> {{'All'|translate}}</mat-option>
+                        <mat-option value="DateRange">{{'DateRange'|translate}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <ng-container *ngIf="dateRangeStatusForStatus">
+                      <mat-form-field appearance="fill" class="duble_date_bx">
+                        <mat-label>{{'EnterADateRange'|translate}}</mat-label>
+                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                          <input matStartDate formControlName="start" placeholder="{{'StartDate'|translate}}">
+                          <input matEndDate formControlName="end" placeholder="{{'EndDate'|translate}}"
+                            (dateChange)="endChange($event)">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+
+                        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">
+                          {{'InvalidStartDate'|translate}}</mat-error>
+                        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">
+                          {{'Invalid end date'|translate}}</mat-error>
+                      </mat-form-field>
+                    </ng-container>
+
+
+                    <!-- <div *ngIf="g.ReportReview.touched && g.ReportReview.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="g.ReportReview.errors.required">
+                                                {{'ReportReviewisrequired'|translate}}</div>
+                                        </div> -->
+
+                  </div>
+
+                  <div class="col-sm-4 col-md-4 mt-0 report_settings">
+                    <label class="form-label">{{'Select'|translate}}</label>
+                    <div>
+                      <a class="file-icon " (click)="downloadExeFile()"><i class="fal fa-file-excel excel"
+                          aria-hidden="true"></i></a>
+                      <a class="file-icon" (click)="downloadFile()"><i class="fa fa-file-pdf-o  pdf"
+                          aria-hidden="true"></i></a>
+                      <button type="button" (click)="runReport('gaugeStatusReportTable')"
+                        class="btn button-border">{{'RunReport'|translate}}</button>
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-2 col-md-2 mb-3">
+                                    <i class="fas fa-file-excel fa-2x" aria-hidden="true"></i>
+                                </div> -->
+                  <!-- <div class="col-sm-2 col-md-2 mb-3">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                                    </label>
+                                    <input id="file-upload" type="file" />
+                                    <label for="file-upload-1" class="custom-file-upload new">
+                                        <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                                    </label>
+                                    <input id="file-upload-1" type="file" />
+                                </div> -->
+
+                </div>
+              </Form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <div class="row m-0">
+          <div class="card mt-3 mb-4">
+            <div class="row">
+              <div class="col-md-4 pb-3 pt-3 d-flex privillage_cntnt">
+                <h2 class="card-title p-0 m-0">{{'AccountPrivilleges'|translate}}</h2>
+              </div>
+              <div class="col-md-4 pt-3">
+                <div class="input-group flex-nowrap justify-content-center" style="display:none;">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                  <input type="text" placeholder="Search" (keyup)="applyFilter($any($event.target).value)"
+                    class="searchInput">
+                </div>
+
+              </div>
+              <div class="col-md-4 actv_bxbtn">
+                <div style="float:right" class="active_btnn">
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="ActiveUsers" (ngModelChange)="onUsersSelection()">
+
+                      <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                      <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row tp-sp px-2">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table  mat-table [dataSource]="dataSource" class="table-responsive w-100">
+                    <ng-container matColumnDef="fullName">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'UserName'|translate}}
+                        <!-- <i class="fa fa-plus-circle" (click)="openModalToAddUser()"></i> -->
+                      </th>
+                      <td mat-cell *matCellDef="let User"> {{User.fullName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'Email'|translate}} </th>
+                      <td mat-cell *matCellDef="let User"> {{User.email}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Invite">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'Invite'|translate}} </th>
+                      <td mat-cell *matCellDef="let User"> <a class="email" title="email" (click)="SendInvite(User)"
+                          data-toggle="tooltip"><i class="fa fa-envelope color" aria-hidden="true"></i></a> </td>
+                      <!-- <td mat-cell *matCellDef="let User"> {{user.Invite}} </td> -->
+                    </ng-container>
+                    <ng-container matColumnDef="Edit">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'Edit'|translate}} </th>
+                      <td mat-cell *matCellDef="let User"><a class="Edit" title="Edit" data-toggle="tooltip"
+                          (click)="editUser(User)"><i class="far fa-pencil-alt m-0" aria-hidden="true"></i></a> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Admin">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'Admin'|translate}} </th>
+                      <td mat-cell *matCellDef="let User"><a class="form-check" title="Edit" data-toggle="tooltip">
+                          <input class="form-check-input" (change)="handleSelected($event,'ADMIN',User)"
+                            [checked]="checkedCheckBoxForAdmin(User)" type="checkbox"></a></td>
+                    </ng-container>
+                    <ng-container matColumnDef="Supplier">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'Supplier'|translate}} </th>
+                      <td mat-cell *matCellDef="let User"><a class="form-check" title="Edit" data-toggle="tooltip">
+                          <input class="form-check-input" (change)="handleSelected($event,'SUPPLIER',User)"
+                            [checked]="checkedCheckBoxForSupplier(User)" type="checkbox"></a></td>
+                    </ng-container>
+                    <ng-container matColumnDef="Read">
+                      <th class="header" mat-header-cell *matHeaderCellDef> {{'Read'|translate}} </th>
+                      <td mat-cell *matCellDef="let User"> <a class="form-check" title="Edit" data-toggle="tooltip">
+                          <input class="form-check-input" (change)="handleSelected($event,'READ',User)"
+                            [checked]="checkedCheckBoxForRead(User)" type="checkbox"></a> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Delete">
+                      <th class="header" mat-header-cell *matHeaderCellDef>{{'Delete'|translate}}</th>
+                      <td mat-cell *matCellDef="let User"> <a *ngIf="active" class="delete-icon" title="Delete"
+                          data-toggle="tooltip" (click)="DeleteUser(User)">
+                          <i class="fa fa-trash-o color" aria-hidden="true"></i>
+                        </a>
+                        <a *ngIf="!active" class="delete-icon" title="Delete" data-toggle="tooltip"
+                          (click)="RecoverUser(User)">
+                          <i class="fa fa-check color" aria-hidden="true"></i>
+                        </a>
+
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let User; columns: columnsToDisplay"></tr>
+                  </table>
+                </div>
+              </div>
+              <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+                [pageSizeOptions]="paginationArray" (page)="getServerData($event)" showFirstLastButtons>
+              </mat-paginator>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row m-0">
+          <div class="card mt-3 mb-4">
+            <div class="row pb-3 pt-3 position-relative">
+              <div class="col-md-4">
+                <div class="input-group flex-nowrap">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                  <input type="text" placeholder="Search" (keyup)="applyFilter($any($event.target).value)"
+                    class="searchInput">
+                </div>
+
+              </div>
+              <div class="col-md-8 d-flex justify-content-end date_range">
+                <!-- <mat-form-field>
+                            <input matInput [matDatepicker]="dp1" (blur)="addEvent($any($event.target).value, $event)"  (dateInput)="addEvent($event.target.value, $event)" placeholder="Choose a date">
+                            <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                            <mat-datepicker #dp1></mat-datepicker>
+                          </mat-form-field> -->
+                <!-- <select class="form-control" [value]="" (change)="selectAllStatusHistory($event)">
+                            <option value="All"> {{'All'|translate}}</option>
+                            <option value="DateRange"> {{'DateRange'|translate}}</option>
+                        </select> -->
+                <div class="freq_select">
+                  <mat-form-field appearance="fill" class="freq_select">
+                    <mat-label>Select</mat-label>
+                    <mat-select [value]="" (selectionChange)="selectAllStatusHistory($event)">
+                      <mat-option value="All"> {{'All'|translate}}</mat-option>
+                      <mat-option value="DateRange">{{'DateRange'|translate}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <ng-container *ngIf="dateRangeStatusForStatusHistory">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'EnterADateRange'|translate}}</mat-label>
+                    <mat-date-range-input [formGroup]="Historyrange" [rangePicker]="pickers">
+                      <input matStartDate formControlName="Historystart" placeholder="{{'StartDate'|translate}}">
+                      <input matEndDate formControlName="Historyend" placeholder="{{'EndDate'|translate}}"
+                        (dateChange)="getGetInfoGaugeRecordsWithDate($event)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                    <mat-date-range-picker #pickers></mat-date-range-picker>
+
+                    <mat-error *ngIf="Historyrange.controls.Historystart.hasError('matStartDateInvalid')">
+                      {{'InvalidStartDate'|translate}}</mat-error>
+                    <mat-error *ngIf="Historyrange.controls.Historyend.hasError('matEndDateInvalid')">
+                      {{'Invalid end date'|translate}}</mat-error>
+                  </mat-form-field>
+                </ng-container>
+
+
+                <a class="edit-icon record_icon_bx"><i class="fal fa-file-excel color" (click)="downloadExecel()"
+                    aria-hidden="true"></i></a>
+                <a class="edit-icon record_icon_bx" (click)="downloadPdfwithCheck('History', 'historyTable')"><i
+                    class="fa fa-file-pdf-o pdf" aria-hidden="true"></i></a>
+              </div>
+
+            </div>
+            <div class="row tp-sp history_tables gap_40">
+              <div id="contentToConvert" class="col-md-12">
+                <div class="p_data_table">
+                  <div class="text-center">
+                    <h2 #historyTableTitle class="report_heading card-title p-0 mb-3">{{'History'|translate}}</h2>
+                  </div>
+                  <div class="table-responsive">
+                    <table id="historyTable" class="table" mat-table [dataSource]="dataSourceHistory " matSort (matSortChange)="sortChange($event)">
+                      <ng-container matColumnDef="gaugeId">
+                        <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'GaugeID'|translate}}
+                        </th>
+                        <td mat-cell *matCellDef="let User"> {{User.gaugeId}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="actions">
+                        <th class="header Changes_dec_td" mat-header-cell *matHeaderCellDef mat-sort-header>Changes</th>
+                        <td class="Changes_dec_td" mat-cell *matCellDef="let User"> {{User.actions}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="userId">
+                        <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>{{'User'|translate}}</th>
+                        <td mat-cell *matCellDef="let User"> {{User.userId}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="updatedDate">
+                        <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Date </th>
+                        <td mat-cell *matCellDef="let User"> {{User.updatedDate|
+                          date: 'MM/dd/yyyy'}} </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="columnsToDisplayHistory"></tr>
+                      <tr mat-row *matRowDef="let User; columns: columnsToDisplayHistory " (click)="openModal(User)">
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                  <!-- <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="paginationArray"
+                    (page)="getServerData($event)" showFirstLastButtons>
+                  </mat-paginator> -->
+                <!-- <mat-paginator #paginator2 [length]="gaugeHistoryLength" [pageIndex]="gaugeHistoryPageIndex" [pageSize]="gaugeHistoryPageSize"
+                   [pageSizeOptions]="paginationArray2" (page)="getGaugeHistoryServerData($event)" showFirstLastButtons>
+                </mat-paginator> -->
+                <mat-paginator #paginator2 [length]="gaugeHistoryLength" [pageIndex]="gaugeHistoryPageIndex" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                 (page)="getGaugeHistoryServerData($event)" showFirstLastButtons>
+             </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div  *ngIf="hideStatusReportTab" class="card mt-3 mb-4 border-0 Gauges_pdf_data" id="contentToConvert2">
+      <div class="pb-3 pt-3 Gauges_heads">
+        <h2 class="card-title">Gauges Status Report </h2>
+      </div>
+      <div  class="row tp-sp px-2" >
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table id="gaugeStatusReportTable"  class="table" mat-table [dataSource]="dataSourceHistory2" matSort>
+              <ng-container matColumnDef="Gauge_ID">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> Gauge ID
+                </th>
+                <td mat-cell *matCellDef="let User"> {{User.gaugeId}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="S_N">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Serial Number</th>
+                <td mat-cell *matCellDef="let User"> {{User.serialNumber}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Status">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let User"> {{User.gaugeStatus?.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Last_Calibrated">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Last Calibrated</th>
+                <td mat-cell *matCellDef="let User"> {{User.calibrationDate|
+                  date: 'MM/dd/yyyy'}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Description">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                <td mat-cell class="description_field" *matCellDef="let User"> {{User.description}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Gauge_Location">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+                <td mat-cell *matCellDef="let User"> {{User.gaugeLocation?.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Supplier">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>Supplier</th>
+                <td mat-cell *matCellDef="let User"> {{User.gaugeSupplier?.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="userId">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+                <td mat-cell *matCellDef="let User"> {{User.userId}} </td>
+              </ng-container>
+              <ng-container matColumnDef="Due_Date">
+                <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </th>
+                <td mat-cell *matCellDef="let User">{{setDueDate(User.calibrationDate,User.gaugeId)|
+                  date: 'MM/dd/yyyy'}}  </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplayHistoryStatus"></tr>
+              <tr mat-row *matRowDef="let User; columns: columnsToDisplayHistoryStatus " (click)="openModal(User)">
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Gauge -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addDepDiv>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            <ng-container *ngIf="!editGaugeStatusCheck"> {{'AddStatus'|translate}}</ng-container>
+            <ng-container *ngIf="editGaugeStatusCheck"> {{'UpdateStatus'|translate}}</ng-container>
+
+          </h2>
+          <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input #saveGauge [(ngModel)]="editValue" [(value)]="editValue"
+                class="k-textbox form-control k-state-valid telerik-blazor">
+              <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="UpdateGaugeStatusField(saveGauge.value);"><span
+              *ngIf="!editGaugeStatusCheck">{{'Add'|translate}}</span><span
+              *ngIf="editGaugeStatusCheck">{{'Update'|translate}}</span></button>
+          <button type="button" class="btn btn-primary" (click)="close();">{{'Cancel'|translate}}</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Modal for Standard Edit -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addstdDiv>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            Update standard
+          </h2>
+          <button type="button" class="btn-close" (click)="closeStandard()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #saveStandard [(ngModel)]="editValueStandard"
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            (click)="UpdateGaugeStandardField(saveStandard.value);saveStandard.value=''">{{'Update'|translate}}</button>
+          <button type="button" class="btn btn-primary"
+            (click)="closeStandard();saveStandard.value=''">{{'Cancel'|translate}}</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal for Account Privileges Edit -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing "
+    #EditPrivilegesDetails>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'EditUser'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="CloseEditPrivilegesDetailsModal()"
+            aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <Form [formGroup]="EditAccountPrivilageForm" (ngSubmit)="onSubmit(EditAccountPrivilageForm)">
+            <div class="form-group row">
+              <label for="Name" class="col-sm-4 col-form-label">{{'FirstName'|translate}}</label>
+              <div class="col-sm-8 mb-2">
+                <input aria-disabled="false" formControlName="Fname" aria-invalid="false"
+                  [(ngModel)]="editPrivilageUserFirstName"
+                  [ngClass]="{ 'is-invalid': a.Fname.touched && a.Fname.errors }"
+                  class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+                <div *ngIf="a.Fname.touched && a.Fname.errors" class="invalid-feedback">
+                  <div *ngIf="a.Fname.errors.required"> {{'FirstNameisrequired'|translate}}</div>
+                </div>
+                <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="Name" class="col-sm-4 col-form-label">{{'LastName'|translate}}</label>
+              <div class="col-sm-8 mb-2">
+                <input aria-disabled="false" formControlName="Lname" aria-invalid="false" #saveStandard
+                  [(ngModel)]="editPrivilageUserLastName" class="k-textbox form-control k-state-valid telerik-blazor"
+                  tabindex="0" [ngClass]="{ 'is-invalid': a.Lname.touched && a.Lname.errors }">
+                <div *ngIf="a.Lname.touched && a.Lname.errors" class="invalid-feedback">
+                  <div *ngIf="a.Lname.errors.required"> {{'LastNameisrequired'|translate}}</div>
+                </div>
+                <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="Name" class="col-sm-4 col-form-label">{{'Email'|translate}}</label>
+              <div class="col-sm-8">
+                <input aria-disabled="false" formControlName="email" aria-invalid="false" #saveStandard
+                  [(ngModel)]="editPrivilageUserEmail" class="k-textbox form-control k-state-valid telerik-blazor"
+                  tabindex="0" [ngClass]="{ 'is-invalid': a.email.touched && a.email.errors }">
+                <div *ngIf="a.email.touched && a.email.errors" class="invalid-feedback">
+                  <div *ngIf="a.email.errors.required"> {{'EmailNameisrequired'|translate}}</div>
+                </div>
+                <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+              </div>
+            </div>
+            <div class="modal-footer mt-3">
+              <button type="button" class="btn btn-primary"
+                (click)="CloseEditPrivilegesDetailsModal();saveStandard.value=''">{{'Cancel'|translate}}</button>
+              <button type="button" class="btn btn-secondary" type="submit"
+                [disabled]="!EditAccountPrivilageForm.valid">{{'Update'|translate}}</button>
+            </div>
+          </Form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Modal for Standard Add -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #AddstandardModal>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'AddStandard'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closeStandardAdd();saveStandardInput.value=''"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #saveStandardInput
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <mat-error *ngIf="addStd">{{'Nameisrequired'|translate}}</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            (click)="AddGaugeStandardField(saveStandardInput.value);saveStandardInput.value=''">{{'Add'|translate}}</button>
+          <button type="button" class="btn btn-primary"
+            (click)="closeStandardAdd();saveStandardInput.value='';">{{'Cancel'|translate}}</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Modal for Owner Edit -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addOwnDiv>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'EditOwner'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closeOwner()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #saveOwner [(ngModel)]="editValueOwner"
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeOwner()">{{'Cancel'|translate}}</button>
+          <button type="button" class="btn btn-secondary"
+            (click)="UpdateGaugeOwnerField(saveOwner.value)">{{'Update'|translate}}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Modal for Owner Add data -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addOwnDivupd>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'AddOwner'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closeOwnerAdd();saveOwnerUpd.value=''"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #saveOwnerUpd
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <mat-error *ngIf="addOwn">{{'Nameisrequired'|translate}}</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            (click)="UpdateOwnerField(saveOwnerUpd.value);saveOwnerUpd.value=''">Add</button>
+          <button type="button" class="btn btn-primary"
+            (click)="closeOwnerAdd();saveOwnerUpd.value=''">{{'Cancel'|translate}}</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal for Manufacturer Edit -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addmnfDiv>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'UpdateManufacturer'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closemnf()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #savemnf [(ngModel)]="editValuemnf"
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closemnf()">{{'Cancel'|translate}}</button>
+          <button type="button" class="btn btn-secondary"
+            (click)="UpdateGaugemnfField(savemnf.value)">{{'Update'|translate}}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal for Manufacturer Add -->
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #mnfDivadd>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'AddManufacturer'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closeManufacturerModal();savemnfDivadd.value=''"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #savemnfDivadd
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <mat-error *ngIf="addManufacturer">{{'Nameisrequired'|translate}}</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            (click)="AddManufacturerField(savemnfDivadd.value);savemnfDivadd.value=''">{{'Add'|translate}}</button>
+          <button type="button" class="btn btn-primary"
+            (click)="closeManufacturerModal();savemnfDivadd.value=''">{{'Cancel'|translate}}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Modal For Location Edit -->
+
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addLocDiv>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'EditLocation'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closeLocaton()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #saveLocation [(ngModel)]="editValueLocation"
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="closeLocaton()">{{'Cancel'|translate}}</button>
+          <button type="button" class="btn btn-secondary"
+            (click)="UpdateGaugeLocationField(saveLocation.value)">{{'Update'|translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal For New Location Field ADD -->
+
+  <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addLocDivUpd>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'AddLocation'|translate}}
+          </h2>
+          <button type="button" class="btn-close" (click)="closeLocationAdd();saveLocationadd.value=''"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #saveLocationadd
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <mat-error *ngIf="addLoc">{{'Nameisrequired'|translate}}</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            (click)="addLocationField(saveLocationadd.value);saveLocationadd.value=''">{{'Add'|translate}}</button>
+          <button type="button" class="btn btn-primary"
+            (click)="closeLocationAdd();saveLocationadd.value=''">{{'Cancel'|translate}}</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- supplier -->
+  <div
+    class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing cdk-overlay-connected-position-bounding-box "
+    #addSupplier>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="pop-up-title" *ngIf="supplierUpdateId==0">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            {{'Addsupplier'|translate}}
+          </h2>
+          <h2 class="pop-up-title" *ngIf="supplierUpdateId>0">
+            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+            Update Supplier
+          </h2>
+          <button type="button" class="btn-close" (click)="closeaddSupplier();" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="Name" class="col-md-4 col-form-label">Name</label>
+            <div class="col-sm-8">
+              <input aria-disabled="false" aria-invalid="false" #manufacture [(ngModel)]="editValueSupplier"
+                class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+              <mat-error *ngIf="addSupplierCheck">{{'Nameisrequired'|translate}}</mat-error>
+            </div>
+            <!-- <div class="col-md-8 cdk-overlay-connected-position-bounding-box ">
+                           <mat-list-item style="z-index: 9999!important;" role="listitem">
+                                <mat-form-field class="select-form" style="z-index: 9999!important;">
+                                    <mat-select name="year" class="filter-select trigger_slect"
+                                        style="z-index: 9999!important;" [(ngModel)]="selectedYears" multiple
+                                        #yearSelect="ngModel">
+                                        <mat-option disabled="disabled" style="z-index: 9999!important;"
+                                            class="filter-option ">
+                                            <input type="checkbox"
+                                                (click)="selectAll(checkAll.checked, yearSelect, years)" #checkAll>
+                                            <mat-option (click)="selectAll(yearSelect, years)" #checkAll> Select All
+                                        </mat-option>
+                                        <mat-option style="z-index: 9999!important;" *ngFor="let year of years"
+                                            [value]="year.id">
+                                            {{year.fullName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-list-item>
+
+
+                        </div>-->
+          </div>
+        </div>
+        <!-- <div class="modal-footer">
+                    <button type="button" (click)="selectAll(checkAll.checked, yearSelect, years)"
+                    class="btn btn-secondary">{{'Add'|translate}}</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="closeaddSupplier();">{{'Cancel'|translate}}</button>
+
+                </div> -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" *ngIf="supplierUpdateId==0"
+            (click)="addSupplierByText(manufacture.value);manufacture.value=''">{{'Add'|translate}}</button>
+          <button type="button" class="btn btn-secondary" *ngIf="supplierUpdateId>0"
+            (click)="addSupplierByText(manufacture.value);manufacture.value=''">{{'Update'|translate}}</button>
+          <button type="button" class="btn btn-primary"
+            (click)="closeaddSupplier();manufacture.value=''">{{'Cancel'|translate}}</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+<!-- Modal for Account Privileges Edit -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #GaugeDetails>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fas fa-tools"></i>
+          Tools View
+        </h2>
+        <button type="button" class="btn-close" (click)="CloseModal()" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <Form>
+          <div class="form-group row">
+            <label for="Name"
+              class="col-sm-6 col-form-label d-flex justify-content-center">{{'GaugeID'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="GaugeID"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Name"
+              class="col-sm-6 col-form-label d-flex justify-content-center">{{'UpdatedDate'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="updateDate"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Name"
+              class="col-sm-6 col-form-label d-flex justify-content-center">{{'CalibrationDate'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="calibrationDate"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Name"
+              class="col-sm-6 col-form-label d-flex justify-content-center ">{{'GaugeStatus'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="StatusOfGauge"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+
+        </Form>
+      </div>
+
+    </div>
+
+  </div>
+</div>

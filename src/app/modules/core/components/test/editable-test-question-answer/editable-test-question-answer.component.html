@@ -1,0 +1,24 @@
+<div class="test-question-answer-edit">
+  <input
+    type="checkbox"
+    class="form-check-input"
+    [(ngModel)]="answerDto!.isCorrectAnswer"
+    (change)="updateIsCorrect()"
+  >
+  <div class="ms-1" style="width: 100%">
+    <input type="text" #answerInput
+           (keyup)="keyUp($event)"
+           (focusout)="stopEdit()"
+           [(ngModel)]="answerText.value"
+           [hidden]="!editMode" style="width: 100%">
+    <span [hidden]="editMode">{{answerText.value}}</span>
+  </div>
+  <div style="display: flex;" class="ms-auto">
+    <span class="question-icon" (click)="toggleEditMode($event)"
+          [matTooltip]="'EditAnswer'|translate" matTooltipPosition="left">
+      <i class="fa fa-pencil mt-auto mb-auto" aria-hidden="true"></i></span>
+    <span class="question-icon" (click)="deleteAnswer($event)"
+          [matTooltip]="'DeleteAnswer'|translate" matTooltipPosition="left">
+      <i class="fa fa-trash mt-auto mb-auto" aria-hidden="true"></i></span>
+  </div>
+</div>

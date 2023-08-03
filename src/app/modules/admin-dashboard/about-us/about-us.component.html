@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="row gap_10">
+    <div class="col-md-4 col-xl-3">
+      <app-side-bar></app-side-bar>
+    </div>
+    <div class="col-md-8 col-xl-9">
+      <div class="card padd_15">
+        <div class="form-row m-0">
+          <!-- <h4 class="card-title red-color empty-space">{{'AboutUs'|translate}}</h4> -->
+        </div>
+
+        <div class="d-flex mb_15">
+          <button type="button" (click)="openModal()" class="block custmBtns">
+            <i class="fa fa-plus" aria-hidden="true"></i> {{'Add'|translate}}</button>&nbsp;
+        </div>
+
+        <div class="table-responsive">
+          <table mat-table [dataSource]="dataSource" class="table_custom_div">
+            <!-- FullName Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="course_col_th">
+                {{'Name'|translate}}
+                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                  (click)="$event.stopPropagation()">
+                  <mat-label>{{ "Search" | translate }}</mat-label>
+                  <input matInput #NumberOfQuestions (blur)="onBlurMethod('name', NumberOfQuestions.value)" />
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">{{ element.name[lang] }}</td>
+            </ng-container>
+
+            <!-- Company Column -->
+            <ng-container matColumnDef="designation">
+              <th mat-header-cell *matHeaderCellDef class="course_col_th">
+                Designation
+                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                  (click)="$event.stopPropagation()">
+                  <mat-label>{{ "Search" | translate }}</mat-label>
+                  <input matInput #Course (blur)="onBlurMethod('designation', Course.value)" />
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.designation[lang] }}
+              </td>
+            </ng-container>
+
+            <!-- Company Column -->
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef class="img_col pb-4">
+                Image
+                <!-- <mat-form-field
+                  class="filter"
+                  floatLabel="never"
+                  (click)="$event.stopPropagation()"
+                >
+                  <mat-label>{{ "Search" | translate }}</mat-label>
+                  <input
+                    matInput
+                    #Course
+                    (blur)="onBlurMethod('image', Course.value)"
+                  />
+                </mat-form-field> -->
+              </th>
+              <td mat-cell *matCellDef="let element" class="about_us_img img-responsive">
+                <img src="{{ element.image }}">
+              </td>
+            </ng-container>
+            <!-- Company Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef class="course_col_th description_col">
+                {{'Description'|translate}}
+                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                  (click)="$event.stopPropagation()">
+                  <mat-label>{{ "Search" | translate }}</mat-label>
+                  <input matInput #Course (blur)="onBlurMethod('description', Course.value)" />
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="description_txt">{{element.description[lang] }}</div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="specification">
+              <th mat-header-cell *matHeaderCellDef class="course_col_th description_col">
+                Specification
+
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="description_txt">{{element.miniDescription[lang] }}</div>
+              </td>
+            </ng-container>
+            <!-- Company Column -->
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <div class="action_btns">
+                  <button type="button" (click)="AddopenModal(element)" class="block">
+                    <i class="fa fa-edit" aria-hidden="true"></i> {{'Edit'|translate}}
+                  </button>
+                  <button type="button" (click)="deleteTestQuestionAns(element)" class="block">
+                    <i class="fa fa-trash" aria-hidden="true"></i> {{'Delete'| translate}}
+                  </button>
+                </div>
+
+
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayTestColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayTestColumns"></tr>
+          </table>
+        </div>
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator> -->
+
+        <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+          [pageSizeOptions]="paginationArray" (page)="getServerData($event)" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

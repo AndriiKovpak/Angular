@@ -1,0 +1,66 @@
+<h1 mat-dialog-title style="color: #FA8060;">
+    <!-- <i class="fa fa-user-plus" aria-hidden="true"></i> -->
+    Share Courses
+</h1>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <mat-label> Email</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }"> </textarea>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
+        </mat-form-field>
+        <mat-error *ngIf="isValid">Email is required</mat-error>
+        <br>
+
+
+        <label style="font-size:12px!important"><i>* {{'Addmultipleemails'|translate}}</i></label>
+
+    </div>
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <!-- <mat-label>Select Courses</mat-label>
+            <mat-select  formControlName="courseId"  [ngClass]="{ 'is-invalid': f.courseId.touched && f.courseId.errors }">
+                <mat-option *ngFor="let data of CustomCourses" [value]="data.value" >
+                    {{data.text}}</mat-option>
+            </mat-select>
+            <div *ngIf="submitted && f.courseId.errors" class="invalid-feedback">
+                <div *ngIf="f.courseId.errors.required">Course is required</div>
+            </div> -->
+
+
+            <mat-label> Courses</mat-label>
+            <mat-select
+            name="year" class="filter-select trigger_slect" style="z-index: 9999!important;" multiple
+                [(ngModel)]="selectedYears" [ngModelOptions]="{standalone: true}" #yearSelect="ngModel">
+                <mat-option disabled="disabled" style="z-index: 9999!important;" class="filter-option ">
+                    <input type="checkbox" (click)="selectAll(checkAll.checked, yearSelect, CustomCourses)" #checkAll>
+                    <!--<mat-option (click)="selectAll(yearSelect, years)" #checkAll> Select All-->
+                </mat-option>
+                <mat-option (onSelectionChange)="change($event)" style="z-index: 9999!important;" *ngFor="let year of CustomCourses" [value]="year.value">
+                    {{year.text}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="isValid">Email is required</mat-error>
+        <br>
+
+    </div>
+        <!-- <button mat-button color="primary">
+            <span class="k-icon k-i-save"></span>{{'Add'|translate}}
+        </button>
+        <input type="button" mat-button color="primary" (click)="onCancel()">
+            <span class="k-icon k-i-cancel"></span>{{'Cancel'|translate}} -->
+        <div class="btn-sec">
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Share</button>
+            <button mat-raised-button type="button" class="Discard-btn" (click)="onCancel()">Cancel</button>
+        </div>
+
+
+
+</form>

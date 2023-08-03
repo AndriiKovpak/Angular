@@ -1,0 +1,276 @@
+<div class="newInvitePage">
+  <div class="text-center logo_div">
+    <a [routerLink]="['/']" routerLinkActive="router-link-active">
+      <img src="../../../../assets/images/myfa.png" class="c_pointer" /></a>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-xl-10 col-lg-11">
+      <div class="wht_bx">
+        <div class="add-title">
+          <h1 class="title_txt">
+            <i class="far fa-file-alt" aria-hidden="true"></i>Registration
+          </h1>
+        </div>
+        <div class="angFormStyle remove_form_lab">
+          <form (ngSubmit)="save()" [formGroup]="EmpForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row full_w_row">
+                  <div class="col-md-6">
+                    <label class="control-label">Title</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" matInput formControlName="title"
+                        placeholder="{{ 'Title' | translate }}" [ngClass]="{
+                          'is-invalid': f.title.touched && f.title.errors
+                        }" />
+                      <mat-error *ngIf="f.title.touched && f.title.errors" class="invalid-feedback">
+                        <div *ngIf="f.title.errors.required">
+                          {{ "Titleisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="control-label">First Name</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'FirstName' | translate }}" matInput
+                        formControlName="firstName" [ngClass]="{
+                          'is-invalid':
+                            f.firstName.touched && f.firstName.errors
+                        }" />
+                      <mat-error *ngIf="f.firstName.touched && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">
+                          {{ "FirstNameisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="control-label">Last Name</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'LastName' | translate }}" matInput
+                        formControlName="lastName" [ngClass]="{
+                          'is-invalid': f.lastName.touched && f.lastName.errors
+                        }" />
+                      <mat-error *ngIf="f.lastName.touched && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">
+                          {{ "LastNameisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="control-label">Email</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="Email" matInput formControlName="email"
+                        [ngClass]="{
+                          'is-invalid': f.email.touched && f.email.errors
+                        }" />
+                      <mat-error *ngIf="f.email.touched && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">
+                          {{ "EmailIsRequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                    <!-- <div class="form-control email_bx">
+                        <span>{{EmpForm.value.email}}</span><i class="fas fa-lock red-color"></i>
+                      </div> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="control-label">Phone</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'PhoneNumber' | translate }}" matInput
+                        formControlName="phoneNumber" [ngClass]="{
+                          'is-invalid':
+                            f.phoneNumber.touched && f.phoneNumber.errors
+                        }" />
+                      <mat-error *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" class="invalid-feedback">
+                        <div *ngIf="f.phoneNumber.errors.required">
+                          {{ "PhoneNumberisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="control-label">Purchase Order #</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="Purchase Order #" matInput
+                        formControlName="purchaseOrder" [ngClass]="{
+                          'is-invalid':
+                            f.purchaseOrder.touched && f.purchaseOrder.errors
+                        }" />
+                      <div *ngIf="
+                          f.purchaseOrder.touched && f.purchaseOrder.errors
+                        " class="invalid-feedback">
+                        <div *ngIf="f.purchaseOrder.errors.required">
+                          {{ "Zipcodeisrequired" | translate }}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row full_w_row">
+                  <div class="col-md-6">
+                    <label class="control-label">Company Name</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="Company Name" matInput
+                        formControlName="companyName" [ngClass]="{
+                          'is-invalid':
+                            f.companyName.touched && f.companyName.errors
+                        }" />
+                      <mat-error *ngIf="f.companyName.touched && f.companyName.errors" class="invalid-feedback">
+                        <div *ngIf="f.companyName.errors.required">
+                          {{ "FirstNameisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="control-label">Street</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="Street" matInput formControlName="street"
+                        [ngClass]="{
+                          'is-invalid': f.street.touched && f.street.errors
+                        }" />
+                      <mat-error *ngIf="f.street.touched && f.street.errors" class="invalid-feedback">
+                        <div *ngIf="f.street.errors.required">
+                          {{ "FirstNameisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="control-label">City</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'City' | translate }}" matInput
+                        formControlName="city" [ngClass]="{
+                          'is-invalid': f.city.touched && f.city.errors
+                        }" />
+                      <mat-error *ngIf="f.city.touched && f.city.errors" class="invalid-feedback">
+                        <div *ngIf="f.city.errors.required">
+                          {{ "Cityisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="control-label">State</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'State' | translate }}" matInput
+                        formControlName="state" [ngClass]="{
+                          'is-invalid': f.state.touched && f.state.errors
+                        }" />
+                      <mat-error *ngIf="f.state.touched && f.state.errors" class="invalid-feedback">
+                        <div *ngIf="f.state.errors.required">
+                          {{ "Stateisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="control-label">Zip Code</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'Street' | translate }}" matInput
+                        formControlName="street" [ngClass]="{
+                          'is-invalid': f.street.touched && f.street.errors
+                        }" />
+                      <mat-error *ngIf="f.street.touched && f.street.errors" class="invalid-feedback">
+                        <div *ngIf="f.street.errors.required">
+                          {{ "Streetisrequired" | translate }}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="control-label">Promo code</label>
+                    <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{ 'PromoCode' | translate }}" matInput
+                        formControlName="promoCode" [ngClass]="{
+                          'is-invalid':
+                            f.promoCode.touched && f.promoCode.errors
+                        }" />
+                      <div *ngIf="f.promoCode.touched && f.promoCode.errors" class="invalid-feedback">
+                        <div *ngIf="f.promoCode.errors.required">
+                          {{ "purchaseOrderisrequired" | translate }}
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="add-title">
+              <h1 class="title_txt">
+                <i class="fas fa-key" aria-hidden="true"></i>Password Setup
+              </h1>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="control-label">Password</label>
+                <mat-form-field class="pass_fiels">
+                  <!-- <input class="form-control" type="password" placeholder="{{'Password'|translate}}"  matInput formControlName="password" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" /> -->
+                  <input class="form-control" matInput [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password" placeholder="{{ 'Password' | translate }}" [ngClass]="{
+                      'is-invalid': f.password.touched && f.password.errors
+                    }" id="password" />
+                  <input class="hidden_bx" type="button" mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hidePassword" />
+                  <mat-icon (click)="hidePassword = !hidePassword">{{
+                    hidePassword ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  <mat-error *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">
+                      {{ "Passwordisrequired" | translate }}
+                    </div>
+                    <div *ngIf="f.password.errors.minlength">
+                      {{ "Passwordmust" | translate }}
+                    </div>
+                    <!-- <div *ngIf="f.password.errors.pattern">
+                      Password must have minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.
+                    </div> -->
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <label class="control-label">Confirm Password</label>
+                <mat-form-field class="pass_fiels">
+                  <!-- <input class="form-control" type="password" placeholder="{{'ConfirmPassword'|translate}}"  matInput formControlName="confirmPassword" [ngClass]="{ 'is-invalid': f.confirmPassword.touched && f.confirmPassword.errors }" /> -->
+                  <input class="form-control" matInput [type]="hideConfirmPassword ? 'password' : 'text'"
+                    formControlName="confirmPassword" placeholder="{{ 'ConfirmPassword' | translate }}" [ngClass]="{
+                      'is-invalid':
+                        f.confirmPassword.touched && f.confirmPassword.errors
+                    }" id="password" />
+                  <input class="hidden_bx" type="button" mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hideConfirmPassword" />
+                  <mat-icon (click)="hideConfirmPassword = !hideConfirmPassword">{{
+                    hideConfirmPassword ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  <mat-error *ngIf="
+                      f.confirmPassword.touched && f.confirmPassword.errors
+                    " class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">
+                      {{ "Passwordisrequired" | translate }}
+                    </div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">
+                      {{ "Passwordmust" | translate }}
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form_btns">
+              <button type="submit" class="btn">Checkout</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

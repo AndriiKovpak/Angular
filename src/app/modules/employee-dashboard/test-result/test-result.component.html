@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="card emp-test">
+            <div class="card-body padd_30">
+                <ng-container *ngIf="values && values.courseModel">
+                    <h4 class="l-space"><i class="fa fa-file-certificate"></i> {{values.courseModel.name}}</h4>
+                </ng-container>
+
+
+                  <div class="row">
+                    <div class="col-md-12 ques l-space">
+                            <h6 *ngIf="values && values.isPassOrFailed" class="text-success">{{values.strIsPassOrFailed}}</h6>
+                            <h6 *ngIf="values &&  !values.isPassOrFailed" class="text-danger">{{values.strIsPassOrFailed}}</h6>
+                        <h6 *ngIf="values && values.strTestScore ">{{values.strTestScore}}</h6>
+                    </div>
+                </div>
+                <ng-container *ngIf=" values && values.userTestQuestionAnswerStatusModelList && values.userTestQuestionAnswerStatusModelList.length>0">
+                    <ng-container *ngFor="let userTests of values.userTestQuestionAnswerStatusModelList; let i=index">
+                        <div class="row">
+                            <div class="col-md-12 custQues l-space">
+                                <label class="text-justify"><b>{{i + 1}} </b>{{userTests.testQuestion}}</label>
+                                <label class="text-danger">Your Answer:&nbsp;{{userTests.userSelectedTestQuestionAnswer}}</label>
+                                <label class="text-success">Correct Answer:&nbsp;{{userTests.testQuestionAnswer}}</label>
+                            </div>
+                        </div>
+                        <hr>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="flex_btns_div">
+              <button *ngIf="values &&  !values.isPassOrFailed" [routerLink]="['/employee-home/takeTest', testId]" Class="btn checkout checkout_buttons mb-2">Retake the Test</button>
+              <button *ngIf="values"  (click)="ReturnToDashBoard()" Class="btn checkout checkout_buttons">Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+</div>

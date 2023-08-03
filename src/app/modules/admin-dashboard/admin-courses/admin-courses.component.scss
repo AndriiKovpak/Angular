@@ -1,0 +1,9 @@
+.admin-courses {
+  mat-select {
+    background-color: #eeee;
+    padding: 10px 15px;
+    ::ng-deep .mat-select-value-text {
+      color: grey;
+    }
+  }
+}

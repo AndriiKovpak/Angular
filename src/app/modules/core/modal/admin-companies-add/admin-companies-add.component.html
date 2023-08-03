@@ -1,0 +1,233 @@
+<div class="container">
+  <div>
+    <div class="add-title">
+      <h1 mat-dialog-title style="color: #FA8060;">
+        {{buttontext}} <span *ngIf="buttontext !== 'Update'">{{'New'|translate}}</span> {{'Record'|translate}}
+      </h1>
+    </div>
+    <div class="angFormStyle">
+      <form [formGroup]="EmpForm" (ngSubmit)="Save()">
+        <div class="addRecord_bx mb-3">
+          <mat-grid-list cols="1" rowHeight="85px">
+            <mat-grid-tile>
+              <div class="text-inside">
+                <mat-form-field>
+                  <input class="form-control" type="text" placeholder="  {{'Name'|translate}}" matInput
+                    formControlName="name" [ngClass]="{ 'is-invalid': f.name.touched && f.name.errors }" />
+                  <mat-error *ngIf="f.name.touched && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">{{'Nameisrequired'|translate}}</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="buttontext === 'Update'">
+              <div class="text-inside">
+                <mat-form-field>
+                  <input class="form-control" type="number" placeholder="#{{'License'|translate}}" matInput
+                    formControlName="noOfLicense"
+                    [ngClass]="{ 'is-invalid': f.noOfLicense.touched && f.noOfLicense.errors }" />
+                  <!-- <div *ngIf="f.noOfLicense.touched && f.noOfLicense.errors" class="invalid-feedback">
+                                        <div *ngIf="f.noOfLicense.errors.required">{{'Licenseisrequired'|translate}}</div>
+                                    </div> -->
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="buttontext === 'Update'">
+              <div class="text-inside">
+                <mat-form-field>
+                  <input class="form-control" type="text" placeholder="{{'StripeCustomerID'|translate}}" matInput
+                    formControlName="stripeCustomerId"
+                    [ngClass]="{ 'is-invalid': f.stripeCustomerId.touched && f.stripeCustomerId.errors }" />
+                  <!-- <div *ngIf="f.stripeCustomerId.touched && f.stripeCustomerId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.stripeCustomerId.errors.required">{{'Licenseisrequired'|translate}}</div>
+                                    </div> -->
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="buttontext === 'Update'">
+              <div class="text-inside">
+                <mat-form-field>
+                  <input class="form-control" type="text" placeholder="{{'PromoCode'|translate}}" matInput
+                    formControlName="promoCode"
+                    [ngClass]="{ 'is-invalid': f.promoCode.touched && f.promoCode.errors }" />
+                  <mat-error *ngIf="f.promoCode.touched && f.promoCode.errors" class="invalid-feedback">
+                    <div *ngIf="f.promoCode.errors.required">{{'Licenseisrequired'|translate}}</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="buttontext === 'Update'">
+              <div class="text-inside">
+
+                <input class="form-control" type="date" placeholder="{{'SubscriptionDueDate'|translate}}"
+                  formControlName="subscriptionRenualDate"
+                  [ngClass]="{ 'is-invalid': f.subscriptionRenualDate.touched && f.subscriptionRenualDate.errors }" />
+                <mat-error *ngIf="f.subscriptionRenualDate.touched && f.subscriptionRenualDate.errors"
+                  class="invalid-feedback">
+                  <div *ngIf="f.subscriptionRenualDate.errors.required">{{'Licenseisrequired'|translate}}</div>
+                </mat-error>
+              </div>
+            </mat-grid-tile>
+            <!--  <mat-grid-tile>
+                        <div class="text-inside">
+                            <mat-form-field>
+                            <mat-checkbox id="amateur" class="amateur" color="primary">Amateur</mat-checkbox>
+                        </mat-form-field>
+                        </div>
+                    </mat-grid-tile> -->
+            <mat-grid-tile>
+              <div class="text-inside mt-2">
+                <mat-checkbox id="amateur2" formControlName="isDemo" class="amateur" color="primary">Is Demo
+                </mat-checkbox>
+
+              </div>
+            </mat-grid-tile>
+
+            <div *ngIf="!data">
+              <mat-grid-tile>
+                <h2>{{'AddCompanyAdmin'|translate}}</h2>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" matInput formControlName="title"
+                      placeholder="{{'Title'|translate}}"
+                      [ngClass]="{ 'is-invalid': f.title.touched && f.title.errors }" />
+                    <mat-error *ngIf="f.title.touched && f.title.errors" class="invalid-feedback">
+                      <div *ngIf="f.title.errors.required"> {{'Titleisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'FirstName'|translate}}" matInput
+                      formControlName="firstName"
+                      [ngClass]="{ 'is-invalid': f.firstName.touched && f.firstName.errors }" />
+                    <mat-error *ngIf="f.firstName.touched && f.firstName.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstName.errors.required"> {{'FirstNameisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'LastName'|translate}}" matInput
+                      formControlName="lastName"
+                      [ngClass]="{ 'is-invalid': f.lastName.touched && f.lastName.errors }" />
+                    <mat-error *ngIf="f.lastName.touched && f.lastName.errors" class="invalid-feedback">
+                      <div *ngIf="f.lastName.errors.required"> {{'LastNameisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'Email'|translate}}" matInput
+                      formControlName="email" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }" />
+                    <mat-error *ngIf="f.email.touched && f.email.errors" class="invalid-feedback">
+                      <div *ngIf="f.email.errors.required"> {{'EmailNameisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'PhoneNumber'|translate}}" matInput
+                      formControlName="phoneNumber"
+                      [ngClass]="{ 'is-invalid': f.phoneNumber.touched && f.phoneNumber.errors }" />
+                    <mat-error *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" class="invalid-feedback">
+                      <div *ngIf="f.phoneNumber.errors.required"> {{'PhoneNumberisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'Street'|translate}}" matInput
+                      formControlName="street" [ngClass]="{ 'is-invalid': f.street.touched && f.street.errors }" />
+                    <mat-error *ngIf="f.street.touched && f.street.errors" class="invalid-feedback">
+                      <div *ngIf="f.street.errors.required"> {{'Streetisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'City'|translate}}" matInput
+                      formControlName="city" [ngClass]="{ 'is-invalid': f.city.touched && f.city.errors }" />
+                    <mat-error *ngIf="f.city.touched && f.city.errors" class="invalid-feedback">
+                      <div *ngIf="f.city.errors.required">{{'Cityisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'State'|translate}}" matInput
+                      formControlName="state" [ngClass]="{ 'is-invalid': f.state.touched && f.state.errors }" />
+                    <mat-error *ngIf="f.state.touched && f.state.errors" class="invalid-feedback">
+                      <div *ngIf="f.state.errors.required"> {{'Stateisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text" placeholder="{{'ZipCode'|translate}}" matInput
+                      formControlName="zipCode" [ngClass]="{ 'is-invalid': f.zipCode.touched && f.zipCode.errors }" />
+                    <mat-error *ngIf="f.zipCode.touched && f.zipCode.errors" class="invalid-feedback">
+                      <div *ngIf="f.zipCode.errors.required"> {{'Zipcodeisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile *ngIf="this.data == null">
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="password" placeholder="{{'Password'|translate}}" matInput
+                      formControlName="password"
+                      [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+                    <mat-error *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                      <div *ngIf="f.password.errors.required">{{'Passwordisrequired'|translate}}</div>
+                      <div *ngIf="f.password.errors.minlength">{{'Passwordmust'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile *ngIf="this.data == null">
+                <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="password" placeholder="{{'ConfirmPassword'|translate}}" matInput
+                      formControlName="confirmPassword"
+                      [ngClass]="{ 'is-invalid': f.confirmPassword.touched && f.confirmPassword.errors }" />
+                    <mat-error *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="invalid-feedback">
+                      <div *ngIf="f.confirmPassword.errors.required">{{'Passwordisrequired'|translate}}</div>
+                      <div *ngIf="f.confirmPassword.errors.mustMatch">{{'ConfirmPassword'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </mat-grid-tile>
+            </div>
+          </mat-grid-list>
+        </div>
+
+        <div class="btn-sec">
+          <button mat-raised-button type="submit" color="primary" class="Update-btn">{{buttontext}}</button>
+          <button mat-raised-button type="button" class="Discard-btn"
+            (click)="closeModal()">{{'Cancel'|translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

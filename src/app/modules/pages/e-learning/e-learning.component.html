@@ -1,0 +1,65 @@
+<div class="single-grid-main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="single-grid-course" style="background: url({{headingData.imageLink[lang]}}); background-position: top;">
+          <h2 class="course-bg-image">
+            {{ headingData.name[lang] }}
+          </h2>
+        </div>
+        <div class="single-grid-text">
+          <div class="crs-description">
+            <p>{{ headingData.description[lang] }}</p>
+
+            <div class="crs-prc">
+              <h5>{{cmsData.length}} {{ "Coursess" | translate }}</h5>
+            </div>
+            <div class="crs-prc-btm">
+              <a [routerLink]="['/buy']" routerLinkActive="router-link-active">
+                <h5 style="cursor: pointer">
+                  <i class="fal fa-shopping-cart" aria-hidden="true"></i>
+                  {{ "Pricing" | translate }}
+                </h5>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="world-cls">
+  <img src="../../../../assets/images/world-class.png" />
+</div>
+<div class="bg-gray-full">
+  <div class="container">
+    <div class="row" *ngFor="let data of cmsData">
+      <div class="col-md-12 course-content">
+        <div class="row">
+          <div class="col-md-4">
+            <img [src]="data.imageLink[lang]" (error)="onImgError($event)" class="img-responsive" alt="not found" />
+          </div>
+          <div class="col-md-8">
+            <div class="crs-description botm">
+              <br />
+              <h3>{{ data.name[lang] }}</h3>
+              <p>
+                {{ data.description[lang] }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="e-learn-bootom">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 e-lear-bottom-img">
+          <img src="../../../../assets/images/ab-line.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="container admin-courses">
+  <div class="row gap_10">
+    <div class="col-md-4 col-xl-3">
+      <app-side-bar></app-side-bar>
+    </div>
+    <div class="col-md-8 col-xl-9">
+      <div class="card padd_15">
+        <div class="form-row m-0">
+          <!-- <h4 class="card-title red-color empty-space">{{"Courses" | translate}}</h4> -->
+        </div>
+        <div class="row m-0 mb-2 gap_10">
+          <div class="col-md-2">
+            <button type="button" (click)="AddopenModal(null)" class="block add_btn">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              {{ "Add" | translate }}</button>&nbsp;
+          </div>
+          <div class="col-md-4">
+            <div class="textStart input-group">
+              <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search" aria-hidden="true"></i></span>
+              <input type="text" placeholder="Search" #name (keyup.enter)="onBlurMethod('name', name.value)"
+                class="searchInput form-control">
+            </div>
+          </div>
+          <!-- <div class="col-md-4 text-center">
+            <label class="view_list_bx">View <button class="filter_btn">10</button> <button class="filter_btn">15</button><button class="filter_btn">All</button></label>
+          </div> -->
+          <div class="col-md-1 text-end">
+            <a class="file-icon pdf m-0" (click)="downloadPdfwithCheck('Courses')"><i class="fal fa-file-pdf fa-2x"
+                aria-hidden="true"></i></a>
+          </div>
+        </div>
+
+        <div class="table-responsive" id="contentToConvert">
+          <table mat-table [dataSource]="dataSource" class="table_custom_div">
+            <!-- FullName Column -->
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef class="course_col_th">
+                {{ "Name" | translate }}
+                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                  (click)="$event.stopPropagation()">
+                  <mat-label>{{ "Search" | translate }}</mat-label>
+                  <input matInput #name (keyup.enter)="onBlurMethod('name', name.value)" />
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">{{ element.name[lang] }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Video">
+              <th mat-header-cell *matHeaderCellDef class="course_col_th">
+                {{ "Video" | translate }}
+                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                  (click)="$event.stopPropagation()">
+                  <mat-label>{{ "Search" | translate }}</mat-label>
+                  <input matInput #Video (blur)="onBlurMethod('Video', Video.value)" />
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">{{ element.video[lang] }}</td>
+            </ng-container>
+            <!-- Course Link -->
+            <ng-container matColumnDef="CourseLink">
+              <th mat-header-cell *matHeaderCellDef class="img_col pb-4 course-link-column">
+                {{ "CourseLink" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" class="course-link-column">
+                {{ element.courseLink[lang] }}
+              </td>
+            </ng-container>
+            <!-- Time -->
+            <ng-container matColumnDef="TotalTrainingTime">
+              <th mat-header-cell *matHeaderCellDef class="img_col pb-4">
+                {{ "TotalTrainingTime" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.courseTotalTraningTime }}
+              </td>
+            </ng-container>
+            <!-- Company Column -->
+            <ng-container matColumnDef="Edit">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ "Status" | translate }}
+                <mat-select [(ngModel)]="isActive" (ngModelChange)="onActiveChange()">
+                  <mat-option [value]="true">{{'Active'|translate}}</mat-option>
+                  <mat-option [value]="false">{{'InActive'|translate}}</mat-option>
+                </mat-select>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="action_btns">
+                  <button *ngIf="isActive" type="button" (click)="openEditTestModal(element)" class="block add_btn me-1">
+                    <i class="fa fa-check-double" aria-hidden="true"></i>
+                    {{ "Test" | translate }}
+                  </button>
+                  <button *ngIf="isActive" type="button" (click)="AddopenModal(element)" class="block add_btn me-1">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    {{ "Edit" | translate }}
+                  </button>
+                  <button *ngIf="isActive" type="button" (click)="deleteTestQuestionAns(element, true)" class="block add_btn">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    {{ "Delete" | translate }}
+                  </button>
+                  <button *ngIf="!isActive" type="button" (click)="deleteTestQuestionAns(element, false)" class="block add_btn">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    {{ "Restore" | translate }}
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsCourses"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsCourses"></tr>
+          </table>
+        </div>
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator> -->
+
+        <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+          [pageSizeOptions]="paginationArray" (page)="getServerData($event)" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

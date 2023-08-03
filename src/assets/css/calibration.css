@@ -1,0 +1,242 @@
+.image-container{
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.gauge-text{
+  color: #FA8060;
+  text-transform: uppercase;
+  font-size: 17px;
+  font-weight: 600;
+  padding-top: 40px;
+}
+.main-head-text{
+  color: #003753;
+  font-size: 59px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.main-p-text{
+  color: #333;
+  font-size: 16px;
+  padding: 20px 0;
+  font-weight: 100;
+}
+
+.main-image{
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index:-2;
+  width: 100%;
+}
+.secondary-image{
+  z-index:-1;
+  position: absolute;
+  bottom: -55px;
+  right: 30px;
+  width: 50%;
+}
+.main-text{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 62%;
+  padding: 40px 0 0 60px;
+}
+.section-head{
+  color: #003753;
+  font-size: 45px;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+.feature-block{
+  width: 95%;
+  margin: auto;
+}
+.faq-block{
+  width: 80%;
+  margin: auto;
+  padding-bottom: 50px;
+}
+
+.faq-accordion .accordion-item {
+  border: none;
+  border-radius: 0;
+  margin: 0 0 12px;
+  background: none;
+}
+
+.faq-accordion .accordion-item .accordion-button {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding: 10px 15px;
+  height: 50px;
+  outline: none !important;
+  border-radius: 10px !important;
+  border-style: hidden !important;
+  overflow: hidden;
+  background: #FEDDD4 !important;
+  box-shadow: none !important;
+}
+
+.faq-accordion .accordion-item .accordion-button[aria-expanded="true"] {
+  border-radius: 10px 10px 0 0 !important;
+  box-shadow: none !important;
+}
+
+.faq-accordion .accordion-item .accordion-body {
+  background-color: #FEDDD4;
+  border-radius: 0 0 10px 10px !important;
+  padding: 15px;
+  margin-top: -10px;
+}
+
+.faq-accordion .accordion-item .accordion-body p {
+  font-size: 14px;
+  font-weight: 100;
+  color: #333;
+  padding-left: 10px;
+}
+
+.faq-accordion .accordion-item .accordion-header {
+  margin: 0;
+}
+
+.calibration-button{
+  background-color: #FA8060;
+  color: white;
+  text-transform: uppercase;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.faq-accordion .accordion-item .accordion-header button {
+  color: #003753;
+  font-size: 14px;
+  padding-left: 30px;
+}
+
+.feature-list{
+  display: flex;
+  flex-flow: row wrap;
+}
+.feature-item{
+  flex: 0 1 calc(20% - 8px);
+  padding: 0 11px;
+}
+.feature-img{
+  width: 60px;
+  margin: auto;
+}
+.feature-text{
+  text-align: center;
+  word-wrap: break-word;
+}
+.feature-text h3{
+  color: #003753;
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+.feature-text p{
+  color: #000;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+
+@media (max-width: 767px) {
+  .container{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .feature-item{
+    flex: 0 1 calc(50% - 8px);
+  }
+
+  .main-text{
+    width: 100%;
+    padding: 40px 0 0 10px;
+  }
+  .gauge-text{
+    display: none;
+  }
+  .main-head-text{
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+  }
+  
+  .main-p-text{
+    color: #333;
+    font-size: 10px;
+    padding: 20px 10px;
+    font-weight: 100;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .main-image{
+    height: 460px;
+  }
+
+  .div-button{
+    width: 150px;
+    margin: auto;
+  }
+  .calibration-button{
+    font-size: 11px;
+  }
+
+  .secondary-image{
+    width: 100%;
+    margin: auto;
+    right: 0;
+    bottom: -30px
+  }
+
+  .section-head{
+    font-size: 20px;
+    padding-top: 30px;
+    padding-bottom: 15px;
+  }
+
+  .feature-text h3{
+    font-size: 11px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+  .feature-text p{
+    font-size: 10px;
+  }
+
+  .faq-block{
+    width: 90%;
+  }
+  .faq-accordion .accordion-item .accordion-header button {
+    padding-left: 10px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1281px) {
+  .main-head-text{
+    font-size: 25px;
+  }
+  .main-text{
+    padding: 0px 0 0 10px;
+  }
+  .main-p-text{
+    font-size: 12px;
+  }
+  .main-image{
+    height: 380px;
+  }
+}

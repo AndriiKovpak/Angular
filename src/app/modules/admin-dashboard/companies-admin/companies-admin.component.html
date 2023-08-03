@@ -1,0 +1,248 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card padd_15">
+                <div class="form-row m-0">
+                    <!-- <h4 class="card-title red-color empty-space">{{'Companies'|translate}}</h4> -->
+                    <div class="col-md-12">
+                        <div class="row mb-4">
+                            <div class="d-flex mb_15">
+                                <button type="button" (click)="openModal()" class="block custmBtns"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>
+                                    {{'Add'|translate}}</button>&nbsp;
+                                <button type="button" (click)="exportToExcel($event)" class="block file custmBtns"><span
+                                        class="fa fa-file-excel-o"></span> {{'Export'|translate}} {{'To'|translate}}
+                                    {{'Excel'|translate}}</button>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="comp-select">
+                                    <mat-select (selectionChange)="getSelectedCompanyCourses($event)"
+                                        [(value)]="isActive">
+                                        <mat-option *ngFor="let data of activeInactiveList" [value]="data.Value">
+                                            {{data.Text}}
+                                        </mat-option>
+                                        <!-- <mat-option value="demo">
+                                            Demo
+                                        </mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSource" class="table_custom_div">
+
+                        <!-- FullName Column -->
+                        <ng-container matColumnDef="Name">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th"> {{'Name'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                                    (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #FullName (blur)="onBlurMethod('FullName',FullName.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                        </ng-container>
+
+                        <!-- Company Column -->
+                        <ng-container matColumnDef="Licences">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th"> {{'Licences'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                                    (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput type="number" min="0" #Licences
+                                        (blur)="onBlurMethod('Licences',Licences.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Licences}} </td>
+                        </ng-container>
+                        <!-- Email Column -->
+                        <ng-container matColumnDef="StripeCustomerID">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'StripeCustomerID'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                                    (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #StripeCustomerID
+                                        (blur)="onBlurMethod('StripeCustomerID',StripeCustomerID.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.StripeCustomerID}} </td>
+                        </ng-container>
+                        <!-- City Column -->
+                        <ng-container matColumnDef="PromoCode">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th"> {{'PromoCode'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                                    (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #PromoCode (blur)="onBlurMethod('PromoCode',PromoCode.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.PromoCode}} </td>
+                        </ng-container>
+                        <!-- isEligibleForAMT Column -->
+                        <ng-container matColumnDef="SubscriptionDueDate">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">
+                                {{'SubscriptionDueDate'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never"
+                                    (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput type="date" #SubscriptionDueDate
+                                        (blur)="onBlurMethod('SubscriptionDueDate',SubscriptionDueDate.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.SubscriptionDueDate}} </td>
+                        </ng-container>
+
+                        <!-- Licence Column -->
+                        <ng-container matColumnDef="CustomCourses">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'CustomCourses4'|translate}}
+                                <mat-form-field class="mt-3">
+                                    <mat-select [(ngModel)]="customCoursesActive"
+                                        (ngModelChange)="onBlurMethod('customCoursesActive','customCoursesActive')">
+                                        <mat-option [value]="'All'">{{'All'|translate}}</mat-option>
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle [checked]="element.PurchasedCustomCourseCreator"
+                                    (change)="toggle($event,element)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="SupplierPro">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'SupplierPro2' | translate}}
+                                <mat-form-field class="mt-3">
+                                    <mat-select [(ngModel)]="supplierPro"
+                                        (ngModelChange)="onBlurMethod('supplierPro','supplierPro')">
+                                        <mat-option [value]="'All'">{{'All'|translate}}</mat-option>
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle [checked]="element.PurchasedSupplierPro"
+                                    (change)="SupplierProtoggle($event,element)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CalibrationProfessional">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'CalibrationProfessional2' |
+                                translate}}
+                                <mat-form-field class="mt-3">
+                                    <mat-select [(ngModel)]="Calibration"
+                                        (ngModelChange)="onBlurMethod('Calibration','Calibration')">
+                                        <mat-option [value]="'All'">{{'All'|translate}}</mat-option>
+
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle [checked]="element.PurchasedCalibration"
+                                    (change)="Calibrationtoggle($event,element)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CalibrationEnterprise">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'CalibrationEnterprise2' |
+                                translate}}
+                                <mat-form-field class="mt-3">
+                                    <mat-select [(ngModel)]="CalibrationEnterprise"
+                                        (ngModelChange)="onBlurMethod('CalibrationEnterprise','CalibrationEnterprise')">
+                                        <mat-option [value]="'All'">{{'All'|translate}}</mat-option>
+
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle [checked]="element.PurchasedCalibrationEnterprise"
+                                    (change)="CalibrationEnterprisetoggle($event,element)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Spanish">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'Spanish' | translate}}
+                                <mat-form-field class="mt-3">
+                                    <mat-select [(ngModel)]="SpanishLanguage"
+                                        (ngModelChange)="onBlurMethod('SpanishLanguage','SpanishLanguage')">
+                                        <mat-option [value]="'All'">{{'All'|translate}}</mat-option>
+
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle [checked]="element.PurchasedSpanishLanguageCourse"
+                                    (change)="SpanishLanguagetoggle($event,element)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="Training">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'Training' | translate}}
+                                <mat-form-field class="mt-3">
+                                    <mat-select [(ngModel)]="training"
+                                        (ngModelChange)="onBlurMethod('training','training')">
+                                        <mat-option [value]="'All'">{{'All'|translate}}</mat-option>
+
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle [checked]="element.PurchasedTraining"
+                                    (change)="Trainingtoggle($event,element)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+
+                        <!-- Company Column -->
+                        <ng-container matColumnDef="edit">
+                            <th mat-header-cell *matHeaderCellDef>
+
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="action_btns">
+                                    <button *ngIf="isActive" type="button" (click)="AddopenModal(element)" class="block"><i
+                                            class="fa fa-edit" aria-hidden="true"></i>
+                                        {{'Edit'|translate}}</button>
+                                    <button *ngIf="isActive" type="button" (click)="deleteCompany(element.Id, true)"
+                                        class="block file"><span class="fa fa-trash" aria-hidden="true"></span>
+                                        {{'Pause'|translate}}</button>
+                                    <button *ngIf="!isActive" type="button" (click)="deleteCompany(element.Id, false)"
+                                        class="block file"><i class="fa fa-check" aria-hidden="true"></i>
+                                        {{'Restore'|translate}}</button>
+                                    <button *ngIf="!isActive" type="button" (click)="hardDeleteCompany(element.Id)"
+                                        class="block file"><span class="fa fa-trash" aria-hidden="true"></span>
+                                        {{'Delete'|translate}}</button>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsCompanies"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsCompanies;"></tr>
+                    </table>
+                </div>
+                <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+              </mat-paginator> -->
+
+                <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+                    [pageSizeOptions]="paginationArray" (page)="getServerData($event)" showFirstLastButtons>
+                </mat-paginator>
+            </div>
+        </div>
+
+    </div>

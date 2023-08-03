@@ -1,0 +1,79 @@
+.table-responsive {
+  max-height: 500px;
+}
+
+.table-responsive .custom-table thead tr th {
+  position: sticky;
+  position: -webkit-sticky;
+  top: -1px;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.table-responsive .custom-table tbody tr th:first-child {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0px;
+  left: -1px !important;
+  background-color: #fff;
+  z-index: 4;
+}
+
+.table-responsive .custom-table thead tr th:first-child {
+  position: sticky;
+  position: -webkit-sticky;
+  top: -1px;
+  left: 0 !important;
+  z-index: 4;
+}
+
+.table-responsive .custom-table tbody tr > td:first-child {
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 3;
+}
+.table.custom-table > :not(:last-child) > :last-child > * {
+  border-bottom-color: #9c9c9c;
+}
+.department_list {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.need-assesst table.mat-table {
+  width: 100%;
+}
+.need-assesst table.mat-table thead .mat-form-field-infix {
+  width: 100%;
+}
+table.ast-need.table.custom-table thead tr th:nth-child(1),
+.admin_table table.mat-table tbody > tr > td:nth-child(1) {
+  width: 300px;
+  min-width: 300px;
+}
+table.ast-need.table.custom-table thead tr th:nth-child(2),
+.admin_table table.mat-table tbody > tr > td:nth-child(2) {
+  width: 132px;
+  min-width: 132px;
+}
+table.ast-need.table.custom-table thead tr th:nth-child(3),
+.admin_table table.mat-table tbody > tr > td:nth-child(3) {
+  width: 132px;
+  min-width: 132px;
+}
+table.ast-need.table.custom-table thead tr th:nth-child(4),
+.admin_table table.mat-table tbody > tr > td:nth-child(4) {
+  width: 132px;
+  min-width: 132px;
+}
+table.ast-need.table.custom-table thead tr th:nth-child(5),
+.admin_table table.mat-table tbody > tr > td:nth-child(5) {
+  width: 132px;
+  min-width: 132px;
+}
+table.ast-need.table.custom-table thead tr th:nth-child(6),
+.admin_table table.mat-table tbody > tr > td:nth-child(6) {
+  width: 132px;
+  min-width: 132px;
+}

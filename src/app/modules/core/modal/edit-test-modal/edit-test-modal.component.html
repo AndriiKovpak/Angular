@@ -1,0 +1,102 @@
+<div style="color: #fa8060">
+  <h1 mat-dialog-title style="float: left">{{'EditTest'|translate}}</h1>
+  <span style="float: right" [mat-dialog-close]><i class="fa fa-times" aria-hidden="true"></i></span>
+</div>
+
+<div mat-dialog-content>
+  <div *ngIf="!editableTest; else loadingComplete">Loading...</div>
+  <ng-template #loadingComplete>
+
+    <div class="angFormStyle">
+      <mat-grid-list cols="1" rowHeight="85px">
+        <mat-grid-tile>
+          <div class="text-inside">
+            <mat-form-field>
+              <input
+                class="form-control"
+                type="number"
+                matInput
+                min="0"
+                max="999"
+                [(ngModel)]="editableTest!.numberOfQuestions"
+                (change)="onChangeNumberOfQuestions()"
+                (keyup)="onChangeNumberOfQuestions()"
+                placeholder="{{ 'NumberOfQuestions' | translate }}"
+              />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="text-inside">
+            <mat-form-field>
+              <input
+                class="form-control"
+                type="number"
+                matInput
+                min="0"
+                max="100"
+                [(ngModel)]="editableTest!.passingScore"
+                (change)="onChangePassingScore()"
+                (keyup)="onChangePassingScore()"
+                placeholder="{{ 'PassingScore' | translate }} (%)"
+              />
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div class="angFormStyle">
+      <div>
+<!--        <h2>{{'TestQuestions' | translate}} ({{editableTest!.questions.length}})</h2>-->
+        <h2 style="float: left">{{'TestQuestions' | translate}} ({{editableTest!.questions.length}})</h2>
+        <button
+          style="float: right"
+          mat-raised-button
+          color="primary"
+          class="Update-btn"
+          [disabled]="addingQuestion"
+          (click)="addQuestion()"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i> Add Question
+        </button>
+      </div>
+
+      <div style="clear: both;" class="angFormStyle edit-test-modal">
+        <mat-grid-list cols="1" rowHeight="85px">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <mat-label>{{'TestLanguage'|translate}}</mat-label>
+                <mat-select [(value)]="testLanguage">
+                  <mat-option value="en">English</mat-option>
+                  <mat-option value="es">Español</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+
+      <div class="test-question-container">
+        <div
+          *ngFor="let question of sortedQuestions"
+          style="margin: 4px;"
+        >
+          <app-editable-test-question #editableQuestion
+            [questionDto]="question"
+            [language]="testLanguage"
+            (questionDeleted)="removeQuestion($event)"
+            ></app-editable-test-question>
+        </div>
+      </div>
+
+
+    </div>
+
+  </ng-template>
+
+
+
+</div>

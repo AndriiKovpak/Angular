@@ -1,0 +1,102 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card padd_15">
+                <form class="contact-form invite " [formGroup]="ContactForm" (ngSubmit)="Save()">
+                    <!-- <h4 class="card-title red-color empty-space">{{'Contact'|translate}}</h4> -->
+                    <div class="form-group mb-2">
+                        <label for="leftHeading" class="control-label">{{'LeftHeading'|translate}}</label>
+                        <div class="">
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="leftHeading"  [ngClass]="{ 'is-invalid': f.leftHeading?.touched && f.leftHeading.errors }" />
+                            <div *ngIf="f.leftHeading?.touched && f.leftHeading.errors" class="invalid-feedback">
+                                <div *ngIf="f.leftHeading.errors.required"> {{'HeadingFieldisrequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="leftDescription" class="control-label">{{'LeftDescription'|translate}}</label>
+                        <div>
+                            <textarea matInput formControlName="leftDescription"
+                                class="des-content contact-textbox TextBoxLarge form-control" [ngClass]="{ 'is-invalid': f.leftDescription?.touched && f.leftDescription.errors }"></textarea>
+                                <div *ngIf="f.leftDescription?.touched && f.leftDescription.errors" class="invalid-feedback">
+                                    <div *ngIf="f.leftDescription.errors.required"> {{'DescriptionFieldisrequired'|translate}}</div>
+                                </div>
+                        </div>
+                    </div>
+
+                     <div class="form-group mb-2">
+                        <label for="rightHeading" class="control-label">{{'RightHeading'|translate}}</label>
+                        <div>
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="rightHeading"  [ngClass]="{ 'is-invalid': f.rightHeading?.touched && f.rightHeading.errors }" />
+                            <div *ngIf="f.rightHeading?.touched && f.rightHeading.errors" class="invalid-feedback">
+                                <div *ngIf="f.rightHeading.errors.required"> {{'HeadingFieldisrequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="rightDescription" class="control-label">{{'RightDescription'|translate}}</label>
+                        <div>
+                            <textarea matInput formControlName="rightDescription"
+                                class="des-content contact-textbox TextBoxLarge form-control" rows="10" [ngClass]="{ 'is-invalid': f.rightDescription?.touched && f.rightDescription.errors }"></textarea>
+                                <div *ngIf="f.rightDescription?.touched && f.rightDescription.errors" class="invalid-feedback">
+                                    <div *ngIf="f.rightDescription.errors.required"> {{'DescriptionFieldisrequired'|translate}}</div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="phoneHeading" class="control-label">{{'PhoneHeading'|translate}}</label>
+                        <div>
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="phoneHeading" [ngClass]="{ 'is-invalid': f.phoneHeading?.touched && f.phoneHeading.errors }"
+                            />
+                            <div *ngIf="f.phoneHeading?.touched && f.phoneHeading.errors" class="invalid-feedback">
+                                <div *ngIf="f.phoneHeading.errors.required"> {{'HeadingFieldisrequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="phone" class="control-label">{{'Phone'|translate}}</label>
+                        <div>
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="phone" [ngClass]="{ 'is-invalid': f.phone?.touched && f.phone.errors }"
+                            />
+                            <div *ngIf="f.phone?.touched && f.phone.errors" class="invalid-feedback">
+                                <div *ngIf="f.phone.errors.required"> {{'PhoneIsRequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="emailHeading" class="control-label">{{'EmailHeading'|translate}}</label>
+                        <div>
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="emailHeading" [ngClass]="{ 'is-invalid': f.emailHeading?.touched && f.emailHeading.errors }"
+                            />
+                            <div *ngIf="f.emailHeading?.touched && f.emailHeading.errors" class="invalid-feedback">
+                                <div *ngIf="f.emailHeading.errors.required"> {{'HeadingFieldisrequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="email" class="control-label">{{'Email'|translate}}</label>
+                        <div>
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="email" [ngClass]="{ 'is-invalid': f.email?.touched && f.email.errors }"
+                            />
+                            <div *ngIf="f.email?.touched && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors.required"> {{'EmailIsRequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row m-0 py-2">
+                      <button Primary="true" class="custmBtns block h_50">{{'Update'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

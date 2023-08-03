@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card">
+                <div class="form-row" style="padding-left:5px ;">
+                    <h4 class="card-title red-color empty-space">Tests</h4>
+                </div>
+                <div class="col-md-8" style="float: left;padding-left:5px;  padding-bottom: 10px;">
+                    <button class="block" (click)="openModal()"><i class="fa fa-plus" aria-hidden="true"></i>
+                        Add
+                    </button>
+                </div>
+                    <ag-grid-angular style="width:95%; height:500px; margin-left: 20px;" class="ag-theme-alpine"
+                        [frameworkComponents]="frameworkComponents" [rowData]="rowData" [columnDefs]="usersColumns"
+                        (gridReady)="onGridReady($event)">
+                    </ag-grid-angular>
+                    <div class="row">
+                        <div class="col-lg-8 ml-auto mr-auto">
+                            <div class="float-right">
+                                <app-pagination [totalRecords]="count" [recordsPerPage]="10"
+                                    (onPageChange)="displayActivePage($event)"></app-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

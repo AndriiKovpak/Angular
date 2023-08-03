@@ -1,0 +1,200 @@
+<div class="container">
+    <div class="row row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card">
+                <div class="row licenses_row admin_dash_pd">
+                    <!-- modules active start -->
+                    <h1>{{'ModulesActive'|translate}}</h1>
+                    <div class="col-md-4" (click)="downloadCompaniesAccordingType('Training')">
+                        <div class="block black mr-3">
+                            <div class="heading module_sec">
+                                {{'Training'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.training}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 " (click)="downloadCompaniesAccordingType('Calibration')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'Calibration'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.calibration}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'SupplierManagement'|translate}}
+                            </div>
+                            <div class="num">0</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" (click)="downloadCompaniesAccordingType('spanish')">
+                      <div class="block black mr-3">
+                          <div class="heading module_sec">
+                             Spanish
+                          </div>
+                          <div class="num">{{dashboardData?.spanish}}</div>
+                      </div>
+                  </div>
+                  <div class="col-md-4 " (click)="downloadCompaniesAccordingType('customCoursesCreater')">
+                      <div class="block black">
+                          <div class="heading module_sec">
+                            Custom Courses Creater
+                          </div>
+                          <div class="num">{{dashboardData?.customCoursesCreater}}</div>
+                      </div>
+                  </div>
+                    <!-- modules active end -->
+
+                    <!-- companies active start -->
+
+                    <h1>{{'Companies'|translate}}</h1>
+                    <div class="col-md-4" (click)="downloadCompaniesAccordingType('Active')" >
+                        <div class="block black mr-3">
+                            <div class="heading module_sec">
+                                {{'Active'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.companiesactive}} </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 " (click)="downloadCompaniesAccordingType('Demo')">
+                        <div class="block black">
+                            <div class="heading module_sec" >
+                                {{'Demo'|translate}}
+                            </div>
+                            <div class="num"> {{dashboardData?.companiesDemo}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="block black">
+                            <div class="heading module_sec" (click)="downloadCompaniesAccordingType('InActive')">
+                                {{'InActive'|translate}}
+                            </div>
+                            <div class="num">  {{dashboardData?.companiesInactive}}</div>
+                        </div>
+                    </div>
+                    <!-- companies active end -->
+
+                    <!-- users active start -->
+
+                    <h1>Users</h1>
+                    <!--  -->
+                    <div class="col-md-4" (click)="downloadActiveUsers('active')">
+                        <div class="block black mr-3">
+                            <div class="heading module_sec">
+                                {{'Active'|translate}}
+                            </div>
+                            <div class="num">   {{dashboardData?.active}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 " (click)="downloadActiveUsers('In ted')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'Invited'|translate}}
+                            </div>
+                            <div class="num">   {{dashboardData?.invited}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4" (click)="downloadActiveUsers('Inactive')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'InActive'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.inActive}}</div>
+                        </div>
+                    </div>
+
+                    <!-- 2 -->
+                    <div class="col-md-4"  (click)="downloadActiveUsers('SafetySensitive')">
+                        <div class="block black mr-3">
+                            <div class="heading module_sec">
+                                {{'Safety-Sensitive'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.safetySensitiveCount}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 " (click)="downloadActiveUsers('eligibleForAMT')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'AMTAwardEligibility'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.eligibleForAMTCount}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'AMT'|translate}} %  {{'Eligible'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.amTeligiblePercentage}}</div>
+                        </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="col-md-4" (click)="downloadUsersWithType('companyAdmin')">
+                        <div class="block black mr-3">
+                            <div class="heading module_sec">
+                                {{'CompanyAdmin'| translate}}
+                            </div>
+                            <div class="num">   {{dashboardData?.companyAdmin}} </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 " (click)="downloadUsersWithType('users')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'Users'|translate}}
+                            </div>
+                            <div class="num"> {{dashboardData?.users}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 " (click)="downloadUsersWithType('total')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'Total'|translate}}
+                            </div>
+                            <div class="num">    {{dashboardData?.total}}</div>
+                        </div>
+                    </div>
+                    <!-- users active end -->
+                    <!-- companies active start -->
+
+                    <h1>{{'Coursess'|translate}}</h1>
+                    <div class="col-md-4" (click)="downloadTestTypes('taken')" >
+                        <div class="block black mr-3">
+                            <div class="heading module_sec
+
+                            ">
+                            {{'Testtaken'|translate}}
+                            </div>
+                            <div class="num">{{dashboardData?.testsTaken}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 " (click)="downloadTestTypes('passed')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'TestPassed'|translate}}
+                            </div>
+                            <div class="num">   {{dashboardData?.testPassed}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 " (click)="downloadTestTypes('failed')">
+                        <div class="block black">
+                            <div class="heading module_sec">
+                                {{'TestFailed'|translate}}
+                            </div>
+                            <div class="num">   {{dashboardData?.testFailed}}</div>
+                        </div>
+                    </div>
+                    <!-- companies active end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

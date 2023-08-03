@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class=" card">
+                <div class="form-row" style="padding-left:5px ;">
+                    <h4 class="card-title red-color empty-space">{{'Tests'|translate}}</h4>
+                </div>
+
+                <div class="col-md-8" style="float: left;padding-left:5px;  padding-bottom: 10px;">
+                    <button type="button" (click)="openModal()" class="block"><i class="fa fa-plus"
+                            aria-hidden="true"></i>
+                            {{'Add'|translate}}</button>&nbsp;
+
+                </div>
+
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <!-- FullName Column -->
+                        <ng-container matColumnDef="NumberOfQuestions">
+                            <th mat-header-cell *matHeaderCellDef> {{'NumberOfQuestions'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never" (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input type="number" min="0" matInput #NumberOfQuestions (blur)="onBlurMethod('NumberOfQuestions',NumberOfQuestions.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.NumberOfQuestions}} </td>
+                        </ng-container>
+
+                        <!-- Company Column -->
+                        <ng-container matColumnDef="Course">
+                            <th mat-header-cell *matHeaderCellDef> {{'Course'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx" floatLabel="never" (click)="$event.stopPropagation()">
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #Course (blur)="onBlurMethod('Course',Course.value)">
+                                </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Course}} </td>
+                        </ng-container>
+                        <!-- Company Column -->
+                        <ng-container matColumnDef="edit">
+                            <th mat-header-cell *matHeaderCellDef>
+
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button type="button" (click)="AddopenModal(element)" class="block"><i
+                                        class="fa fa-edit" aria-hidden="true"></i>
+                                        {{'Edit'|translate}}</button>
+                                <button type="button" (click)="deleteTestQuestionAns(element)" class="block"><i
+                                        class="fa fa-trash" aria-hidden="true"></i>
+                                        {{'Delete'|translate}}</button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayTestColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayTestColumns;"></tr>
+                    </table>
+                </div>
+                <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator> -->
+
+                <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+                    [pageSizeOptions]="paginationArray" (page)="getServerData($event)" showFirstLastButtons>
+                </mat-paginator>
+            </div>
+        </div>
+
+    </div>

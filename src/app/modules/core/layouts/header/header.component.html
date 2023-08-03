@@ -1,0 +1,62 @@
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+    <div class="container remove-flex">
+      <div class="top-row">
+        <div class="row align-items-center ">
+          <div class="col-md-6 col-6">
+            <div class="navbar-header">
+              <a class="navbar-brand" routerLink="/">
+                <b class="logo-icon">
+                  <img src="../../../../../assets/images/myfa.png" alt="homepage" class="dark-logo" />
+                </b>
+              </a>
+              <a class="nav-toggler waves-effect waves-light d-block d-md-none" (click)="navigate()">
+                <i class="ti-menu ti-close"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6 col-6 flex-row" style="display: flex">
+            <div class="top_bar_dropdown ms-auto me-4 mt-2">
+              <div>
+                <div class="dropdown">
+                  <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa fa-globe"></i>{{currentLanguage}}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li *ngFor="let item of language" (click)="switchLang(item.lang)"><a class="dropdown-item">
+                        {{item.label}}
+                      </a></li>
+                  </ul>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="navbar_collapse">
+              <ul class="navbar-nav float-left mr-auto"></ul>
+              <ul class="navbar-nav justify-content-end order_mobile_view">
+                <li class="user-name">
+                  <h5 class="mx-2 text-start">
+                    <a (click)="navigate()">{{'Hello'|translate}}, {{(userInfo$ | async)?.displayUserName}}</a>
+                  </h5>
+                  <h6 class="text-start">
+                    <button class="nav-link btn btn-link text-start mx-1" (click)="changePassword()">{{'ChangePassword'|translate}}</button>
+                    <button class="nav-link btn btn-link text-start mx-1" (click)='logout()'>{{'Logout'|translate}}</button>
+                  </h6>
+                </li>
+                <div class="user-icon">
+                  <a *ngIf="!disableProfileClick" [routerLink]="['/companyadmin/profile']"
+                    routerLinkActive="router-link-active"><img [src]="userInfo.profileImage" (error)="onError($event)"
+                      class="profile-rounded" alt="" /></a>
+                  <img *ngIf="disableProfileClick" [src]="userInfo.profileImage" (error)="onError($event)"
+                    class="profile-rounded" alt="" />
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

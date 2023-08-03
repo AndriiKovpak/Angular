@@ -1,0 +1,235 @@
+<!-- <div class="content pb_0"> -->
+<div class="main-bg-light">
+  <div class="container">
+    <app-middle-layout-calibration></app-middle-layout-calibration>
+    <div class="card table-border p-5 dashboard_data_bx">
+      <div class="row pb-3 g-3 pt-0">
+        <div class="col-xl-6">
+          <div class="card header">
+            <div class="row main-shadow">
+              <div class="col-lg-4 col-md-6">
+                <div class="card shadow-external">
+                  <h4>{{'GaugeStatus'| translate}}</h4>
+                </div>
+              </div>
+            </div>
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+              [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend" [colors]="chartColors"
+              height="170" width="307">
+            </canvas>
+          </div>
+        </div>
+        <div class="col-xl-6 margin_b_0">
+          <div class="row gap_10 StatusCardBx">
+            <div class="col-sm-4 col-md-4 mb-1" (click)="getDataOfTab('calibrationCurrent')">
+              <div class="card inner shadow"
+                [ngStyle]="{'background-color': calibrationCurrentCheck? '#6FA8DC': '#C3C3C3' }">
+                <h6>{{'CalibrationCurrent'|translate}}</h6>
+                <strong>{{gaugesOverDueData.calibrationCurrent}}</strong>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 xol-xs-12 mb-1" (click)="getDataOfTab('gaugeOverDue')">
+              <div class="card inner shadow "
+                [ngStyle]="{'background-color': gaugeOverDueCheck? '#6FA8DC': '#C3C3C3' }">
+                <h6>{{'GaugesOverdue'|translate}}</h6>
+                <!-- {{gaugesOverDueData | json}} -->
+                <strong>{{gaugesOverDueData.gaugesOverDue}}</strong>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-xs-12 mb-2 mb-1">
+              <div class="card inner shadow" onmouseover="this.style.backgroundColor='#6FA8DC';"
+                onmouseout="this.style.backgroundColor='#C3C3C3';">
+                <h6>{{'SubscriptionRenewal'|translate}}</h6>
+                <strong>
+                  <h4 class="inner-text">{{gaugesOverDueData.subscription |
+                    date: 'MM/dd/yyyy'}}</h4>
+                </strong>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-xs-12 mb-1" (click)="getDataOfTab('dueIn30Days')">
+              <div class="card inner shadow " [ngStyle]="{'background-color': DueIn30DaysCheck? '#6FA8DC': '#C3C3C3' }">
+                <h6>{{'DueIn30Days'|translate}}</h6>
+                <strong>{{gaugesOverDueData.dueIn30Days}}</strong>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-xs-12 mb-1" (click)="getDataOfTab('dueIn60Days')">
+              <div class="card inner shadow " [ngStyle]="{'background-color': DueIn60DaysCheck? '#6FA8DC': '#C3C3C3' }">
+                <h6>{{'DueIn60Days'|translate}}</h6>
+                <strong>{{gaugesOverDueData.dueIn60Days}}</strong>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-xs-12 mb-1" (click)="getDataOfTab('dueIn90Days')">
+              <div class="card inner shadow " [ngStyle]="{'background-color': DueIn90DaysCheck? '#6FA8DC': '#C3C3C3' }">
+                <h6>{{'DueIn90Days'|translate}}</h6>
+                <strong>{{gaugesOverDueData.dueIn90Days}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row report_bx mb_0  position-relative">
+        <div class="col-md-4">
+          <div class="dash_content_box">
+            <!-- <a class="file-icon"><i (click)="picker.open()" class="fal fa-calendar-alt fa-2x"
+                aria-hidden="true"></i></a> -->
+            <!-- <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker"  (dateInput)="handleDateChange($event.value)" >
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <button mat-raised-button (click)="picker.open()">Open</button> -->
+            <!-- <mat-form-field>
+                        <input matInput [matDatepicker]="dp1" (blur)="addEvent($any($event.target).value, $event)"  (dateInput)="addEvent($event.target.value, $event)" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1></mat-datepicker>
+                      </mat-form-field> -->
+            <mat-form-field class="dateRangeBx">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [formGroup]="Historyrange" [rangePicker]="picker"   >
+                <input matStartDate formControlName="Historystart" placeholder="{{'StartDate'|translate}}">
+                <input matEndDate formControlName="Historyend" placeholder="{{'EndDate'|translate}}" (dateChange)="getGetInfoGaugeRecordsWithDate($event)">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+              <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">{{'InvalidStartDate'|translate}}</mat-error>
+              <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">{{'InvalidEndDate'|translate}}</mat-error>
+            </mat-form-field>
+            <a class="file-icon"><i class="fal fa-file-excel fa-2x" aria-hidden="true" (click)="downloadPdf()"></i></a>
+            <a class="file-icon pdf" (click)="convetToPDF('mainTable')"><i class="fal fa-file-pdf fa-2x"
+                aria-hidden="true"></i></a>
+            <!--          <button style="border:none"><i class="fa fa-calendar"
+                                style="font-weight:bolder;" aria-hidden="true"></i></button>&nbsp;&nbsp;&nbsp;<i
+                            class="fa fa-file-excel-o" aria-hidden="true"
+                            style="font-weight:bolder;"></i>&nbsp;&nbsp;<button style="border:none"><i
+                                class="fa fa-file-pdf-o" style="font-weight:bolder;" aria-hidden="true"></i></button> -->
+          </div>
+        </div>
+        <div class="col-md-4 overdue_sec" >
+          <!-- <h2 *ngIf="calibrationCurrentCheck">{{'Report'|translate}}: {{'CalibrationCurrent'|translate}}</h2>
+          <h2 *ngIf="gaugeOverDueCheck">{{'Report'|translate}}: {{'GaugesOverdue'|translate}}</h2>
+          <h2 *ngIf="DueIn30DaysCheck">{{'Report'|translate}}: {{'DueIn30Days'|translate}}</h2>
+          <h2 *ngIf="DueIn60DaysCheck">{{'Report'|translate}}: {{'DueIn60Days'|translate}}</h2>
+          <h2 *ngIf="DueIn90DaysCheck">{{'Report'|translate}}: {{'DueIn90Days'|translate}}</h2> -->
+        </div>
+        <div class="col-md-4">
+          <div class="text-end input-group justify-end">
+            <span class="input-group-text"  id="addon-wrapping"><i
+              class="fa fa-search" aria-hidden="true"></i></span>
+            <input type="text" placeholder="Search" (keyup)="applyFilter($any($event.target).value)" class="searchInput">
+          </div>
+        </div>
+      </div>
+      <div class="row tp-sp gap_40">
+        <div class="col-md-12" id="contentToConvert">
+          <div class="Report_data_table">
+            <div class="text-center" *ngIf="tabs">
+              <h2 #reportTitle class="report_heading" *ngIf="calibrationCurrentCheck">{{'Report'|translate}}: {{'CalibrationCurrent'|translate}}</h2>
+              <h2 #reportTitle class="report_heading" *ngIf="gaugeOverDueCheck">{{'Report'|translate}}: {{'GaugesOverdue'|translate}}</h2>
+              <h2 #reportTitle class="report_heading" *ngIf="DueIn30DaysCheck">{{'Report'|translate}}: {{'DueIn30Days'|translate}}</h2>
+              <h2 #reportTitle class="report_heading" *ngIf="DueIn60DaysCheck">{{'Report'|translate}}: {{'DueIn60Days'|translate}}</h2>
+              <h2 #reportTitle class="report_heading"  *ngIf="DueIn90DaysCheck">{{'Report'|translate}}: {{'DueIn90Days'|translate}}</h2>
+            </div>
+            <div class="text-center" *ngIf="graphs">
+              <h2 #reportTitle>{{'Report'|translate}}:
+              {{isGaugeStatus}}</h2>
+            </div>
+            <div class="table-responsive">
+              <table id="mainTable"  mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="calibrationDate">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'DueDate'|translate}} </th>
+                  <!-- <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> Calibration Date </th> -->
+                  <td mat-cell *matCellDef="let User"> {{setDueDate(User.calibrationDate,User.gaugeId)|
+                    date: 'MM/dd/yyyy'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="gaugeId">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'GaugeID'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.gaugeId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="serialNumber">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'S/N'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.serialNumber}} </td>
+                </ng-container>
+                <ng-container matColumnDef="gaugeStatus">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'Status'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.gaugeStatus}} </td>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'Description'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.description}} </td>
+                </ng-container>
+                <ng-container matColumnDef="location">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'GaugeLocation'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.location}} </td>
+                </ng-container>
+                <ng-container matColumnDef="manufacturer">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'Manufacturer'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.manufacturer}} </td>
+                </ng-container>
+                <ng-container matColumnDef="supplier">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'Supplier'|translate}} </th>
+                  <td mat-cell *matCellDef="let User"> {{User.supplier}} </td>
+                </ng-container>
+                <ng-container matColumnDef="updatedDate">
+                  <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> {{'LastCalibrated'|translate}} </th>
+                  <!-- <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header> UpdatedDate </th> -->
+                  <td mat-cell *matCellDef="let User"> {{User.calibrationDate|
+                    date: 'MM/dd/yyyy'}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let User; columns: columnsToDisplay " [routerLink]="['/companyadmin/gauge-records', User.gaugeId,User.gaugeStatusId]"></tr>
+              </table>
+            </div>
+            <!-- <mat-paginator [pageSizeOptions]="[10,25,50,dataSource.data.length]"></mat-paginator>  (click)="openModal(User)"-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal for Account Privileges Edit -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #GaugeDetails>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fas fa-tools"></i>
+          Tools View
+        </h2>
+        <button type="button" class="btn-close" (click)="CloseModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <Form>
+          <div class="form-group row">
+            <label for="Name" class="col-sm-6 col-form-label d-flex justify-content-center">{{'GaugeID'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="GaugeID"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Name" class="col-sm-6 col-form-label d-flex justify-content-center">{{'UpdatedDate'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="updateDate"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Name" class="col-sm-6 col-form-label d-flex justify-content-center">{{'CalibrationDate'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="calibrationDate"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Name" class="col-sm-6 col-form-label d-flex justify-content-center">{{'GaugeStatus'|translate}}</label>
+            <div class="col-sm-6 mb-2">
+              <input hover aria-disabled="false" disabled aria-invalid="false" [(ngModel)]="StatusOfGauge"
+                class="noBorder k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            </div>
+          </div>
+        </Form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->

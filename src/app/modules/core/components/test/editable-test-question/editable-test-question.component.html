@@ -1,0 +1,35 @@
+<div class="question-panel-wrapper">
+  <div class="disabled-overlay" [class.disabled]="disabled"></div>
+  <mat-expansion-panel #expansionPanel (opened)="panelOpenState = true" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-icon>
+        {{
+        panelOpenState
+        ? "expand_more"
+        : "chevron_right"
+        }}
+      </mat-icon>
+      <div style="width: 100%">
+        <input type="text" #questionInput (keyup)="keyUp($event)" (keydown)="$event.stopPropagation();"
+          (click)="$event.stopPropagation();" (focusout)="stopEdit()" [(ngModel)]="questionText.value"
+          [hidden]="!editMode" style="width: 100%">
+        <span [hidden]="editMode">{{questionText.value}}</span>
+      </div>
+      <div style="display: flex;" class="ms-auto">
+        <span class="question-icon" (click)="addAnswer($event)" [matTooltip]="'AddAnswer'|translate"
+          matTooltipPosition="left">
+          <i class="fa fa-plus mt-auto mb-auto" aria-hidden="true"></i></span>
+        <span class="question-icon" (click)="toggleEditMode($event)" [matTooltip]="'EditQuestion'|translate"
+          matTooltipPosition="left">
+          <i class="fa fa-pencil mt-auto mb-auto" aria-hidden="true"></i></span>
+        <span class="question-icon" (click)="deleteQuestion()" [matTooltip]="'DeleteQuestion'|translate"
+          matTooltipPosition="left">
+          <i class="fa fa-trash mt-auto mb-auto" aria-hidden="true"></i></span>
+      </div>
+    </mat-expansion-panel-header>
+    <app-editable-test-question-answer #editableAnswer *ngFor="let answer of sortedAnswers" [answerDto]="answer"
+      [language]="language" (answerDeleted)="removeAnswer($event)">
+    </app-editable-test-question-answer>
+    <!--  <div class="question-icon"><i class="fa fa-plus ms-0 myex-orange-text" aria-hidden="true"></i> Add answer</div>-->
+  </mat-expansion-panel>
+</div>

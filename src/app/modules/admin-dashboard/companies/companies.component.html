@@ -1,0 +1,51 @@
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="container col-md-8" >
+            <div class="card padd_15">
+                <div class="form-row">
+                    <div class="col">
+                        <h4 class="card-title red-color empty-space">Companies</h4>
+                    </div>
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-select (selectionChange)="getSelectedCompanyCourses($event)" [(value)]="selectedVal">
+                                <mat-option *ngFor="let data of activeInactiveList" [value]="data.Value">{{data.Text}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <div class="d-flex mb_15">
+                    <button type="button" (click)="openModal()" class="block custmBtns"><i class="fa fa-plus"
+                            aria-hidden="true"></i>
+                        Add</button>&nbsp;
+
+                            <button type="button" class="block file custmBtns" (click)="exportToExcel($event)"><span class="fa fa-file-excel-o"></span>Export to
+                                Excel</button>
+                </div>
+
+
+
+                <ag-grid-angular style="width:95%; height:500px; margin-left: 20px; " class="ag-theme-alpine" [rowData]="rowData"
+                    [columnDefs]="courseColumns" (gridReady)="onGridReady($event)">
+                </ag-grid-angular>
+                <div class="row">
+                    <div class="col-lg-8 ml-auto mr-auto">
+                        <div class="float-right">
+                            <app-pagination [totalRecords]="count" [recordsPerPage]="10"
+                                (onPageChange)="displayActivePage($event)"></app-pagination>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

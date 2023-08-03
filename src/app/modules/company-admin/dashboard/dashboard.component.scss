@@ -1,0 +1,45 @@
+.red-btn {
+	background: #FA8060 !important;
+	border: none !important;
+	font-size: 15px !important;
+	border-radius: 5px !important;
+	color: #fff !important;
+}
+.heading {
+	height: 30px;
+	position: relative;
+	font-size: 15px;
+	width: 100%;
+	padding: 15px 0;
+	font-weight: bold;
+}
+.block {
+	float: left;
+	position: relative;
+	background: #c3c3c3;
+	min-width: 165px;
+	height: 100px;
+	text-align: center;
+	overflow: hidden;
+}
+.num {
+	position: relative;
+	font-size: 25px;
+	padding-top: 15px;
+	font-weight: bold;
+}
+.black {
+	color: black;
+}
+.view-button{
+	color: #FA8060;
+}
+.mat-sort-header-container {
+	align-items: center;
+  }
+  th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 0;
+}
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding-right: 0;
+}

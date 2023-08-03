@@ -1,0 +1,82 @@
+
+<!-- Main component -->
+<div class="container-fluid cont-page">
+    <form class="card contact-form">
+
+        <div class="row contact-page-form">
+            <div class="col-md-6 contact-left-form">
+                <h1>{{contactCMSData.leftHeading}}</h1>
+                <h2>{{contactCMSData.leftDescription}}</h2>
+                <h4 class="card-title red-color empty-space contact-heading" style="background: none;">
+                    <i class="fas fa-headset" aria-hidden="true"></i>{{'ContactUs'|translate}}
+                </h4>
+                <form class="form-contact-us" [formGroup]="contactusform"  #formDirective="ngForm" (ngSubmit)="onContactSubmit(formDirective)">
+                    <div class="form-group row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Name'|translate}}</mat-label>
+                            <input matInput type="{{'Name'|translate}}" formControlName="name" id="name"  [ngClass]="{ 'is-invalid': f.name.touched && f.name.errors?.required }">
+                            <mat-error *ngIf="f.name.touched || f.name.errors?.required">{{'NameIsRequired'|translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Company'|translate}}</mat-label>
+                            <input matInput type="company" formControlName="company" id="company"  [ngClass]="{ 'is-invalid': f.company.touched && f.company.errors?.required }">
+                            <mat-error *ngIf=" f.company.touched || f.company.errors?.required">{{'CompanyIsRequired'|translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Phone'|translate}}</mat-label>
+                            <input matInput type="phone" formControlName="phone" id="phone"  [ngClass]="{ 'is-invalid': f.phone.touched && f.phone.errors?.required }">
+                            <mat-error *ngIf=" f.phone.touched || f.phone.errors?.required">{{'PhoneIsRequired'|translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Email'|translate}}</mat-label>
+                            <input matInput type="email" formControlName="email" id="email"  [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors?.required }">
+                                <mat-error *ngIf="f.email.touched || f.email.errors?.required">{{'EmailIsRequired'|translate}}</mat-error>
+                                <mat-error *ngIf="f.email.errors?.pattern">{{'InValidEmail'|translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group row">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>{{'Message'|translate}}</mat-label>
+                            <textarea matInput type="message" formControlName="message" id="message"  [ngClass]="{ 'is-invalid': f.message.touched && f.message.errors?.required }"></textarea>
+                            <mat-error *ngIf="f.message.touched || f.message.errors?.required">{{'MessageIsRequired'|translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-end">
+                            <button mat-button color="warn" class="btn btn-success" type="submit" mat-raised-button>{{'Send'|translate}}</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-md-6 contact-right" id="contact-us">
+                <h3><i class="fal fa-file-edit" aria-hidden="true"></i>{{contactCMSData.rightHeading}}</h3>
+                <p class="text-justify">
+                    {{contactCMSData.rightDescription}}
+                </p>
+                <div class="request-border"></div>
+
+                <div class="request-bottom text-center">
+                    <p><b>{{contactCMSData.phoneHeading}}</b></p>
+                    <p>{{contactCMSData.phone}}</p>
+                    <br>
+                    <p><b>{{contactCMSData.emailHeading}}</b></p>
+                    <p>{{contactCMSData.email}}</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

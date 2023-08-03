@@ -1,0 +1,57 @@
+<div class="login-bg-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="navbar-brand" href="/">
+                <img src="../../../../assets/images/myfa.png" style="cursor:pointer">
+                </a>
+            </div>
+        </div>
+        <div class="row quote-form">
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8">
+                <div class="card login-form">
+                    <h1><i class="far fa-user" aria-hidden="true"></i>{{'LogIn'|translate}}</h1>
+                    <form class="form-signin" [formGroup]="loginForm" >
+                        <div class="form-group row mobile_row_div">
+                            <label for="username" class="col-3 col-form-label">{{'UserName'|translate}}/Email</label>
+                            <div class="col-9">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'UserName'|translate}}/Email</mat-label>
+                                    <input matInput type="text" formControlName="username" id="username" required>
+                                    <mat-icon matSuffix>
+
+                                    </mat-icon>
+                                    <mat-error *ngIf="f.username.errors?.required">Username/Email is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class=" form-group row mobile_row_div">
+                            <label for="password" class="col-3 col-form-label">{{'Password'|translate}}</label>
+                            <div class="col-9 pass-invalid password_field">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'EnterYourPassword'|translate}}</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'"
+                                        formControlName="password" id="password" required>
+                                    <input class="hidden_bx" type="button" mat-icon-button matSuffix
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <br>
+                        <label class="text-danger mb-2" *ngIf="loginFailed">Invalid username or password.</label>
+                        <div class="error-bg text-center">
+                            <label class="text-danger"></label>
+                            <button class="btn btn-lg btn-primary btn-block" type="button" (click)="onLoginSubmit()">{{'AccessYourAccount'|translate}}</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="Forgotpassword" class="col-md-12 col-form-label" style="text-align:center"><a routerLink='/forgotPassowrd' >{{'ForgotYourPassword'|translate}}</a></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

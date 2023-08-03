@@ -1,0 +1,173 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card padd_15">
+                <div class="form-row m-0">
+                    <!-- <h4 class="card-title red-color empty-space">{{'UsersLoginHistory'|translate}}  </h4> -->
+                </div>
+                <!-- <div class="col-md-8" style="float: left;padding-left:5px;  padding-bottom: 10px;">
+                    <button type="button" class="block" (click)="openModal()"><i class="fa fa-plus" aria-hidden="true" ></i>
+                        Add</button>&nbsp;&nbsp;
+                    <button type="button" class="block file_icon" (click)="exportToExcel()"><span class="fa fa-file-excel-o"></span>Export to
+                        Excel</button>
+                </div> -->
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSource" class="table_custom_div">
+
+                        <!-- FullName Column -->
+                        <ng-container matColumnDef="FullName">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">  {{'FullName'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #FullName (blur)="onBlurMethod('FullName',FullName.value)"  >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+                        </ng-container>
+
+                        <!-- Company Column -->
+                        <ng-container matColumnDef="Company">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'Company'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #Company (blur)="onBlurMethod('Company',Company.value)" >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Company}} </td>
+                        </ng-container>
+                        <!-- Email Column -->
+                        <ng-container matColumnDef="Email">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th"> {{'Email'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #Email (blur)="onBlurMethod('Email',Email.value)"  >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+                        </ng-container>
+                        <!-- City Column -->
+                        <ng-container matColumnDef="City">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th"> {{'City'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #City  (blur)="onBlurMethod('City',City.value)" >
+                                  </mat-form-field>
+                                </th>
+                            <td mat-cell *matCellDef="let element"> {{element.City}} </td>
+                        </ng-container>
+                        <!-- isEligibleForAMT Column -->
+                        <!-- <ng-container matColumnDef="isEligibleForAMT">
+                            <th mat-header-cell *matHeaderCellDef> Is Eligible For AMT
+                                <mat-form-field class="filter" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput  (blur)="onBlurMethod('isEligibleForAMT')"  >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.isEligibleForAMT}} </td>
+                        </ng-container> -->
+
+                        <!-- Licence Column -->
+                        <ng-container matColumnDef="Licence">
+                            <th mat-header-cell *matHeaderCellDef class="img_col pb-4">{{'Licence'|translate}} (Qty)
+                                 </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Licence}} </td>
+                        </ng-container>
+                        <!-- PhoneNumber Column -->
+                        <ng-container matColumnDef="PhoneNumber">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'PhoneNumber'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #PhoneNumber (blur)="onBlurMethod('PhoneNumber',PhoneNumber.value)" >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.PhoneNumber}} </td>
+                        </ng-container>
+                        <!-- Role Column -->
+                        <ng-container matColumnDef="Role">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'Role'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #Role (blur)="onBlurMethod('Role',Role.value)" >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Role}} </td>
+                        </ng-container>
+                        <!-- State Column -->
+                        <ng-container matColumnDef="State">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'State'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #State  (blur)="onBlurMethod('State',State.value)" >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.State}} </td>
+                        </ng-container>
+                        <!-- Street Column -->
+                        <ng-container matColumnDef="Street">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'Street'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #Street (blur)="onBlurMethod('Street',Street.value)">
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Street}} </td>
+                        </ng-container>
+                        <!-- SubscriptionDueDate Column -->
+                        <ng-container matColumnDef="SubscriptionDueDate">
+                           <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'SubscriptionDueDate'|translate}}
+                                 <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input type="date" matInput #SubscriptionDueDate (blur)="onBlurMethod('SubscriptionDueDate',SubscriptionDueDate.value)" >
+                                  </mat-form-field>
+                                 </th>
+                            <td mat-cell *matCellDef="let element"> {{element.SubscriptionDueDate|
+                                date: 'MM/dd/yyyy'}} </td>
+                        </ng-container>
+                        <!-- Title Column -->
+                        <ng-container matColumnDef="Title">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'Title'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #Title (blur)="onBlurMethod('Title',Title.value)" >
+                                  </mat-form-field>
+                                </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+                        </ng-container>
+                        <!-- ZipCode Column -->
+                        <ng-container matColumnDef="ZipCode">
+                            <th mat-header-cell *matHeaderCellDef class="course_col_th">{{'ZipCode'|translate}}
+                                <mat-form-field class="filter mt-3 filter_search_bx filter_search_bx" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #ZipCode (blur)="onBlurMethod('ZipCode',ZipCode.value)" >
+                                  </mat-form-field>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ZipCode}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="dateTime">
+                            <th mat-header-cell *matHeaderCellDef class="img_col pb-4">{{'Logindate'|translate}}
+                                <!-- <mat-form-field class="filter" floatLabel="never"  (click)="$event.stopPropagation()" >
+                                    <mat-label>{{'Search'|translate}}</mat-label>
+                                    <input matInput #ZipCode (blur)="onBlurMethod('ZipCode',ZipCode.value)" >
+                                  </mat-form-field> -->
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.dateTime |
+                                date: 'MM/dd/yyyy, h:mm:ss a'}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+                <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator> -->
+
+                <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+          [pageSizeOptions]="paginationArray"
+            (page)="getServerData($event)" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+
+    </div>

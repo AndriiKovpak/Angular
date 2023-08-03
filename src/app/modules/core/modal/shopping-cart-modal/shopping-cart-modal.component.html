@@ -1,0 +1,251 @@
+<div class="modal_custm shopping_modal">
+  <h1 mat-dialog-title style="color: #fa8060">
+    <i class="fa fa-shopping-cart ms-0 me-2"></i
+    >{{ "ShoppingCart" | translate }}
+  </h1>
+  <i
+    class="far fa-times-circle cross_far"
+    aria-hidden="true"
+    (click)="onCancel()"
+  ></i>
+  <div class="">
+    <div class="inner-box shopping-cart">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Quantity</th>
+            <th scope="col" class="w_100">Unit Price</th>
+            <th scope="col" class="w_88">Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!data.PurchasedCustomCoursesCreator">
+            <td scope="row">
+              <span class="blue">Training</span> Aerospace Online Training
+              Licenses
+            </td>
+            <td>
+              <input
+                *ngIf="activeLicences == 0"
+                class="form-control"
+                matInput
+                #Aerospace
+                type="number"
+                min="10"
+                value="10"
+                style="width: 87px"
+                (change)="PurchaseLicenseValueChange(Aerospace.value)"
+              />
+              <input
+                *ngIf="activeLicences != 0"
+                class="form-control"
+                matInput
+                #Aerospace
+                type="number"
+                min="0"
+                style="width: 87px"
+                (change)="PurchaseLicenseValueChange(Aerospace.value)"
+              />
+            </td>
+            <td>
+              <b>${{ data?.PricePerUserTraning }}</b>
+            </td>
+            <td>
+              <b>${{ LicensesTotalPrice }}</b>
+            </td>
+          </tr>
+          <tr *ngIf="data.PurchasedCustomCoursesCreator">
+            <td scope="row">
+              <span class="blue">Training</span> Software, MyEX Courses, Plus
+              Spanish Courses
+            </td>
+            <td>
+              <input
+                matInput
+                type="number"
+                #MyEX
+                class="form-control"
+                min="0"
+                style="width: 87px"
+                (change)="
+                  PurchaseLicenseValueChangeWithType(MyEX.value, 'noCustom')
+                "
+              />
+            </td>
+            <td>
+              <b>${{ data.MyExCoursesAlternative }}</b>
+            </td>
+            <td>
+              <b>${{ showPriceWithOutSpanish }}</b>
+            </td>
+          </tr>
+          <!-- without spanish  -->
+          <tr *ngIf="data.PurchasedCustomCoursesCreator">
+            <td scope="row">
+              <span class="blue">Training</span> Software, Plus Custom Courses
+              Creator (without Spanish)
+            </td>
+            <td>
+              <input
+                matInput
+                type="number"
+                #MyEX
+                class="form-control"
+                min="0"
+                style="width: 87px"
+                (change)="
+                  PurchaseLicenseValueChangeWithType(
+                    MyEX.value,
+                    'withoutSpanish'
+                  )
+                "
+              />
+            </td>
+            <td>
+              <b>${{ data.MyExCoursesWithoutSpanish }}</b>
+            </td>
+            <td>
+              <b>${{ showPriceWithSpanish }}</b>
+            </td>
+          </tr>
+          <!-- spanish ends -->
+          <tr *ngIf="data.PurchasedCustomCoursesCreator">
+            <td scope="row">
+              <span class="blue">Training</span> Software, MyEX Courses, Plus
+              Custom Courses Creator, and Spanish Courses
+            </td>
+            <td>
+              <input
+                matInput
+                type="number"
+                #MyEX
+                class="form-control"
+                min="0"
+                style="width: 87px"
+                (change)="
+                  PurchaseLicenseValueChangeWithType(MyEX.value, 'Custom')
+                "
+              />
+            </td>
+            <td>
+              <b>${{ data?.CustomCoursesAndSoftwarePricePerUser }}</b>
+            </td>
+            <td>
+              <b>${{ customCoursePrice }}</b>
+            </td>
+          </tr>
+          <tr *ngIf="!data.PurchasedCustomCoursesCreator">
+            <td scope="row">Custom Courses Creator</td>
+            <td>
+              <input
+                type="checkbox"
+                Class="shopping-check"
+                [(ngModel)]="data.openShoppingModalToggle"
+                [checked]="data.openShoppingModalToggle"
+                (change)="CustomCourseCheckboxValueChange($event)"
+              />
+            </td>
+            <td>
+              <b>${{ CustomCoursesCreatorPrice }}</b>
+            </td>
+            <td>
+              <b>${{ CustomCoursesCreatorPrice }}</b>
+            </td>
+          </tr>
+
+          <tr *ngIf="!data.PurchasedSpanishLanguageCourse">
+            <td scope="row">Spanish Language</td>
+            <td>
+              <input
+                type="checkbox"
+                Class="shopping-check"
+                [(ngModel)]="data.purchasedSpanishCardToggele"
+                [checked]="data.purchasedSpanishCardToggele"
+                (change)="spanishCoursePriceEvaluate($event)"
+              />
+            </td>
+            <td>
+              <b>${{ spanishLanguagePrice }}</b>
+            </td>
+            <td>
+              <b>${{ spanishLanguagePrice }}</b>
+            </td>
+          </tr>
+          <tr *ngIf="!data.PurchasedCalibration">
+            <td scope="row">
+              <span class="blue"
+                >{{ "Calibration" | translate }} Professional</span
+              >
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                Class="shopping-check"
+                [checked]="gaugeProCheck"
+                (change)="GaugeProValueChange($event)"
+              />
+            </td>
+            <td>
+              <b>${{ data.GaugeProPrice }}</b>
+            </td>
+            <td *ngIf="gaugeProCheck">
+              <b>${{ data.GaugeProPrice }}</b>
+            </td>
+            <td *ngIf="!gaugeProCheck"><b>$0</b></td>
+          </tr>
+          <!-- purchased calibration enterprise   {{'GaugePro'|translate}} -->
+          <tr *ngIf="!data.PurchasedCalibrationEnterprise">
+            <td scope="row">
+              <span class="blue">Calibration Enterprise</span>
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                Class="shopping-check"
+                [checked]="calibrationEnterpriseCheck"
+                (change)="CalibrationEnterPriseValueChange($event)"
+              />
+            </td>
+            <td>
+              <b>${{ data.CalibrationEnterPrise }}</b>
+            </td>
+            <td *ngIf="calibrationEnterpriseCheck">
+              <b>${{ data.CalibrationEnterPrise }}</b>
+            </td>
+            <td *ngIf="!calibrationEnterpriseCheck"><b>$0</b></td>
+          </tr>
+          <!-- <tr *ngIf="!data.PurchasedSupplierPro" >
+                        <td scope="row"><span class="blue">Supplier Management </span> SupplierPro</td>
+                        <td>
+                            <input type="checkbox" Class="shopping-check" (change)="supplierProValuechange($event)">
+                        </td>
+                        <td><b>${{data.SupplierProPrice}}</b></td>
+                        <td *ngIf="supplierProCheck"><b>${{data.SupplierProPrice}}</b></td>
+                        <td *ngIf="!supplierProCheck"><b>$0</b></td>
+                    </tr> -->
+          <tr>
+            <td scope="row">
+              <span class="blue">Support</span>Unlimited Technical Support
+            </td>
+            <td>
+              <input type="checkbox" checked disabled Class="shopping-check" />
+            </td>
+            <td><b>Free</b></td>
+            <td><b>Free</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <span class="d-flex total justify-content-end">
+      <h4 class="col-md-2 text-start w_100">Subtotal(USD)</h4>
+      <h4 class="col-md-3 text-start w_88">${{ TotalCheckoutPrice }}</h4>
+    </span>
+    <input
+      type="button"
+      (click)="checkout()"
+      class="btn checkout col-md-12 my-3"
+      value="Checkout"
+    />
+  </div>
+</div>

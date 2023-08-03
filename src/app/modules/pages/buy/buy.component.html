@@ -1,0 +1,214 @@
+<div class="login-bg-main">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <a class="navbar-brand" href="/">
+          <img src="../../../../assets/images/myfa.png" style="cursor:pointer">
+        </a>
+      </div>
+    </div>
+    <div class="quote-form mt-3">
+      <div class="wht_bx buy_page_sec">
+        <div class="row">
+          <div class="col_md_8">
+            <div class="page_head_bx">{{'AnnualSubscription' | translate}}</div>
+            <div class="row align-items-center mb-3">
+              <div class="col-md-7">
+                <h3 class="font_w_500 mb-2 mb-md-0">{{"TRAINING" | translate}}</h3>
+              </div>
+              <div class="col-md-5">
+                <div class="d-flex align-items-center justify-content-end">
+                  <label class="m-0 me-2">{{"Number" | translate}}</label>
+                  <input type="number" class="form-control mx_100" [(ngModel)]="numberOfUsers" (ngModelChange)="calculateTrainingCourse()" min="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item accordion_box">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <span class="min_w_150">{{"TrainingCourses" | translate}}</span>
+                    <span>$ 149 {{'PerUser'|translate}}</span>
+                  </button>
+                  <input type="checkbox" [(ngModel)]="purchasingTraining" (change)="onTrainingCourseChange()" />
+                </h2>
+
+
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"CoursesmeetEX" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"EXCourses" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Includesall" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" />{{"Userintuitive" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" />{{"Singlerepository" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" /> {{"Managecompany" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" /> {{"Americanswith" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" />{{"Automatedemail" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" /> {{"Maintenancefree" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" />{{"Free" | translate}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item accordion_box">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <span class="min_w_150">{{"CustomCourses" | translate}}</span>
+                    <span>$ 67 {{'PerUser'|translate}}</span>
+                  </button>
+                  <input type="checkbox" [disabled]="!purchasingTraining" [(ngModel)]="purchasingCustomCourseCreator" (change)="calculateTrainingCourse()" />
+                </h2>
+
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"companytraining" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Addcourses" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" />{{"video" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" />{{"Createcustom" | translate}}</li>
+                      <li class="list-group-item"><img src="../../../../assets/images/checkBoxIcon.png" />{{"CreateAndIssue" | translate}}</li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item accordion_box">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <span class="min_w_150">{{"SpanishCourses" | translate}}</span>
+                    <span>$ 26 {{'PerUser'|translate}}</span>
+                  </button>
+                  <input type="checkbox" [disabled]="!purchasingTraining" [(ngModel)]="purchasingSpanishLanguageCourse" (change)="calculateTrainingCourse()" />
+                </h2>
+
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" />{{"Coursesavailable" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" />{{"Professionallycrafted" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Allows" | translate}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <h3 class="font_w_500 mt-3 mb-0">{{"CALIBRATION" | translate}}</h3>
+              <div class="accordion-item accordion_box">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree3" aria-expanded="false" aria-controls="flush-collapseThree3">
+                    <span class="min_w_150">{{"CalibrationProfessional" | translate}}</span>
+                    <span>$ 795</span>
+                  </button>
+                  <input type="checkbox" name="calibration"
+                        [checked]="currentlyChecked === check_box_type.Calibration_Professional"
+                        (click)="selectCalibrationCheckBox($event,check_box_type.Calibration_Professional)" />
+                </h2>
+
+                <div id="flush-collapseThree3" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Storeupprofessional" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" />{{"CalibrationProfessional2ndPoint"  | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Receiveautomated" | translate}}</li>
+
+
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Allowcompany" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" />{{"Addemail" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Managecompany" | translate}}</li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Permitgauge" | translate}}</li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Free" | translate}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item accordion_box">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree4" aria-expanded="false" aria-controls="flush-collapseThree4">
+                    <span class="min_w_150">{{"CalibrationEnterprise" | translate}}</span>
+                    <span>$ 1,495 </span>
+                  </button>
+                  <input type="checkbox" name="calibration"
+                        [checked]="currentlyChecked === check_box_type.Calibration_Enterprise"
+                        (click)="selectCalibrationCheckBox($event,check_box_type.Calibration_Enterprise)" />
+                </h2>
+
+                <div id="flush-collapseThree4" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Storeup" | translate}}
+                      </li>
+                      <li class="list-group-item"> <img src="../../../../assets/images/checkBoxIcon.png" /> {{"Same" | translate}}
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+          <div class="col_md_4">
+            <div class="page_head_bx">{{"Subtotal" | translate}}</div>
+            <h3 class="text-center">$ {{totalTrainingcourseValue}}</h3>
+            <div *ngIf="isSysAdmin">
+              <mat-form-field appearance="fill">
+                <mat-label>{{"Company"| translate}}</mat-label>
+                <mat-select [(ngModel)]="companySelectedId">
+                  <mat-option *ngFor="let item of companiesWithoutSubscription" value="{{item.companyID}}">{{item.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="accordion Subtotal_data" id="accordionFlushExample2">
+                <div class="accordion-item">
+                  <h2 class="accordion-header m-0" id="flush-headingOne3">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne1"
+                      aria-expanded="true" aria-controls="flush-collapseOne1">
+                      {{"ApplyCodes" | translate}}
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne1" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne3"
+                    data-bs-parent="#accordionFlushExample2">
+                    <div class="accordion-body">
+                      <div class="form_group pt-1">
+                        <input class="form-control h_50" [(ngModel)]="promoCode" type="text"
+                          placeholder="{{'DiscountCode' | translate}}" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-primary w-100 m-0 h_50" (click)="SubmitAndRedirect()">
+                {{"ProceedtoCheckout" | translate}}
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

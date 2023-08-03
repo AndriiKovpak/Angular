@@ -1,0 +1,86 @@
+<div class="container">
+  <app-middle-layout></app-middle-layout>
+  <div class="row need-assesst">
+    <div class="col-md-12">
+      <div class="card">
+        <h3><i class="far fa-check-double"></i> {{'Assessments'|translate}}</h3>
+        <div class="table-responsive">
+          <table *ngIf="
+              CompanyDepartmentModelList &&
+              CompanyDepartmentModelList.length > 0 &&
+              CompanyCourseModelList &&
+              CompanyCourseModelList.length > 0
+            " cellpadding="10" class="ast-need table custom-table">
+            <thead>
+              <tr>
+                <th *ngIf="IsCustomCoursesPurchased" style="color: #fa8060">
+                  {{'CustomCourses3'|translate}}
+                </th>
+
+                <th *ngIf="!IsCustomCoursesPurchased" style="color: #fa8060">
+                  MyEx {{'Coursess'|translate}}
+                </th>
+                <th class="text-center department_list" *ngFor="
+                    let CompanyDepartment of CompanyDepartmentModelList;
+                    let index = index
+                  ">
+                  {{ CompanyDepartment.name }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template [ngIf]="
+                  IsCustomCoursesPurchased &&
+                  CompanyCustomCourseModelList &&
+                  CompanyDepartmentModelList
+                ">
+                <tr *ngFor="
+                    let CompanyCourse of CompanyCustomCourseModelList;
+                    let index = index
+                  ">
+                  <td>{{ CompanyCourse.course }}</td>
+                  <td class="text-center department_list" *ngFor="
+                      let CompanyDepartment of CompanyDepartmentModelList;
+                      let index = index
+                    " style="vertical-align: middle">
+                    <input type="checkbox" [checked]="
+                        customCoursesCheckBox(
+                          CompanyCourse.companyCourseID,
+                          CompanyDepartment.companyDepartmentID
+                        )
+                      "
+                      (change)="CompanyDepartmentCourseCheckboxClicked(CompanyDepartment.companyDepartmentID, CompanyCourse.companyCourseID,$event)" />
+                  </td>
+                </tr>
+              </ng-template>
+
+              <tr *ngIf="IsCustomCoursesPurchased">
+                <th style="color: #fa8060" height="40px">MyEx {{'Coursess'|translate}}</th>
+              </tr>
+              <ng-template [ngIf]="CompanyCourseModelList && CompanyDepartmentModelList">
+                <tr *ngFor="
+                  let CompanyCourse of CompanyCourseModelList;
+                  let index = index
+                ">
+                  <td>{{ CompanyCourse.course }}</td>
+                  <td *ngFor="
+                    let CompanyDepartment of CompanyDepartmentModelList;
+                    let index = index
+                  " style="text-align: center; vertical-align: middle" class="department_list">
+                    <input type="checkbox" [checked]="
+                      MyExCoursesCheckBox(
+                        CompanyCourse.companyCourseID,
+                        CompanyDepartment.companyDepartmentID
+                      )
+                    "
+                      (change)="CompanyDepartmentCourseCheckboxClicked(CompanyDepartment.companyDepartmentID, CompanyCourse.companyCourseID,$event)" />
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

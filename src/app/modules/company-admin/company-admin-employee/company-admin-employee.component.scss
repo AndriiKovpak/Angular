@@ -1,0 +1,57 @@
+.example-chip-list {
+  width: 100%;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.mat_grid_list {
+  max-height: none;
+}
+
+.example-tree .mat-nested-tree-node div[role=group] {
+  padding-left: 40px;
+}
+
+.btn-right {
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.angFormStyle {
+  mat-label {
+    font-size: small;
+    color: grey;
+  }
+
+  select {
+    appearance: none;
+    background-color: #eeeff2;
+    margin-bottom: 5px;
+    padding: 12px 10px 12px 10px;
+  }
+
+  .inner-input {
+    top: 0 !important;
+  }
+
+  ::ng-deep .mat-form-field-label-wrapper::after {
+    display: none !important;
+  }
+}
+
+.upcoming-history{
+  ::ng-deep .mat-tab-label-content {
+    color: #EC451A;
+    font-weight: bold;
+  }
+}

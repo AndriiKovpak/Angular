@@ -1,0 +1,41 @@
+<h1 mat-dialog-title style="color: #FA8060;">
+  <i class="fa fa-user-plus" aria-hidden="true"></i>
+  Add a Course
+</h1>
+<div mat-dialog-content class="addCompanyData addCompanyDataTable">
+  <mat-table [dataSource]="dataSource">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef class="mat_cell_1">
+        <mat-checkbox class="ml-2" (click)="$event.stopPropagation()" (change)="checkAllRows($event)">
+        </mat-checkbox>
+
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="mat_cell_1">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="selectHandler($event,row)"
+          [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="course">
+      <mat-header-cell *matHeaderCellDef class="mat_cell_2"> Course
+        <div class="textStart input-group">
+          <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search" aria-hidden="true"></i></span>
+          <input type="text" placeholder="Search" #name (keyup)="applyFilter($event)" class="searchInput form-control">
+        </div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="mat_cell_2"> {{element.course}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50,100]" showFirstLastButtons></mat-paginator>
+</div>
+<div class="btn-sec mt-2">
+  <button mat-raised-button (click)="onSubmit()" color="primary" class="Update-btn">Add</button>
+  <button mat-raised-button type="button" (click)="onCancel()" class="Discard-btn">Cancel</button>
+</div>

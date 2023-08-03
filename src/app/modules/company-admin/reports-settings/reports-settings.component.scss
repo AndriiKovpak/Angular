@@ -1,0 +1,143 @@
+.mat-card{
+    padding: 15px 16px;
+}
+.btn-primary{
+    background: #FA8060 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    color: #fff !important;
+}
+h4.card-title {
+    font-size: 18px;
+    font-weight: 500;
+}
+.button-alligned {
+    display: flex;
+    justify-content: flex-end;
+    
+    @media(max-width: 1000px) {
+        justify-content: flex-start;
+    }
+}
+.button-alligned button {
+    min-width: 170px;
+}
+
+.row {
+	&.report-col {
+		& > div {
+			padding-left: 7px;
+			padding-right: 7px;
+		}
+	}
+}
+
+.table_padd {
+    .tp-sp {
+        overflow: auto;
+    }
+}
+
+.report-setting {
+	.card {
+		&.right-card {
+			padding: 15px 16px;
+		}
+	}
+    
+    .m-mt-3 {
+        @media(max-width:780px) {
+            margin-bottom: 25px;
+        }
+    }
+}
+.row.report-col {
+    margin-right: -7px;
+    margin-left: -7px;
+}
+.report-setting .row.report-col {
+    align-items: baseline;
+}
+.account-field input.form-control.valid {
+    width: 320px;
+    background: #F7F8F9;
+    border: none;
+    height: 50px;
+    border-radius: 5px;
+    padding: 0 12px;
+}
+
+.report-setting .row.report-col {
+    margin-top: 15px;
+}
+.mat-slide-toggle {
+    &.mat-checked {
+      ::ng-deep.mat-slide-toggle-bar::after {
+        content: 'ON';
+        font-size: 45%;
+        font-weight: 700;
+        color: black;
+        position: absolute;
+        left: 4px;
+        top: -5px;
+      }
+    }
+    &:not(.mat-checked) {
+      ::ng-deep.mat-slide-toggle-bar::after {
+        content: 'OFF';
+        font-size: 45%;
+        font-weight: 700;
+        color: white;
+        position: absolute;
+        left: 21px;
+        top: -5px;
+      }
+    }
+}
+.mat-slide-toggle {
+    transform: scale(1.5);
+}
+h4.card-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+.red-color {
+    color: #FA8060;
+}
+.report-setting h6.reprt-he {
+    color: #566A74;
+    font-size: 15px;
+    font-weight: 400 !important;
+}
+.card.pd-t.matrix input.form-control.valid {
+    width: 100%;
+}
+.no-scroll .k-grid-content {
+    overflow-y: hidden;
+}
+
+.no-scroll .k-grid-header {
+    padding-right: 0 !important;
+}
+.no-scroll .k-grid-content {
+    overflow-y: hidden;
+}
+
+.no-scroll .k-grid-header {
+    padding-right: 0 !important;
+}
+.no-scroll .k-grid-content {
+    overflow-y: hidden;
+}
+
+.no-scroll .k-grid-header {
+    padding-right: 0 !important;
+}
+.toggle-back {
+    background: #FA8060 !important;
+    /* background-color: rgba(255,64,129,.54); */
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background: #FA8060 !important;
+    /* background-color: #ff4081; */
+}

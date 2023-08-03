@@ -1,0 +1,221 @@
+
+
+    <div class="add-title">
+      <h1 *ngIf="isNew" mat-dialog-title style="color: #FA8060;">
+          {{'AddUser'|translate}}
+      </h1>
+      <h1 *ngIf="!isNew" mat-dialog-title style="color: #FA8060;">
+        {{'EditUser'|translate}}
+    </h1>
+    </div>
+<div class="angFormStyle">
+   <form  [formGroup]="EmpForm" (ngSubmit)="Save()">
+    <div class="addRecord_bx">
+      <mat-grid-list cols="1" rowHeight="70px" class="">
+          <mat-grid-tile>
+
+              <div class="text-inside dropdown_txt">
+                  <mat-form-field *ngIf="type == '' " class="form-label-ubderline ">
+                      <mat-label class="admin_usesr_dasboard">{{'Selectrole'|translate}}</mat-label>
+                      <mat-select [(ngModel)]="selectedRole" [ngModelOptions]="{standalone: true}"
+                          (ngModelChange)="onRolesSelected($event.value)"  class="admin_usesr_dasboard">
+                          <mat-option *ngFor="let data of roles" [value]="data.value">
+                              {{data.text}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="type == 'calibration' " class="form-label-ubderline">
+                      <mat-label class="admin_usesr_dasboard">{{'Selectrole'|translate}}</mat-label>
+                      <mat-select [(ngModel)]="selectedRole" [ngModelOptions]="{standalone: true}"
+                          (ngModelChange)="onRolesSelected($event.value)"  class="admin_usesr_dasboard">
+                          <mat-option *ngFor="let data of rolesForCalibration" [value]="data.value">
+                              {{data.text}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="!isNew">
+            <div class="text-inside">
+                <mat-form-field>
+                    <mat-label>{{'Status' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                        <mat-option [value]="'Active'">{{'Active' | translate}}</mat-option>
+                        <mat-option [value]="'Inactive'">{{'Inactive' | translate}}</mat-option>
+                        <mat-option [value]="'Invited'">{{'Invited' | translate}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+          <mat-grid-tile *ngIf="showCompanies">
+              <div class="text-inside">
+                  <mat-form-field>
+                      <mat-label>{{'Chooseacompany'|translate}}</mat-label>
+                      <mat-select [(ngModel)]="selectedDepartent" [ngModelOptions]="{standalone: true}"
+                          (ngModelChange)="onDepartmentSelected($event.value)">
+                          <mat-option *ngFor="let data of departments" [value]="data.value">
+                              {{data.text}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile *ngIf="showDepartment">
+            <div class="text-inside">
+              <mat-form-field class="example-chip-list">
+                <mat-label>{{'Department'|translate}}(s)</mat-label>
+                <mat-chip-list #chipList [disabled]="!showDepartment">
+                  <mat-chip *ngFor="let department of departmentChips" [selectable]="true" [removable]="true"
+                    (removed)="remove(department)">
+                    {{department}}
+                    <mat-icon matChipRemove>{{'cancel'|translate}}
+                    </mat-icon>
+                  </mat-chip>
+                  <input #departmentInput [disabled]="!showDepartment"
+                    #autocompleteTrigger="matAutocompleteTrigger" [formControl]="departmentCtrl"
+                    [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"
+                    style="background-color: #f7f8f9 !important;">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)"
+                  autoActiveFirstOption>
+                  <mat-option *ngFor="let department of filteredDepartments | async" [value]="department">
+                    <mat-checkbox color="primary" style="padding: 0 12px;"
+                      [checked]="departmentChips.indexOf(department) >= 0"></mat-checkbox>
+                    {{department}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                    <input class="form-control" type="text"  matInput formControlName="title" placeholder="{{'Title'|translate}}" [ngClass]="{ 'is-invalid': f.title.touched && f.title.errors }" />
+                      <mat-error *ngIf="f.title.touched && f.title.errors" class="invalid-feedback">
+                          <div *ngIf="f.title.errors.required"> {{'Titleisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text"placeholder="{{'FirstName'|translate}}"  matInput formControlName="firstName" [ngClass]="{ 'is-invalid': f.firstName.touched && f.firstName.errors }" />
+                          <mat-error *ngIf="f.firstName.touched && f.firstName.errors" class="invalid-feedback">
+                              <div *ngIf="f.firstName.errors.required"> {{'FirstNameisrequired'|translate}}</div>
+                          </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+         <!--  <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                  <mat-checkbox id="amateur" class="amateur" color="primary">Amateur</mat-checkbox>
+              </mat-form-field>
+              </div>
+          </mat-grid-tile> -->
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text"  placeholder="{{'LastName'|translate}}" matInput formControlName="lastName" [ngClass]="{ 'is-invalid': f.lastName.touched && f.lastName.errors }" />
+                      <mat-error *ngIf="f.lastName.touched && f.lastName.errors" class="invalid-feedback">
+                          <div *ngIf="f.lastName.errors.required"> {{'LastNameisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{'Email'|translate}}"  matInput formControlName="email" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }" />
+                      <mat-error *ngIf="f.email.touched && f.email.errors" class="invalid-feedback">
+                          <div *ngIf="f.email.errors.required">  {{'EmailNameisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{'PhoneNumber'|translate}}" matInput formControlName="phoneNumber" [ngClass]="{ 'is-invalid': f.phoneNumber.touched && f.phoneNumber.errors }" />
+                      <mat-error *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" class="invalid-feedback">
+                          <div *ngIf="f.phoneNumber.errors.required"> {{'PhoneNumberisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text"  placeholder="{{'Street'|translate}}"  matInput formControlName="street" [ngClass]="{ 'is-invalid': f.street.touched && f.street.errors }" />
+                      <mat-error *ngIf="f.street.touched && f.street.errors" class="invalid-feedback">
+                          <div *ngIf="f.street.errors.required"> {{'Streetisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{'City'|translate}}" matInput formControlName="city" [ngClass]="{ 'is-invalid': f.city.touched && f.city.errors }" />
+                      <mat-error *ngIf="f.city.touched && f.city.errors" class="invalid-feedback">
+                          <div *ngIf="f.city.errors.required">{{'Cityisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+                <mat-form-field>
+                    <input class="form-control" type="text"  placeholder="{{'State'|translate}}"  matInput formControlName="state" [ngClass]="{ 'is-invalid': f.state.touched && f.state.errors }" />
+                    <mat-error *ngIf="f.state.touched && f.state.errors" class="invalid-feedback">
+                        <div *ngIf="f.state.errors.required"> {{'Stateisrequired'|translate}}</div>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+          <mat-grid-tile>
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="text" placeholder="{{'ZipCode'|translate}}"   matInput formControlName="zipCode" [ngClass]="{ 'is-invalid': f.zipCode.touched && f.zipCode.errors }" />
+                      <mat-error *ngIf="f.zipCode.touched && f.zipCode.errors" class="invalid-feedback">
+                          <div *ngIf="f.zipCode.errors.required"> {{'Zipcodeisrequired'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile *ngIf="this.data == null">
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="password" placeholder="{{'Password'|translate}}"  matInput formControlName="password" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+                      <mat-error *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                          <div *ngIf="f.password.errors.required">{{'Passwordisrequired'|translate}}</div>
+                          <div  *ngIf="f.password.errors.minlength">{{'Passwordmust'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="this.data == null">
+              <div class="text-inside">
+                  <mat-form-field>
+                      <input class="form-control" type="password" placeholder="{{'ConfirmPassword'|translate}}"  matInput formControlName="confirmPassword" [ngClass]="{ 'is-invalid': f.confirmPassword.touched && f.confirmPassword.errors }" />
+                      <mat-error *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="invalid-feedback">
+                          <div *ngIf="f.confirmPassword.errors.required">{{'Passwordisrequired'|translate}}</div>
+                          <div *ngIf="f.confirmPassword.errors.mustMatch">{{'ConfirmPassword'|translate}}</div>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
+          </mat-grid-tile>
+
+      </mat-grid-list>
+    </div>
+
+      <div class="btn-sec mt-3">
+          <button mat-raised-button type="submit" [disabled]="submitted" color="primary" class="Update-btn" >{{'Save'|translate}}</button>
+          <button mat-raised-button type="button" class="Discard-btn" (click)="modalClose()">{{'Cancel'|translate}}</button>
+        </div>
+   </form>
+</div>
+

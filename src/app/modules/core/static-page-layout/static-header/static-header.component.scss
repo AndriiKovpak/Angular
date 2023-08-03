@@ -1,0 +1,123 @@
+// sub header css
+
+.sub-header {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	background-color: #00334d;
+	border-bottom: 3px solid #FA8060;
+    padding-top: 5px;
+}
+header.topbar .top-navbar {
+    min-height: 64px;
+    padding: 0px;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+.nav-link {
+    display: inline-block;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+a.nav-link.active span, a.nav-link span fa-icon {
+    color: #fa8060;
+}
+span.active a span{
+  color: #fa8060;
+}
+span.active{
+  color: #fa8060;
+}
+span.active.nav-text-color.nav-link > a{
+  color: #fa8060;
+}
+.nav-text-color {
+    color: #fff;
+    font-size: 18px;
+    margin-left: 20px;
+}
+li.user-name h6 a {
+    font-size: 14px;
+    font-weight: 400;
+    color: #FA8060;
+    text-decoration: underline;
+}
+header.topbar {
+    position: relative;
+    z-index: 50;
+    -webkit-transition: 0.2s ease-in;
+    -o-transition: 0.2s ease-in;
+    transition: 0.2s ease-in;
+    -webkit-box-shadow: 1px 0px 7px rgb(0 0 0 / 5%);
+    box-shadow: 1px 0px 7px rgb(0 0 0 / 5%);
+    height: 122px;
+    background: #003753;
+    padding: 26px 0;
+}
+.mobile_div {
+    min-width: 120px;
+    max-width: 120px;
+    text-align: left;
+}
+.link_dropdown {
+    display: inline-block;
+    width: auto;
+}
+.link_dropdown .dropdown-menu {
+    padding: 0;
+    overflow: hidden;
+    transition: 0.5s;
+    min-width: 6rem;
+    left: 35px;
+    margin-top: -5px;
+}
+.link_dropdown:hover .dropdown-menu{
+    display: block;
+    transition: 0.5s;
+}
+.link_dropdown .dropdown-item {
+    color: #fff !important;
+    font-size: 18px;
+    background-color: #003753;
+    padding: 100px;
+    cursor: pointer;
+}
+.dropdown-item.nav-link:hover {
+  background-color: #205277;
+}
+.link_dropdown .dropdown-menu .dropdown-item {
+  padding: 10px 15px;
+}
+.link_dropdown .dropdown-menu .dropdown-item fa-icon {
+  color: #fa8060;
+  padding: 5px;
+}
+
+@media (max-width: 767px) {
+    header.topbar {
+        height: auto;
+        padding: 13px 0;
+    }
+}
+
+.navbar-icon {
+  color: #FA8060;
+}
+
+.navbar-dropdown-button {
+  margin-left: 0px;
+}
+
+ul.dropdown-menu.myex-navbar-dropdown-menu {
+  background-color: #003753;
+}
+
+.dropdown-item.nav-link {
+  margin-right: 20px;
+}

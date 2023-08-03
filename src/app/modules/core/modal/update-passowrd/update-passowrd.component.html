@@ -1,0 +1,46 @@
+
+<h1 mat-dialog-title style="color: #FA8060;">
+    <i class="fa fa-user-plus" aria-hidden="true"></i>
+{{'UpdatePassword'|translate}}
+</h1>
+<div class="mat_grid_list">
+<form  [formGroup]="EmpForm" (ngSubmit)="onSubmit()">
+
+    <mat-grid-list cols="1" rowHeight="100px" >
+    <!-- <mat-error *ngIf="isValid">Email is required</mat-error> -->
+    <mat-grid-tile>
+        <div class="text-inside">
+            <mat-form-field>
+                <input type="password" placeholder="{{'Password'|translate}}"  matInput formControlName="password" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+                <mat-error *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">{{'Passwordmust'|translate}}</div>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div class="text-inside">
+            <mat-form-field>
+                <input type="password" placeholder="{{'ConfirmPassword'|translate}}"  matInput formControlName="confirmPassword" [ngClass]="{ 'is-invalid': f.confirmPassword.touched && f.confirmPassword.errors }" />
+                <mat-error *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">{{'ConfirmPasswordisrequired'|translate}}</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">{{'Passwordsmustmatch'|translate}}</div>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+
+
+
+    <button mat-button color="primary" (click)="onSubmit()">
+        <span class="k-icon k-i-save"></span>{{'Add'|translate}}
+    </button>
+    <button mat-button color="primary" (click)="onCancel()">
+        <span class="k-icon k-i-cancel"></span>{{'Cancel'|translate}}
+    </button>
+
+</form>
+</div>

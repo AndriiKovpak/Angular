@@ -1,0 +1,137 @@
+<div class="profile_page">
+  <div class="container">
+    <div class="row admin-header">
+			<div class="col-md-4 col-xl-2">
+				<h2 style="cursor:pointer " class="mt-0" routerLink="/companyadmin/main-page">
+					<i class="fa fa-database" aria-hidden="true"></i> {{'Modules'|translate}}
+				</h2>
+			</div>
+		</div>
+    <div class="pro_bx">
+      <h4 class="card-title red-color" style="background: none; padding-top: 20px;">Profile</h4>
+      <div class="col-md-12 p-2">
+        <form class="card contact-form invite" [formGroup]="form">
+          <div class="form-group row mb-3">
+            <label for="Title" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-6">
+              <!-- <input aria-disabled="false" aria-invalid="false" id="43ecc708-1e98-4870-8dfa-ada92a906d75" data-id="6d011142-9d1c-43e8-832f-e8338c54adce" class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0"> -->
+              <input type="text" formControlName="title" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+              <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Tittle is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mb-3">
+            <label for="LastName" class="col-sm-2 col-form-label">First Name</label>
+            <div class="col-sm-6">
+              <!-- <input aria-disabled="false" aria-invalid="false" id="0c348163-a895-4307-9d56-095e9ac17518" data-id="750e7cd7-084d-4122-a199-cd4e2867863e" class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0"> -->
+              <input type="text" formControlName="firstName" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+              <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                <div *ngIf="f.firstName.errors.required">FirstName is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-6">
+              <!-- <input aria-disabled="false" aria-invalid="false" id="1073a571-be50-4bb8-bade-806795f89384" data-id="c65dc75d-c77d-4740-b9fc-df715e7d4053" class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0"> -->
+              <input type="text" formControlName="lastName" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+              <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                <div *ngIf="f.lastName.errors.required">LastName is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label for="LastName" class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-8">
+
+              <div class="row" id="user-profile-image">
+                <div class="col-md-12">
+                  <img src="{{imgUrl || userInfo?.profileImage}}" (click)="imgElem.click()" (error)="onImgError($event)"
+                    alt="Picture" width="150" height="150">
+                  <input type="file" ngModel #imgElem class="sr-only" (change)="onReadImgUrl($event)" id="inputImage"
+                    name="file" accept="image/*">
+                </div>
+              </div>
+
+              <div class="row" id="profile-image-container" style="display:none;">
+                <div class="col-md-12">
+                  <div class="docs-demo">
+                    <div class="img-container">
+                      <img src="https://myexstorage.blob.core.windows.net/profiles/01125d07436e.jpg" alt="Picture">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--
+              <div class="row" id="actions">
+                <div class="col-md-12 docs-buttons">
+                  <div class="btn-group">
+                    <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                      <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                      <span class="docs-tooltip" data-toggle="tooltip" title="Import image">
+                        <span class="fa fa-upload" aria-hidden="true"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="btn-group btn-group-crop" id="divgetCroppedCanvas" style="display:none;">
+                    <button type="button" class="btn btn-primary" data-method="getCroppedCanvas"
+                      data-option="{ &quot;maxWidth&quot;: 4096, &quot;maxHeight&quot;: 4096 }">
+                      <span class="docs-tooltip" data-toggle="tooltip">
+                        Done
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="form-row">
+            <button mat-raised-button (click)="onSubmit()" color="primary" class="Update-btn">Update</button>
+          </div>
+        </form>
+      </div>
+      <h4 class="card-title red-color" style="background: none; padding-top: 20px;">Change Password</h4>
+      <hr>
+      <div class="col-md-12 p-2">
+        <form class="card contact-form invite" [formGroup]="changePasswordForm">
+
+          <div class="form-group row mb-3">
+            <label for="OldPassword" class="col-sm-3 col-form-label">Current Password</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control valid" id="OldPassword" formControlName="currentPassword">
+
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label for="NewPassword" class="col-sm-3 col-form-label">New Password</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control valid" id="NewPassword" formControlName="password">
+
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label for="ConfirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control valid" id="ConfirmPassword" formControlName="passwordConfirm">
+
+            </div>
+          </div>
+
+          <div class="form-row">
+            <button
+              class="btn btn-success btnChangePassWidth k-button telerik-blazor k-button-icontext k-primary w-auto"
+              tabindex="0" aria-disabled="false" type="submit" [disabled]="changePasswordForm.invalid"
+              (click)="submitPasswordChange()"><span class="k-icon k-i-save"></span>
+              Change Password
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

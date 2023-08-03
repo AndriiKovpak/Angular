@@ -1,0 +1,326 @@
+<div *ngIf="data.data == 'Logo'" class="">
+  <div class="add-title">
+    <h1 mat-dialog-title style="color: #fa8060">Add Logo</h1>
+  </div>
+  <div class="angFormStyle">
+    <form [formGroup]="CourseForm" (ngSubmit)="Save()">
+      <div class="addRecord_bx mb-3 record_scroll">
+        <mat-grid-list cols="1" rowHeight="600px">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="Name" placeholder="Logo Title"
+                  [ngClass]="{ 'is-invalid': f.Name.touched && f.Name.errors }" />
+                <mat-error *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+                  <div *ngIf="f.Name.errors.required">
+                    {{ "Titleisrequired" | translate }}
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="drag_drop_bx">
+            <div class="text-inside drag-drop pt-1">
+              <div class="formGroup">
+                <div class="file-title">
+                  <label>Primary Logo
+                    <h6>Accepted file types JPG &amp; PNG</h6>
+                  </label>
+                  <div>
+                    <a *ngIf="primaryLogo" class="file-icon" (click)="downloadFile(primaryLogo)"><i aria-hidden="true"
+                        class="fa fa-file-pdf-o pdf"></i></a>
+                    <a *ngIf="primaryLogo" class="file-icon" (click)="primaryLogo=''"><i aria-hidden="true"
+                        class="far fa-times"></i></a>
+                  </div>
+                </div>
+                <ngx-file-drag-drop #filePrimaryLogo activeBorderColor="#3F51B5" [multiple]="false" accept=".png,.jpg"
+                  (valueChanged)="onValueChangeForLogo($any($event), 'primaryLogo')">
+                  {{ "Draganddrop" | translate }}
+                </ngx-file-drag-drop>
+              </div>
+
+              <div class="formGroup">
+                <div class="file-title">
+                  <label>Top Left Logo
+                    <h6>Accepted file types JPG &amp; PNG</h6>
+                  </label>
+                  <div>
+                    <a *ngIf="TopLeftLogo" class="file-icon" (click)="downloadFile(TopLeftLogo)"><i aria-hidden="true"
+                        class="fa fa-file-pdf-o pdf"></i></a>
+                    <a *ngIf="TopLeftLogo" class="file-icon" (click)="TopLeftLogo=''"><i aria-hidden="true"
+                        class="far fa-times"></i></a>
+                  </div>
+                </div>
+                <ngx-file-drag-drop activeBorderColor="#3F51B5" [multiple]="false" accept=".png,.jpg" #fileTopLeftLogo
+                  (valueChanged)="onValueChangeForLogo($any($event), 'TopLeft')">
+                  {{ "Draganddrop" | translate }}
+                </ngx-file-drag-drop>
+              </div>
+              <div class="formGroup">
+                <div class="file-title">
+                  <label>Middle left Logo
+                    <h6>Accepted file types JPG &amp; PNG</h6>
+                  </label>
+                  <div>
+                    <a *ngIf="MiddleLeftLogo" class="file-icon" (click)="downloadFile(MiddleLeftLogo)"><i
+                        aria-hidden="true" class="fa fa-file-pdf-o pdf"></i></a>
+                    <a *ngIf="MiddleLeftLogo" class="file-icon" (click)="MiddleLeftLogo=''"><i aria-hidden="true"
+                        class="far fa-times"></i></a>
+                  </div>
+                </div>
+                <ngx-file-drag-drop activeBorderColor="#3F51B5" [multiple]="false" accept=".png,.jpg"
+                  #fileMiddleLeftLogo (valueChanged)="onValueChangeForLogo($any($event), 'middleLeft')">
+                  {{ "Draganddrop" | translate }}
+                </ngx-file-drag-drop>
+              </div>
+              <div class="formGroup">
+                <div class="file-title">
+                  <label>Bottom left Logo
+                    <h6>Accepted file types JPG &amp; PNG</h6>
+                  </label>
+                  <div>
+                    <a *ngIf="bottomLeftLogo" class="file-icon" (click)="downloadFile(bottomLeftLogo)"><i
+                        aria-hidden="true" class="fa fa-file-pdf-o pdf"></i></a>
+                    <a *ngIf="bottomLeftLogo" class="file-icon" (click)="bottomLeftLogo=''"><i aria-hidden="true"
+                        class="far fa-times"></i></a>
+                  </div>
+                </div>
+                <ngx-file-drag-drop activeBorderColor="#3F51B5" [multiple]="false" accept=".png,.jpg"
+                  #fileButtonLeftLogo (valueChanged)="onValueChangeForLogo($any($event), 'bottomLeft')">
+                  {{ "Draganddrop" | translate }}
+                </ngx-file-drag-drop>
+              </div>
+
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <div class="btn-sec">
+        <button mat-raised-button type="submit" color="primary" class="Update-btn"
+          [disabled]="!primaryLogo || !CourseForm.controls.Name.value">
+          {{ buttontext }}
+        </button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="closeModal()">
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<!-- signature 1 -->
+<div *ngIf="data.data == 'SignatureOne'" class="">
+  <div class="add-title">
+    <h1 mat-dialog-title style="color: #fa8060">Signature One</h1>
+  </div>
+  <div class="angFormStyle">
+    <form [formGroup]="CourseForm" (ngSubmit)="getImageLink()">
+      <div class="addRecord_bx mb-3 record_scroll">
+        <mat-grid-list cols="1" rowHeight="200px">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="Name" placeholder="Title"
+                  [ngClass]="{ 'is-invalid': f.Name.touched && f.Name.errors }" />
+                <mat-error *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+                  <div *ngIf="f.Name.errors.required">
+                    {{ "Titleisrequired" | translate }}
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="drag_drop_bx">
+            <div class="text-inside drag-drop pt-1">
+              <div class="file-title">
+                <label>Signature One Link</label>
+                <div class="account-field" style="margin-right: 10px;">
+                  <b style="margin-right: 20px;">Draw</b>
+                  <mat-slide-toggle [checked]="drawSignatureOne" (change)="drawSignatureOne = $event.checked">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+              <div class="formGroup signature_box" style="padding-top: 10px">
+                <div *ngIf="drawSignatureOne">
+                  <div class="signature_options">
+                    <div class="sign_color_bx">
+                      <span class="dot mr-4" (click)="changeColor('rgb(0, 0, 0)','black')"
+                        style=" background-color: rgb(0, 0, 0);"></span>
+                      <span class="dot " (click)="changeColor(selectedColor,'any')"
+                        [style.background-color]="selectedColor"></span>
+                    </div>
+                    <span class="delete_btn_span" style="margin-right: 10px;"><i (click)="signaturePad1.clear()" class="fa fa-trash"></i></span>
+                  </div>
+                  <hr class="line">
+                  <signature-pad *ngIf="!switchSignatureOptions" #signaturePad1 [options]="signaturePadOptions"
+                    (onEndEvent)="drawComplete()">
+
+                  </signature-pad>
+
+                  <div *ngIf="switchSignatureOptions">
+                    <signature-pad #signaturePad2 [options]="signaturePadOptions2" (onEndEvent)="drawComplete()">
+
+                    </signature-pad>
+                  </div>
+                </div>
+                <div *ngIf="!drawSignatureOne">
+                  <div class="file-title">
+                    <h6>Accepted file types JPG &amp; PNG</h6>
+                    <div>
+                      <a *ngIf="signaturelink" class="file-icon" (click)="downloadFile(signaturelink)"><i
+                          aria-hidden="true" class="fa fa-file-pdf-o pdf"></i></a>
+                      <a *ngIf="signaturelink" class="file-icon" (click)="signaturelink=''"><i aria-hidden="true"
+                          class="far fa-times"></i></a>
+                    </div>
+                  </div>
+                  <ngx-file-drag-drop #fileSignatureOne activeBorderColor="#3F51B5" [multiple]="false"
+                    accept=".png,.jpg" (valueChanged)="onValueChangeForLogo($any($event), 'signatureOneFile')">
+                    {{ "Draganddrop" | translate }}
+                  </ngx-file-drag-drop>
+                </div>
+              </div>
+
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <div class="btn-sec">
+        <button [disabled]="!drawSignatureOne && (!signaturelink || !CourseForm.controls.Name.value)" mat-raised-button type="submit" color="primary" class="Update-btn">
+          {{ buttontext }}
+        </button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="closeModal()">
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- signature 2 -->
+<div *ngIf="data.data == 'SignatureTwo'" class="">
+  <div class="add-title">
+    <h1 mat-dialog-title style="color: #fa8060">Signature Two</h1>
+  </div>
+  <div class="angFormStyle">
+    <form [formGroup]="CourseForm" (ngSubmit)="getImageLink()">
+      <div class="addRecord_bx mb-3 record_scroll">
+        <mat-grid-list cols="1" rowHeight="200px">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="Name" placeholder="Title"
+                  [ngClass]="{ 'is-invalid': f.Name.touched && f.Name.errors }" />
+                <mat-error *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+                  <div *ngIf="f.Name.errors.required">
+                    {{ "Titleisrequired" | translate }}
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="drag_drop_bx">
+            <div class="text-inside drag-drop pt-1">
+              <div class="file-title">
+                <label>Signature Two Link</label>
+                <div class="account-field" style="margin-right: 10px;">
+                  <b style="margin-right: 20px;">Draw</b>
+                  <mat-slide-toggle [checked]="drawSignatureTwo" (change)="drawSignatureTwo = $event.checked">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+              <div class="formGroup signature_box" style="padding-top: 10px;">
+                <div *ngIf="drawSignatureTwo">
+                  <div class="signature_options">
+                    <div class="sign_color_bx">
+                      <span class="dot mr-4" (click)="changeColor('rgb(0, 0, 0)','black')"
+                        style=" background-color: rgb(0, 0, 0);"></span>
+                      <span class="dot " (click)="changeColor(selectedColor,'any')"
+                        [style.background-color]="selectedColor"></span>
+                    </div>
+                    <span class="delete_btn_span" style="margin-right: 10px;"><i (click)="signaturePad1.clear()" class="fa fa-trash"></i></span>
+                  </div>
+                  <hr class="line">
+                  <signature-pad *ngIf="!switchSignatureOptions" #signaturePad1 [options]="signaturePadOptions"
+                    (onEndEvent)="drawComplete()">
+                  </signature-pad>
+                  <div *ngIf="switchSignatureOptions">
+                    <signature-pad #signaturePad2 [options]="signaturePadOptions2" (onEndEvent)="drawComplete()">
+                    </signature-pad>
+                  </div>
+                </div>
+                <div *ngIf="!drawSignatureTwo">
+                  <div class="file-title">
+                    <h6>Accepted file types JPG &amp; PNG</h6>
+                    <div>
+                      <a *ngIf="signaturelink" class="file-icon" (click)="downloadFile(signaturelink)"><i
+                          aria-hidden="true" class="fa fa-file-pdf-o pdf"></i></a>
+                      <a *ngIf="signaturelink" class="file-icon" (click)="signaturelink=''"><i aria-hidden="true"
+                          class="far fa-times"></i></a>
+                    </div>
+                  </div>
+                  <ngx-file-drag-drop #fileSignatureTwo activeBorderColor="#3F51B5" [multiple]="false"
+                    accept=".png,.jpg" (valueChanged)="onValueChangeForLogo($any($event), 'signatureTwoFile')">
+                    {{ "Draganddrop" | translate }}
+                  </ngx-file-drag-drop>
+                </div>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <div class="btn-sec">
+        <button [disabled]="!drawSignatureTwo && (!signaturelink || !CourseForm.controls.Name.value)" mat-raised-button
+          type="submit" color="primary" class="Update-btn">
+          {{ buttontext }}
+        </button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="closeModal()">
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Note -->
+<div *ngIf="data.data == 'Note'" class="">
+  <div class="add-title">
+    <h1 mat-dialog-title style="color: #fa8060">Note</h1>
+  </div>
+  <div class="angFormStyle">
+    <form [formGroup]="CourseForm" (ngSubmit)="Save()">
+      <div class="addRecord_bx mb-3 record_scroll">
+        <mat-grid-list cols="1" rowHeight="200px">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <textarea class="form-control" maxlength="200" matInput formControlName="Name" placeholder="Title"
+                  [ngClass]="{ 'is-invalid': f.Name.touched && f.Name.errors }"></textarea>
+                <mat-error *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+                  <div *ngIf="f.Name.errors.required">
+                    {{ "Titleisrequired" | translate }}
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+
+      <div class="btn-sec">
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">
+          {{ buttontext }}
+        </button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="closeModal()">
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

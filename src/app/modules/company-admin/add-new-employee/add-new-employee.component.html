@@ -1,0 +1,100 @@
+<h1 mat-dialog-title style="color: #FA8060;">
+  <i class="fa fa-user-plus" aria-hidden="true"></i>
+  {{'AddEmployee'|translate}}
+</h1>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Select an option</mat-label>
+      <mat-select [(value)]="selectByEmail" (selectionChange)="selectOption($event)">
+        <mat-option [value]="true">{{'InviteByEmail'|translate}}</mat-option>
+        <mat-option [value]="false">{{'CreateByUsername'|translate}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="selectByEmail">
+      <mat-form-field appearance="fill">
+        <mat-label>{{'EmployeeEmail'|translate}}</mat-label>
+        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5" formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"> </textarea>
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">{{'EmailIsRequired'|translate}}</div>
+        </div>
+      </mat-form-field>
+      <br>
+      <label style="font-size:12px!important"><i>* {{'Addmultipleemails'|translate}}</i></label>
+    </div>
+    <div *ngIf="!selectByEmail">
+      <mat-form-field appearance="fill">
+        <mat-label>{{'UserName'|translate}}</mat-label>
+        <input matInput formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">{{'UsernameIsRequired'|translate}}</div>
+        </div>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{'Password'|translate}}</mat-label>
+        <input matInput type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">{{'PasswordIsRequired'|translate}}</div>
+          <div *ngIf="f.password.errors.minlength">{{'Passwordmust'|translate}}</div>
+        </div>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{'FirstName'|translate}}</mat-label>
+        <input matInput formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">{{'FirstNameisrequired'|translate}}</div>
+        </div>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{'LastName'|translate}}</mat-label>
+        <input matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required">{{'LastNameisrequired'|translate}}</div>
+        </div>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{'Title'|translate}}</mat-label>
+        <input matInput formControlName="title"/>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{'SafetySensitive'|translate}}</mat-label>
+
+        <mat-select [(value)]="safetySensitiveSelectedValue" matNativeControl formControlName="safetySensitive" required>
+          <mat-option value="1">{{'Yes'|translate}}</mat-option>
+          <mat-option value="0">{{'No'|translate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="department-chip-list">
+        <mat-chip-list #chipList aria-label="Department(s)">
+          <mat-chip *ngFor="let selectedDepartmentName of selectedDepartmentNames" (removed)="removeDepartment(selectedDepartmentName)">
+            {{selectedDepartmentName}}
+            <mat-icon matChipRemove>{{'cancel'|translate}}
+            </mat-icon>
+          </mat-chip>
+          <input #departmentInput placeholder="Department(s)"
+               #autocompleteTrigger="matAutocompleteTrigger" [formControl]="departmentControl"
+               [matAutocomplete]="auto" [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addDepartment($event)"
+               style="background-color: #f7f8f9 !important; width: 100%;">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedDepartment($event)"
+                autoActiveFirstOption>
+          <mat-option *ngFor="let departmentName of filteredDepartmentNames | async" [value]="departmentName">
+          <mat-checkbox color="primary" style="padding: 0 12px;"
+                  [checked]="selectedDepartmentNames.indexOf(departmentName) >= 0"></mat-checkbox>
+          {{departmentName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="btn-sec mt-2">
+    <button mat-raised-button type="submit" color="primary" class="Update-btn">Add</button>
+    <button mat-raised-button type="button" (click)="onCancel()" class="Discard-btn">Cancel</button>
+  </div>
+</form>

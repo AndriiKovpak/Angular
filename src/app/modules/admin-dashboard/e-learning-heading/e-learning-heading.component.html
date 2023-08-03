@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row gap_10">
+        <div class="col-md-4 col-xl-3">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-8 col-xl-9">
+            <div class="card padd_15">
+                <form class="contact-form invite " [formGroup]="form" (ngSubmit)="UpdateELearning()">
+                    <div class="form-group mb-2">
+                        <label for="name" class="control-label">{{'Name'|translate}}</label>
+                        <div class="">
+                            <input Class="form-control" style="background-color: #F7F8F9;" formControlName="name"  [ngClass]="{ 'is-invalid': f.name.touched && f.name.errors }" />
+                            <div *ngIf="f.name.touched && f.name.errors" class="invalid-feedback">
+                                <div *ngIf="f.name.errors.required"> {{'NameFieldisrequired'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="ELearningImage" class="control-label">{{'Image'|translate}}</label>
+                        <div class="">
+                            <div class="" id="elearning-image-container">
+                                <div class="">
+                                    <div class="docs-demo">
+                                        <div class="img-elearning-container">
+                                            <img [src]="imageLink"
+                                                alt="{{'Picture'|translate}}" width="100%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="" id="elearningactions">
+                                <div class="docs-elearning-buttons">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary btn-upload" for="inputELearningImage"
+                                            title="Upload image file">
+                                            <input type="file" class="sr-only" id="inputELearningImage" (change)="showPreview($event)" name="file"
+                                                accept="image/*" />
+                                            <span class="docs-tooltip" data-toggle="tooltip" title="Import image">
+                                                <span class="fa fa-upload"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-crop" id="divgetElearningCroppedCanvas"
+                                        style="display:none;">
+                                        <button type="button" class="btn btn-primary" data-method="getCroppedCanvas"
+                                            data-option="{ &quot;maxWidth&quot;: 4096, &quot;maxHeight&quot;: 4096 }">
+                                            <span class="docs-tooltip" data-toggle="tooltip">
+                                                {{'Done'|translate}}
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="description" class="control-label">{{'Description'|translate}}</label>
+                        <div class="0">
+                            <textarea formControlName="description" rows="12"
+                                class="des-content contact-textbox TextBoxLarge form-control" [ngClass]="{ 'is-invalid': f.description.touched && f.description.errors }"></textarea>
+                                <mat-error *ngIf="f.description.touched && f.description.errors" class="invalid-feedback">
+                                    <div *ngIf="f.description.errors.required"> {{'DescriptionFieldisrequired'|translate}}</div>
+                                </mat-error>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-4 pt-2">
+                        <button Primary="true" class="custmBtns block h_50">{{'Update'|translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

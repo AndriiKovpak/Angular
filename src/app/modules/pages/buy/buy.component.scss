@@ -1,0 +1,42 @@
+.login-bg-main {
+	background: url(../../../../assets/images/login-bg.jpg) no-repeat;
+	background-size: cover;
+	padding: 60px 0;
+	min-height: 100vh;
+  height: auto;
+}
+.card {
+	border: none !important;
+	box-shadow: 0px 3px 6px #00000012;
+}
+.card.login-form {
+    padding: 10px 15px;
+    margin-top: 60px;
+}
+.login-container {
+	button {
+		&.btn {
+			&.btn-lg {
+				&.btn-block {
+					background: #FA8060;
+					border: none;
+					width: 215px;
+					margin: auto;
+					margin-bottom: 20px;
+				}
+			}
+		}
+	}
+}
+
+a {
+	color: #007bff;
+	text-decoration: none;
+	background-color: transparent;
+}
+.login-bg-main h1 {
+    font-size: 24px;
+    color: #FA8060;
+    text-align: center;
+    margin-bottom: 30px;
+}

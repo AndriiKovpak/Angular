@@ -1,0 +1,146 @@
+<div class="container">
+        <app-middle-layout></app-middle-layout>
+        <h2 class="custom_heading"><i class="fas fa-paint-brush" aria-hidden="true"></i>Custom Courses Creator</h2>
+        <div class="row gap_10">
+          <div class="col-md-4 col-xl-3">
+            <app-custom-course-side-pannel></app-custom-course-side-pannel>
+        </div>
+
+        <div class="col-md-8 col-xl-9">
+          <div class="card">
+            <div class="form-row">
+              <h4 class="card-title red-color empty-space">
+               Courses
+              </h4>
+            </div>
+            <div class="row m-0 mb-2 gap_10 px-2">
+              <div class="col-md-2">
+                <button type="button" (click)="AddopenModal(null)" class="block add_btn">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ "Add" | translate }}</button
+                >&nbsp;
+              </div>
+              <div class="col-md-4">
+                <div class="textStart input-group">
+                  <span class="input-group-text"  id="addon-wrapping"><i
+                    class="fa fa-search" aria-hidden="true"></i></span>
+                  <input type="text" placeholder="Search" #name
+                  (keyup.enter)="onBlurMethod('top', name.value)" class="searchInput form-control">
+                </div>
+              </div>
+              <!-- <div class="col-md-4 text-center">
+                <label class="view_list_bx">View <button class="filter_btn">10</button> <button class="filter_btn">15</button><button class="filter_btn">All</button></label>
+              </div>
+                <div class="col-md-1 text-end">
+                  <a class="file-icon pdf m-0"><i class="fal fa-file-pdf fa-2x"
+                    aria-hidden="true"></i></a>
+                </div> -->
+
+            </div>
+
+            <div class="table-responsive">
+              <table mat-table [dataSource]="dataSource">
+                <!-- FullName Column -->
+                <ng-container matColumnDef="Name">
+                  <th mat-header-cell *matHeaderCellDef class="course_col_th course-title-column">
+                    {{ "Name" | translate }}
+                    <!-- <mat-form-field
+                      class="filter mt-3 filter_search_bx"
+                      floatLabel="never"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <mat-label>{{ "Search" | translate }}</mat-label>
+                      <input
+                        matInput
+                        #name
+                        (keyup.enter)="onBlurMethod('name', name.value)"
+                      />
+                    </mat-form-field> -->
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="course-title-column">{{ element.name[lang] }}</td>
+                </ng-container>
+
+                <!-- Company Column -->
+                <ng-container matColumnDef="Video">
+                  <th mat-header-cell *matHeaderCellDef class="course_col_th">
+                    {{ "Video" | translate }}
+                    <!-- <mat-form-field
+                      class="filter mt-3 filter_search_bx"
+                      floatLabel="never"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <mat-label>{{ "Search" | translate }}</mat-label>
+                      <input
+                        matInput
+                        #Video
+                        (blur)="onBlurMethod('Video', Video.value)"
+                      />
+                    </mat-form-field> -->
+                  </th>
+                  <td mat-cell *matCellDef="let element">{{ element.video[lang] }}</td>
+                </ng-container>
+                <!-- Course Link -->
+                <ng-container matColumnDef="CourseLink">
+                  <th mat-header-cell *matHeaderCellDef class="img_col pb-4 course-link-column">
+                    {{ "CourseLink" | translate }}
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="course-link-column">
+                    {{ element.courseLink[lang] }}
+                  </td>
+                </ng-container>
+                <!-- Email Column -->
+                <ng-container matColumnDef="TotalTrainingTime">
+                  <th mat-header-cell *matHeaderCellDef class="img_col pb-4">
+                    {{ "TotalTrainingTime" | translate }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ toHoursString(element.totalTrainingTime) }}
+                  </td>
+                </ng-container>
+                <!-- Company Column -->
+                <ng-container matColumnDef="edit">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <button
+                      type="button"
+                      (click)="openEditTestModal(element)"
+                      class="block add_btn me-1"
+                    >
+                      <i class="fa fa-check-double" aria-hidden="true"></i>
+                      {{ "Test" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="AddopenModal(element)"
+                      class="block add_btn me-1"
+                    >
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                      {{ "Edit" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="deleteTestQuestionAns(element)"
+                      class="block add_btn"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                      {{ "Delete" | translate }}
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCourses"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumnsCourses"
+                ></tr>
+              </table>
+            </div>
+            <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+              [pageSizeOptions]="paginationArray" (page)="getServerData($event)" showFirstLastButtons>
+            </mat-paginator>
+          </div>
+        </div>
+        </div>
+
+
+    </div>

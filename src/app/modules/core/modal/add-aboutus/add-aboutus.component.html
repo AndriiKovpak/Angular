@@ -1,0 +1,110 @@
+<div class="container">
+    <div>
+        <div class="add-title">
+            <h1 mat-dialog-title style="color: #FA8060;">
+                {{buttontext}} <span *ngIf="buttontext !== 'Update'">New</span> Record
+            </h1>
+        </div>
+        <div class="angFormStyle">
+            <form [formGroup]="form" (ngSubmit)="Save()">
+                <div class="addRecord_bx mb-3">
+                    <mat-grid-list cols="1" rowHeight="170px">
+                        <mat-grid-tile>
+                            <div class="text-inside">
+                                <mat-form-field>
+                                    <input hidden matInput formControlName="image">
+                                    <div class="group-gap" (click)="fileInput.click()">
+                                        <!-- Upload image -->
+                                        <div class="avatar-upload">
+                                            <div class="avatar-edit">
+                                                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"
+                                                    #fileInput (change)="uploadFile($event)" />
+                                            </div>
+                                            <div class="avatar-preview">
+                                                <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-error *ngIf="f.image.touched && f.image.errors" class="invalid-feedback">
+                                        <div *ngIf="f.image.errors.required"> This Field is required</div>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <div class="text-inside">
+                                <mat-form-field>
+                                    <mat-select (selectionChange)="onChangeLanguage($event)" [(value)]="lang">
+                                        <mat-option value="en">English</mat-option>
+                                        <mat-option value="es">Spanish</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </mat-grid-tile>
+                        <!-- name -->
+                        <mat-grid-tile>
+                            <div class="text-inside">
+                                <mat-form-field>
+                                    <input class="form-control" matInput formControlName="name" placeholder="Name"
+                                        [ngClass]="{ 'is-invalid': f.name.touched && f.name.errors }">
+                                    <mat-error *ngIf="f.name.touched && f.name.errors" class="invalid-feedback">
+                                        <div *ngIf="f.name.errors.required"> This Field is required</div>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <div class="text-inside">
+                                <mat-form-field>
+                                    <input class="form-control" matInput formControlName="designation"
+                                        placeholder="Designation"
+                                        [ngClass]="{ 'is-invalid': f.designation.touched && f.designation.errors }">
+                                    <mat-error *ngIf="f.designation.touched && f.designation.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.designation.errors.required"> This Field is required</div>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <div class="text-inside">
+                                <mat-form-field>
+                                    <textarea class="form-control" type="number" matInput formControlName="description"
+                                        placeholder="Description"
+                                        [ngClass]="{ 'is-invalid': f.description.touched && f.description.errors }">
+                                        </textarea>
+                                    <mat-error *ngIf="f.description.touched && f.description.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.description.errors.required"> This Field is required</div>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <div class="text-inside">
+                                <mat-form-field>
+                                    <textarea class="form-control" type="number" matInput
+                                        formControlName="miniDescription" placeholder="Specification"
+                                        [ngClass]="{ 'is-invalid': f.miniDescription.touched && f.miniDescription.errors }">
+                                      </textarea>
+                                    <mat-error *ngIf="f.miniDescription.touched && f.miniDescription.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.miniDescription.errors.required"> This Field is required</div>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+
+
+                <div class="btn-sec">
+                    <button mat-raised-button type="submit" color="primary" class="Update-btn">{{buttontext}}</button>
+                    <button mat-raised-button type="button" class="Discard-btn" (click)="ModalClose()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

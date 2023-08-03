@@ -1,0 +1,29 @@
+
+<div class="content">
+   <ng-container *ngFor="let item of list; let index = index"  >
+    <div class="about-row about_page px-2" [ngClass]="{'wht_bg': 0 === index % 2}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 about-image">
+                    <img [src]="item.image">
+                    <div class="ab-img-text text-center">
+                        <div class="border-top-img"></div>
+                        <h2 class="mb-0">{{item.name}}</h2>
+                        <p class="text-center mb-0">
+                            <b>{{item.designation}}</b>
+                        </p>
+                        <p class="desc">{{item.miniDescription}}</p>
+                    </div>
+                </div>
+                <div class="col-md-8 about-text">
+                    <h3>{{item.name}}</h3>
+                    <br>
+                    <p class="about-content">{{item.designation}}</p>
+                    <p>{{item.description}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+   </ng-container>
+</div>

@@ -1,0 +1,913 @@
+<div class="content pb_0">
+  <div class="container">
+    <app-middle-layout-calibration></app-middle-layout-calibration>
+    <div class="card table-border gaugeRecordPage"  id="gaugeidddd">
+      <form (keydown.enter)="$event.preventDefault()" [formGroup]="RecordsReview" class="record_review">
+        <div class="row mb-3">
+          <div class="col-lg-7">
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <h2 class="card-title-title_gauge">{{'RecordsReview'|translate}}</h2>
+              </div>
+              <div class="col-lg-8">
+                <div class="row border review_record">
+                  <div class="col-lg-6 mt-3">
+                    <div class="input-group flex-nowrap">
+
+                      <input type="text" *ngIf="lastRecordAdded" value="{{lastRecordAdded.createdDate |
+                        date: 'MM/dd/yyyy'}}" class="form-control" readonly>
+                      <input type="date" *ngIf="!lastRecordAdded" readonly class="form-control" id="Inputdate"
+                        formControlName="Inputdate"
+                        [ngClass]="{ 'is-invalid': RecordsReview.controls.Inputdate.touched && RecordsReview.controls.Inputdate.errors }">
+                      <!-- <div *ngIf="RecordsReview.controls.Inputdate.touched && RecordsReview.controls.Inputdate.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="RecordsReview.controls.Inputdate.errors.required"> Input date is
+                                            required
+                                        </div>
+                                    </div> -->
+                      <span class="input-group-text short_icons" id="addon-wrapping">
+                        <i class="fas fa-sort-up" aria-hidden="true" (click)="shownew()" ></i>
+                        <i class="fas fa-sort-down" aria-hidden="true"  (click)="showold()"></i>
+                      </span>
+                    </div>
+                    <div class="text-center pt-1 pb-3">
+                      <strong>{{count}} {{'of'|translate}} {{gaugesCount}}</strong>
+                    </div>
+
+                  </div>
+                  <div class="col-lg-6 mt-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Status</mat-label>
+                      <mat-select
+                        [(value)]="statusId"
+                        (selectionChange)="changeWebsite($event)">
+                        <mat-option *ngFor="let status of statusList" [value]="status.id">{{status.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div *ngIf="canSaveGauge" class="mt-3 record-picker-buttons">
+                      <button type="btn" class="w-100 btn input-block-level mat-button btn-danger mb-1 mt-0 me-1"
+                              (click)="submitGaugeForm()">{{'Save'|translate}} </button>
+                      <button *ngIf="roleAdmin || roleCompanyAdmin" type="btn" class="w-100 btn mat-button btn-danger mb-1 ms-1"
+                              (click)="opendeleteModalForGauge()">{{'Delete'|translate}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="row form-group">
+              <div class="col-lg-12 search_sec">
+                <div class="input-group flex-nowrap input_bx_icon">
+                  <span class="input-group-text"  id="addon-wrapping"><i
+                      class="fa fa-search" aria-hidden="true"></i></span>
+
+                  <input type="text" placeholder="{{'Search'|translate}}" (keyup.enter)="search(searchGauge.value)" class="form-control" [formControl]="control"
+                    [matAutocomplete]="auto" #searchGauge>
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+                      {{street}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+      <form (keydown.enter)="$event.preventDefault()" [formGroup]="AddNewGauge" class="gauge_cal_form">
+
+        <div class="row mb-3 row_margin">
+          <div class="col-lg-6">
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="inputstatus" class="form-label">{{'GaugeId'|translate}}</label>
+              </div>
+              <div class="col-lg-8" *ngIf="roleSupplier">
+                <div class="input_bx_icon pb_15">
+                  <input type="text" readonly class="form-control" formControlName="gaugeId" id="message" #gaugeId>
+                </div>
+              </div>
+              <div class="col-lg-8" *ngIf="!roleSupplier">
+                <div class="input_bx_icon pb_15">
+                  <input type="text" class="form-control" formControlName="gaugeId" id="message" #gaugeId
+                    (blur)="checkDuplicateId(gaugeId.value)"
+                    [ngClass]="{ 'is-invalid': f.gaugeId.touched && f.gaugeId.errors }" [matAutocomplete]="auto1"
+                    #trigger="matAutocompleteTrigger">
+                  <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="search($event.option.value)">
+                    <mat-option *ngFor="let gaugesVal of gaugeIds | async" [value]="gaugesVal">
+                      {{gaugesVal}}
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  <mat-error *ngIf="f.gaugeId.touched && f.gaugeId.errors" class="invalid-feedback">
+                    <div *ngIf="f.gaugeId.errors.required"> {{'requiredGaugeField'|translate}}</div>
+                  </mat-error>
+                  <div *ngIf="duplicateGaugeId && !searchCheckDuplicate" style="color: #dc3545">
+                    {{'DuplicategaugeId'|translate}}</div>
+                  <span class="column_right"><i (click)="openPanel($event, trigger)" class="fa fa-eye"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="inputstatus" class="form-label">{{'Gaugestatus'|translate}}</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Gaugestatus'|translate}}</mat-label>
+                    <mat-select matInput id="inputstatus" formControlName="status"
+                      [ngClass]="{ 'is-invalid': f.status.touched && f.status.errors }">
+                      <mat-option *ngFor="let option of gaugeStatusList" [value]="option.id">
+                        {{option.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.status.touched && f.status.errors" class="invalid-feedback">
+                      <div *ngIf="f.status.errors"> {{'Gaugestatusisrequired'|translate}}</div>
+                    </mat-error>
+
+                  </mat-form-field>
+                  <span *ngIf="showAddButtons" class="right_col">
+                     <i class="fa fa-plus-circle" (click)="openGaugeStatusModal()"></i>
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="supplier" class="form-label">{{'Supplier'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Supplier'|translate}}</mat-label>
+                    <mat-select matInput id="supplier" formControlName="supplierId" [(value)]="supplierBind"
+                      [ngClass]="{ 'is-invalid': f.supplierId.touched && f.supplierId.errors }">
+                      <mat-option *ngFor="let option of getSupplierListWithoutUserList" [value]="option.id">
+                        {{option.name}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error *ngIf="f.supplierId.touched && f.supplierId.errors" class="invalid-feedback">
+                      <div *ngIf="f.supplierId.errors"> {{'Supplierisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                  <span *ngIf="showAddButtons" class="right_col"> <i class="fa fa-plus-circle" (click)="openModaladdSupplier()"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="serial_number" class="form-label">{{'Certificate Number'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input type="text" class="form-control" id="certificate_number" formControlName="certificateNumber"
+                    [ngClass]="{ 'is-invalid': f.certificateNumber.touched && f.certificateNumber.errors }">
+                  <mat-error *ngIf="f.certificateNumber.touched && f.certificateNumber.errors" class="invalid-feedback">
+                    <div *ngIf="f.certificateNumber.errors.required">
+                      {{'CertificateNumberisrequired'|translate}}
+                    </div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="owner" class="form-label">{{'Standard'|translate}}</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Standard'|translate}}</mat-label>
+                    <mat-select id="standard" formControlName="standardId" [value]="lastRecordAdded?.standardId"
+                      [ngClass]="{ 'is-invalid': f.standardId.touched && f.standardId.errors }">
+                      <mat-option *ngFor="let option of gaugeStandardList" [value]="option.id">
+                        {{option.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.standardId.touched && f.standardId.errors" class="invalid-feedback">
+                      <div *ngIf="f.standardId.errors"> {{'StandardIsRequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                  <span *ngIf="showAddButtons" class="right_col"> <i class="fa fa-plus-circle" (click)="OpenStandardModal()"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="result" class="form-label">{{'Result'|translate}}</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Result'|translate}}</mat-label>
+                    <mat-select [value]="lastRecordAdded?.result" id="result" formControlName="result"
+                      [ngClass]="{ 'is-invalid': f.manufacturerId.touched && f.manufacturerId.errors }">
+                      <mat-option selected>{{'Result'|translate}}</mat-option>
+                      <mat-option value="1">{{'Pass'|translate}}</mat-option>
+                      <mat-option value="2">{{'Fail'|translate}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.result.touched && f.result.errors" class="invalid-feedback">
+                      <div *ngIf="f.result.errors"> {{'resultIsRequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="Calibration_date" class="form-label">{{'CalibrationDate'|translate}}
+                </label></div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <input type="date" class="form-control" id="Calibration_date" formControlName="calibrationDate"
+                    [ngClass]="{ 'is-invalid': f.calibrationDate.touched && f.calibrationDate.errors }">
+                  <mat-error *ngIf="f.calibrationDate.touched && f.calibrationDate.errors" class="invalid-feedback">
+                    <div *ngIf="f.calibrationDate.errors.required">
+                      {{'CalibrationDateisrequired'|translate}}</div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="Calibration_date" class="form-label">{{'Frequency'|translate}}
+                  ({{'Months'|translate}})</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input #months (mouseleave)="frequancyMonths(months.value)" type="number" min="0" class="form-control"
+                    id="Frequency" formControlName="frequency"
+                    [ngClass]="{ 'is-invalid': f.frequency.touched && f.frequency.errors }">
+                  <mat-error *ngIf="f.frequency.touched && f.frequency.errors" class="invalid-feedback">
+                    <div *ngIf="f.frequency.errors.required"> {{'frequencyisrequired'|translate}}</div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="Retirement_Date" class="form-label">
+                  {{'CalibrationDueDate'|translate}}
+                </label></div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input type="date" placeholder="Calculate based on Date and Freq" class="form-control"
+                    id="Retirement_Date" formControlName="calibrationDueDate"
+                    [ngClass]="{ 'is-invalid': f.calibrationDueDate.touched && f.calibrationDueDate.errors }">
+                  <mat-error *ngIf="f.calibrationDueDate.touched && f.calibrationDueDate.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="f.calibrationDueDate.errors.required">
+                      {{'CalibrationDueDateisrequired'|translate}}
+                    </div>
+                  </mat-error>
+                </div>
+
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="Entered By" class="form-label">
+                  {{'EnteredBy'|translate}} </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input hidden type="text" class="form-control" id="Entered_By" formControlName="updatedBy"
+                    [ngClass]="{ 'is-invalid': f.updatedBy.touched && f.updatedBy.errors }">
+                  <input type="text" disabled class="form-control" id="Entered_By" value="{{userEmail}}">
+                  <mat-error *ngIf="f.updatedBy.touched && f.updatedBy.errors" class="invalid-feedback">
+                    <div *ngIf="f.updatedBy.errors.required"> {{'EnteredByisrequired'|translate}}</div>
+                  </mat-error>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="inputdescrption" class="form-label">{{'Description'|translate}}</label>
+              </div>
+              <div class=" col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input class="form-control" formControlName="description" type="text" id="inputdescrption"
+                    [ngClass]="{ 'is-invalid': f.description.touched && f.description.errors }">
+                  <mat-error *ngIf="f.description.touched && f.description.errors" class="invalid-feedback">
+                    <div *ngIf="f.description.errors.required">
+                      {{'descriptionFieldisrequired'|translate}}</div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="unitofmeasure" class="form-label">{{'UnitOfMeasure'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <input type="text" class="form-control" id="model_number" formControlName="measureUnit"
+                    [ngClass]="{ 'is-invalid': f.measureUnit.touched && f.measureUnit.errors }">
+                  <mat-error *ngIf="f.measureUnit.touched && f.measureUnit.errors" class="invalid-feedback">
+                    <div *ngIf="f.measureUnit.errors.required"> {{'UnitOfMeasureisrequired'|translate}}
+                    </div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="serial_number" class="form-label">{{'ModelNumber'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <input type="text" class="form-control" id="serial_number" formControlName="modelNumber"
+                    [ngClass]="{ 'is-invalid': f.modelNumber.touched && f.modelNumber.errors }">
+                  <mat-error *ngIf="f.modelNumber.touched && f.modelNumber.errors" class="invalid-feedback">
+                    <div *ngIf="f.modelNumber.errors.required"> {{'ModelNumberisrequired'|translate}}
+                    </div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"> <label for="certificate_number" class="form-label">{{'SerialNumber'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input type="text" class="form-control" id="serial_number" formControlName="serialNumber"
+                    [ngClass]="{ 'is-invalid': f.serialNumber.touched && f.serialNumber.errors }">
+                  <mat-error *ngIf="f.serialNumber.touched && f.serialNumber.errors" class="invalid-feedback">
+                    <div *ngIf="f.serialNumber.errors.required"> {{'SerialNumberisrequired'|translate}}
+                    </div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="standard" class="form-label">{{'Owner'|translate}}
+                </label>
+              </div>
+
+              <div class="col-lg-8 ">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Owner'|translate}}</mat-label>
+                    <mat-select matInput id="owner" formControlName="ownerId" [value]="lastRecordAdded?.ownerId"
+                      [ngClass]="{ 'is-invalid': f.ownerId.touched && f.ownerId.errors }">
+                      <mat-option *ngFor="let option of gaugeOwnerList" [value]="option.id">
+                        {{option.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.ownerId.touched && f.ownerId.errors" class="invalid-feedback">
+                      <div *ngIf="f.ownerId.errors"> {{'OwnerIsRequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                  <span *ngIf="showAddButtons" class="right_standard_col"> <i class="fa fa-plus-circle"
+                      (click)="openModalOwnerforUpdate()"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="manufacturer" class="form-label">{{'Manufacturer'|translate}}</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Manufacturer'|translate}}</mat-label>
+                    <mat-select id="manufacturer" formControlName="manufacturerId"
+                      [value]="lastRecordAdded?.manufacturerId"
+                      [ngClass]="{ 'is-invalid': f.manufacturerId.touched && f.manufacturerId.errors }">
+                      <mat-option *ngFor="let option of gaugeManufacturerList" [value]="option.id">
+                        {{option.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.manufacturerId.touched && f.manufacturerId.errors" class="invalid-feedback">
+                      <div *ngIf="f.manufacturerId"> {{'ManufacturerIsRequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                  <span *ngIf="showAddButtons" class="right_standard_col"><i class="fa fa-plus-circle"
+                      (click)="OpenAddManufacturerModal()"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4"><label for="location" class="form-label">{{'Location'|translate}}</label></div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <mat-form-field appearance="fill">
+                    <mat-label>{{'Location'|translate}}</mat-label>
+                    <mat-select matInput id="location" formControlName="locationId"
+                      [ngClass]="{ 'is-invalid': f.locationId.touched && f.locationId.errors }">
+                      <mat-option *ngFor="let option of gaugeLocationList" [value]="option.id">
+                        {{option.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.locationId.touched && f.locationId.errors" class="invalid-feedback">
+                      <div *ngIf="f.locationId.errors"> {{'Locationisrequired'|translate}}</div>
+                    </mat-error>
+                  </mat-form-field>
+                  <span *ngIf="showAddButtons" class="right_standard_col"> <i class="fa fa-plus-circle"
+                      (click)="openModalLocationforAdd()"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="new_date" class="form-label">{{'NewDate'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input type="date" class="form-control" id="new_date" formControlName="newDate"
+                    [ngClass]="{ 'is-invalid': f.newDate.touched && f.newDate.errors }">
+                  <mat-error *ngIf="f.newDate.touched && f.newDate.errors" class="invalid-feedback">
+                    <div *ngIf="f.newDate.errors.required"> {{'NewDateisrequired'|translate}}</div>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="Retirement_Date" class="form-label">
+                  {{'RetirementDate'|translate}}
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <input type="date" class="form-control" id="Retirement_Date" formControlName="retirementDate"
+                    [ngClass]="{ 'is-invalid': f.retirementDate.touched && f.retirementDate.errors }">
+                  <mat-error *ngIf="f.retirementDate.touched && f.retirementDate.errors" class="invalid-feedback">
+                    <div *ngIf="f.retirementDate.errors.required">
+                      {{'RetirementDateisrequired'|translate}}</div>
+                  </mat-error>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-lg-4">
+                <label for="Retirement_Date" class="form-label">
+                  {{'AdditionalEmailsforNotifications'|translate}}
+
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon pb_15">
+                  <textarea class="form-control" rows="2" cols="2" id="notes" formControlName="emails"></textarea>
+                  <label class="fnt_12"><i>*
+                      {{'Addmultipleemails'|translate}}</i></label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="row form-group">
+              <div class="col-lg-4"> <label for="notes" class="form-label">{{'notes'|translate}}</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="input_bx_icon">
+                  <textarea matInput class="form-control text_notes me-0" id="notes" formControlName="notes"
+                    rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row form-group">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-8">
+            <div class="input_bx_icon">
+              <div class="row">
+                <div class="col-md-8 addGauge">
+                  <button *ngIf="canSaveGauge" type="button" (click)="generateNewId()" class="btn button-border">{{'AddNewGauge'|translate}}
+                  </button>
+                  <button *ngIf="canSaveGauge" type="button" (click)="submitFormWithDiffId()"
+                    class="btn  button-border">{{'CloneGauge'|translate}}</button>
+                </div>
+                <div class="col-md-4">
+                  <button type="button" class="btn  button-border me-0"
+                    (click)="print()">{{'PrintLabel'|translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+          <h2 class="add-docs">{{'AddDocument'|translate}}</h2>
+        </div>
+        <div class="col-md-8 docmnts_dropdwn" style="text-align: right;">
+          <mat-form-field appearance="fill">
+            <mat-select [(ngModel)]="myexCoursesActive" (ngModelChange)="onMyexCoursesSelection()">
+              <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+              <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <a (click)="downLoadAllFiles(null)" class="edit-icon record_icon_bx"><i class="fa fa-file-pdf-o"
+              aria-hidden="true"></i></a>
+          <a *ngIf="canAddDocument" (click)="openModal()" class="add-icon record_icon_bx" title="add" data-toggle="tooltip"><i
+              class="fa fa-plus-circle" aria-hidden="true"></i></a>
+
+        </div>
+        <div class="col-lg-12">
+          <div class="desc-table">
+
+            <!-- admin control -->
+            <table id="contentToConvert" *ngIf="documentsCheck.length >0" mat-table [dataSource]="dataSourceAdmin"
+              class="custom_table">
+
+              <!--- Note that these columns can be defined in any order.
+                                      The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> {{'Type'|translate}}
+                <td mat-cell *matCellDef="let element">
+                  {{element.type}}
+                </td>
+
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="documentName">
+                <th mat-header-cell *matHeaderCellDef>{{'Document'|translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.documentName}}
+                </td>
+              </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="documentDate">
+                <th mat-header-cell *matHeaderCellDef>{{'Date'|translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.documentDate |
+                  date: 'MM/dd/yyyy'}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+
+                  <span  *ngIf="!activateAfterData" class="crud-icon">
+                    <button *ngIf="canSoftDelete" class="cred-right k-button telerik-blazor k-button-icon crud" tabindex="0"
+                      aria-disabled="false" type="submit" (click)="opendeleteModal(element)">
+                      <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    </button>
+                    <button class="cred-right k-button telerik-blazor k-button-icon crud" (click)="downLoadAllFiles(element)"
+                      tabindex="0" aria-disabled="false" type="submit">
+                      <span><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                    </button>
+                    <button *ngIf="canEditDocument" class="cred-right k-button telerik-blazor k-button-icon crud" (click)="edit(element)"
+                      tabindex="0" aria-disabled="false" type="submit">
+                      <span><i class="fa fa-edit" aria-hidden="true"></i></span>
+                    </button>
+                  </span>
+                  <span *ngIf="activateAfterData && canViewSoftDelete">
+                    <button class="cred-right k-button telerik-blazor k-button-icon crud" tabindex="0"
+                      aria-disabled="false" type="submit" (click)="getDeleted(element.id)">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button *ngIf="canPermanentlyDelete" class="cred-right k-button telerik-blazor k-button-icon crud" tabindex="0"
+                    aria-disabled="false" type="submit" (click)="deleteGaugeDocument(element.id)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsAdmin"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsAdmin;">
+              </tr>
+            </table>
+            <div *ngIf="documentsCheck.length == 0 && !activateAfterData" class="row align-items-center mt-2">
+              <h2 class="createCourses">{{'NoDocumentRelatedToThisGauge'|translate}}. {{'PleaseAddDocument'|translate}}
+              </h2>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Modal for Gauge -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addDepDiv>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          {{'AddStatus'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #saveGauge
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+          (click)="UpdateGaugeStatusField(saveGauge.value);saveGauge.value=''"><span
+            *ngIf="!editGaugeStatusCheck">{{'Add'|translate}}</span></button>
+        <button type="button" class="btn btn-primary"
+          (click)="close();saveGauge.value=''">{{'Cancel'|translate}}</button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal for Manufacturer Add -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #mnfDivadd>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          {{'AddManufacturer'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="closeManufacturerModal();savemnfDivadd.value=''"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #savemnfDivadd
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary"
+          (click)="AddManufacturerField(savemnfDivadd.value)">{{'Add'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="closeManufacturerModal();savemnfDivadd.value=''">{{'Cancel'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal for Owner Add data -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addOwnDivupd>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          {{'AddOwner'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="closeOwnerAdd();saveOwnerUpd.value=''"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #saveOwnerUpd
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary"
+          (click)="UpdateOwnerField(saveOwnerUpd.value)">{{'Add'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="closeOwnerAdd();saveOwnerUpd.value=''">{{'Cancel'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal for Standard Add -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #AddstandardModal>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          {{'AddStandard'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="closeStandardAdd();saveStandardInput.value=''"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #saveStandardInput
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <mat-error *ngIf="addStd">{{'Nameisrequired'|translate}}</mat-error>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary"
+          (click)="AddGaugeStandardField(saveStandardInput.value)">{{'Add'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="closeStandardAdd();saveStandardInput.value=''">{{'Cancel'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal For New Location Field ADD -->
+
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addLocDivUpd>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          {{'AddLocation'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="closeLocationAdd();saveLocationadd.value=''"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #saveLocationadd
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary"
+          (click)="addLocationField(saveLocationadd.value);saveLocationadd.value=''">{{'Add'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="closeLocationAdd();saveLocationadd.value=''">{{'Cancel'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- delete -->
+
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #deletepop>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          {{'Delete'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="delete();deleteDoc.value=''" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-lg-12 col-form-label mb-2">{{deleteMessage}}{{'THISISIMMEDIATE'|translate}}
+          </label>
+          <div class="col-lg-12 mt-1">
+            <span class="font-10">{{'Pleasetype'|translate}} <strong>{{'DELETE'|translate}}</strong>
+              {{'toconfirm'|translate}}</span>
+            <input aria-disabled="false" aria-invalid="false" #deleteDoc
+              class="k-textbox form-control k-state-valid telerik-blazor mt-2" tabindex="0">
+            <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary"
+          (click)="deleteDocument(deleteDoc.value);deleteDoc.value=''">{{'Delete'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="delete();deleteDoc.value=''">{{'Cancel'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- delete  -->
+<div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #deletepopForRecord>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title">
+          {{'Delete'|translate}}
+        </h2>
+        <button type="button" class="btn-close" (click)="deleteForGauge();deleteForGaugeID.value=''"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-lg-12 col-form-label mb-2">{{deletemessaageForGauge}}
+
+            {{'THISISIMMEDIATE'|translate}}
+          </label>
+          <div class="col-lg-12 mt-1">
+            <span class="font-10">{{'Pleasetype'|translate}} <strong>{{'DELETE'|translate}}</strong>
+              {{'toconfirm'|translate}}</span>
+            <input aria-disabled="false" aria-invalid="false" #deleteForGaugeID
+              class="k-textbox form-control k-state-valid telerik-blazor mt-2" tabindex="0">
+            <!-- <mat-error *ngIf="addStatus">{{'Nameisrequired'|translate}}</mat-error> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary"
+          (click)="deleteGauge(deleteForGaugeID.value);deleteForGaugeID.value=''">{{'Delete'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="deleteForGauge();deleteForGaugeID.value=''">{{'Cancel'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- supplier -->
+<div
+  class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing cdk-overlay-connected-position-bounding-box "
+  #addSupplier>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="pop-up-title" *ngIf="supplierUpdateId==0">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          {{'Addsupplier'|translate}}
+        </h2>
+        <h2 class="pop-up-title" *ngIf="supplierUpdateId>0">
+          <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+          Update Supplier
+        </h2>
+        <button type="button" class="btn-close" (click)="closeaddSupplier();" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="Name" class="col-md-4 col-form-label">Name</label>
+          <div class="col-sm-8">
+            <input aria-disabled="false" aria-invalid="false" #manufacture [(ngModel)]="editValueSupplier"
+              class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+            <mat-error *ngIf="addSupplierCheck">{{'Nameisrequired'|translate}}</mat-error>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" *ngIf="supplierUpdateId==0"
+          (click)="addSupplierByText(manufacture.value);manufacture.value=''">{{'Add'|translate}}</button>
+        <button type="button" class="btn btn-secondary" *ngIf="supplierUpdateId>0"
+          (click)="addSupplierByText(manufacture.value);manufacture.value=''">{{'Update'|translate}}</button>
+        <button type="button" class="btn btn-primary"
+          (click)="closeaddSupplier();manufacture.value=''">{{'Cancel'|translate}}</button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="printDiv" #printDiv style="display:none">
+  <div  *ngIf="lastRecordAdded  && userInfo"   class="print_box" style="max-width: 700px;margin: 0 auto;background: #fff;padding: 16px;border: 1px solid #ddd;border-radius: 5px;">
+    <h2 style="font-size: 18px;text-align: center;margin: 0 0 16px;color: #222;line-height: 21px;">Gauge Information</h2>
+    <div style="display: table;width: 100%;margin: 0 0 10px;">
+      <label style="display: table-cell;width: 100px;min-width: 100px;font-size: 16px;font-weight: 600;margin: 0;text-align: right;padding-right: 10px;">ID:</label>
+      <label style="display: table-cell;font-size: 16px;font-weight: 500;margin: 0;text-align: left;">{{this.lastRecordAdded.gaugeId}}</label>
+    </div>
+    <div style="display: table;width: 100%;margin: 0 0 10px;">
+     <label style="display: table-cell;width: 100px;min-width: 100px;font-size: 16px;font-weight: 600;margin: 0;text-align: right;padding-right: 10px;">Desc:</label>
+     <label style="display: table-cell;font-size: 16px;font-weight: 500;margin: 0;text-align: left;">{{this.lastRecordAdded.description}}</label>
+   </div>
+   <div style="display: table;width: 100%;margin: 0 0 10px;">
+     <label style="display: table-cell;width: 100px;min-width: 100px;font-size: 16px;font-weight: 600;margin: 0;text-align: right;padding-right: 10px;">By:</label>
+     <label style="display: table-cell;font-size: 16px;font-weight: 500;margin: 0;text-align: left;">{{userInfo.displayUserName}}</label>
+   </div>
+   <div style="display: table;width: 100%;margin: 0 0 10px;">
+     <div style="display: table-cell;width: 50%;">
+       <div style="display: table;width: 100%;margin: 0 0 10px;">
+         <label style="display: table-cell;width: 100px;min-width: 100px;font-size: 16px;font-weight: 600;margin: 0;text-align: right;padding-right: 10px;">Done:</label>
+         <label style="display: table-cell;font-size: 16px;font-weight: 500;margin: 0;text-align: left;">{{lastRecordAdded.calibrationDate}}</label>
+       </div>
+     </div>
+     <div style="display: table-cell;width: 50%;">
+       <div style="display: table;width: 100%;margin: 0 0 10px;">
+         <label style="display: table-cell;width: 100px;min-width: 100px;font-size: 16px;font-weight: 600;margin: 0;text-align: right;padding-right: 10px;">Due:</label>
+         <label style="display: table-cell;font-size: 16px;font-weight: 500;margin: 0;text-align: left;">{{AddNewGauge.value.calibrationDueDate}}</label>
+       </div>
+     </div>
+   </div>
+   </div>
+</div>
+
+

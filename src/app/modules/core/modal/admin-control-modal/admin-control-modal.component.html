@@ -1,0 +1,31 @@
+<h1 mat-dialog-title style="color: #FA8060;">
+    <i class="fa fa-user-plus" aria-hidden="true"></i>
+    Add Company Admin
+</h1>
+<div mat-dialog-content class="addCompanyData">
+    <ag-grid-angular
+    #agGrid
+    style=" height: 350px;"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [rowSelection]="rowSelection"
+    [pagination]="true"
+    [paginationAutoPageSize]="true"
+    [suppressRowDeselection]="true"
+    (selectionChanged)="onSelectionChanged($event)"
+    (gridReady)="onGridReady($event)"
+    [id]="1"
+
+>
+</ag-grid-angular>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="primary" (click)="onSubmit()">
+        <span class="k-icon k-i-save"></span>{{'Add'|translate}}
+    </button>
+    <button mat-button color="primary" (click)="onCancel()">
+        <span class="k-icon k-i-cancel"></span>{{'Cancel'|translate}}
+    </button>
+</div>

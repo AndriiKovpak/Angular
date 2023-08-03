@@ -1,0 +1,124 @@
+.contact-page-form {
+	.contact-right {
+		img {
+			width: 100%;
+		}
+		background-image: url('../../../../assets/images/cn-01.jpg');
+		padding: 150px 70px 0 70px;
+		color: #fff;
+		background-position: 50% 50%;
+		background-size: cover;
+		h3 {
+			font-size: 25px;
+			margin-bottom: 30px;
+		}
+		p {
+			font-size: 15px;
+		}
+		.request-bottom {
+			p {
+				margin-bottom: 0;
+			}
+		}
+		.request-border {
+			border-bottom: 1px solid #bdbdbd;
+			margin: 30px 0 30px 0;
+		}
+		.req-left {
+			width: 50%;
+			float: left;
+		}
+	}
+	.contact-left-form {
+		padding-left: 80px;
+		.validation-message {
+			height: auto;
+		}
+		h1 {
+			color: #003753;
+			font-size: 26px;
+			line-height: 25px;
+			font-weight: 700;
+			margin-top: 50px;
+			margin-bottom: 0;
+		}
+		h2 {
+			color: #566A74;
+			font-size: 26px;
+			margin-bottom: 60px;
+		}
+	}
+	.btn-right {
+		text-align: right;
+		position: relative;
+		right: 44px;
+	}
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 0;
+	.form-group.row {
+		align-items: baseline;
+		margin-bottom: 5px;
+	}
+}
+form.card.contact-form {
+	textarea.TextBoxLarge.invalid {
+		width: 92%;
+		border-color: #dc3545;
+		border-radius: 5px;
+	}
+	textarea.TextBoxLarge.valid {
+		background: #F7F8F9;
+		border: 1px solid #00375334;
+		border-radius: 5px;
+		width: 92%;
+	}
+	button.btn.btn-success {
+		background: #FA8060;
+		border: none;
+		width: 128px;
+		height: 40px;
+		margin: 25px 0 70px;
+	}
+}
+.container-fluid.cont-page {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.contact-page-form .contact-right h3 i {
+    margin-right: 8px;
+}
+@media (max-width: 1199px) {
+	.contact-page-form .contact-right {
+		padding: 63px 30px 30px 30px;
+	}
+	.contact-page-form .contact-left-form{
+		padding: 0 18px;
+	}
+}
+
+@media (max-width: 767px) {
+	.contact-page-form .contact-left-form h1 {
+		font-size: 22px;
+		line-height: 24px;
+		margin-top: 35px;
+		margin-bottom: 10px;
+	}
+	.contact-page-form .contact-left-form h2 {
+		font-size: 23px;
+		margin-bottom: 25px;
+	}
+	.form-group.row mat-form-field {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.contact-page-form .contact-right {
+	    padding: 40px 18px;
+	}
+	.contact-page-form .contact-right h3 {
+		font-size: 23px;
+		margin-bottom: 20px;
+	}	
+}

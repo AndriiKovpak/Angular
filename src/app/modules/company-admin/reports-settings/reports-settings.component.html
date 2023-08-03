@@ -1,0 +1,578 @@
+<div class="content pb_0">
+    <div class="container">
+        <app-middle-layout></app-middle-layout>
+        <div class="row">
+            <div class="col-md-12 " style="text-align:right;padding-bottom:10px;">
+                <button mat-button class="btn-primary red-btn custm_btn mx-2"
+                    (click)="openShoppingModal()">{{'ShoppingCart'|translate}}</button>
+            </div>
+        </div>
+        <div class="row report-setting margin5">
+            <div class="col-lg-6 col-12 m-mt-3">
+                <mat-card>
+                    <div class="same-height report_boX">
+                        <h4 class="card-title red-color">Reports</h4>
+                        <div class="row">
+                            <div class="col-lg-5 mb-2" *ngIf="!PurchasedCustomCoursesCreator">
+                                <button mat-button [disabled]="!PurchasedCustomCoursesCreator" style="border-color: #e4e7eb;
+                                    color: #212529; background-color: #e4e7eb;"><i class="fa fa-file-pdf-o" aria-hidden="true"> </i>
+                                    {{'CustomCourses2'|translate}}</button>
+                            </div>
+                            <div class="col-lg-5 mb-2" *ngIf="PurchasedCustomCoursesCreator">
+                                <button mat-button class="btn-primary red-btn custm_btn"
+                                    (click)="downloadcustomcourcesmatrix('custom')">{{'CustomCourses2'|translate}}</button>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="button-alligned">
+                                    <button mat-button class="btn-primary red-btn custm_btn"
+                                        (click)="downloadcustomcourcesmatrix('myex')">{{'MyEXCoursesMatrix'|translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <br>
+                        </div>
+                        <div class="row report-col">
+                            <div class="col-xl-3 col-md-5">
+                                <h6 class="reprt-he">{{'AMTAwardsYear'|translate}}</h6>
+                            </div>
+                            <div class="col-xl-4 col-md-7 mb-2">
+                                <div class="calender-field">
+                                    <mat-form-field appearance="fill">
+                                        <!-- <mat-label>Ano</mat-label> -->
+                                        <input type="text" style="border: 0" [(ngModel)]="selectYear" disabled>
+                                        <input hidden style="border: 0" matInput [matDatepicker]="picker" />
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker startView="multi-year"
+                                            (yearSelected)="chosenYearHandler($event, picker)"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <!-- <jp-multi-datepicker tabindex="-1"  mode="YEAR" label="Choose a year" [(ngModel)]="chosenYearDate" [max]="2020"></jp-multi-datepicker> -->
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-md-12">
+                                <div class="button-alligned mt_2_md">
+                                    <button mat-button class="btn-primary red-btn custm_btn"
+                                        (click)="downloadamtawardsreport()">{{'AMTAwardsReport'|translate}} </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+                <mat-card>
+                    <div class="same-height">
+                        <h4 class="card-title red-color">{{'Account'|translate}}</h4>
+                        <form>
+                            <div class="row report-col mt-2">
+                                <div class="col-md-5">
+                                    <h6 class="reprt-he">{{'Name'|translate}}</h6>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="flex_div">
+                                        <div class="account-field">
+                                            <mat-form-field appearance="fill" *ngIf="companyOfUser">
+                                                <input matInput #nameOfUser disabled type="text" id="email"
+                                                    value="{{companyOfUser.name}}"
+                                                    (blur)="onBlurMethod(nameOfUser.value)">
+                                            </mat-form-field>
+                                            <a class="link-action inner-input" title="Edit" (click)="onNameEdit()">
+                                                <i class="fa fa-edit red-color" *ngIf="editShow" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row_customDiv row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6 class="reprt-he">Employee Notifications</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="account-field">
+                                                <mat-slide-toggle [checked]="emailNotifications"
+                                                    (change)="updateEmailCompanyByuser($event)"></mat-slide-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6 class="reprt-he">Lock User Profiles</h6>
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                            <div class="account-field">
+                                                <mat-slide-toggle [checked]="lockUserProfile"
+                                                    (change)="lockUserProfiles($event)"></mat-slide-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row_customDiv row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6 class="reprt-he">Supervisor Notifications</h6>
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                            <div class="account-field">
+                                                <mat-slide-toggle [checked]="emailNotifications"
+                                                    (change)="updateEmailCompanyByuser($event)"></mat-slide-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6 class="reprt-he">Lock User Credentials</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="account-field">
+
+                                                <mat-slide-toggle [checked]="lockUserCredentialslock"
+                                                    (change)="lockUserCredentials($event)"></mat-slide-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row_customDiv row mb-0">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6 class="reprt-he">{{'Creator'|translate}}</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="account-field">
+                                                <mat-slide-toggle #createCoursesToggle
+                                                    [checked]="PurchasedCustomCoursesCreator"
+                                                    [disabled]="PurchasedCustomCoursesCreator"
+                                                    (change)="updateCompanyByuser($event)"></mat-slide-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6 class="reprt-he">Spanish Language </h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="account-field">
+                                                <mat-slide-toggle [checked]="spanishPurchaseOnandOff"
+                                                    [disabled]="spanishPurchaseOnandOff"
+                                                    (change)="openModalWithSpanishLanguage($event)"></mat-slide-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <div class="row margin5 table_padd">
+            <div class="col-md-3">
+
+
+                <mat-card class="card pd-t matrix">
+                    <div class="row margin5">
+                        <div class="col-md-10 col-9 ">
+                            <div>
+                                <h4 class="card-title red-color " style="margin-left: 12px;margin-top: 5px;">
+                                    {{'TrainingMatrixFormID'|translate}}</h4>
+                            </div>
+                        </div>
+                        <!-- <p class="left-department">{{'TrainingMatrixFormID'|translate}}</p> -->
+                        <form>
+                            <div class="row margin5">
+                                <div class="col-10">
+                                    <span class="text-left" *ngIf="companyOfUser">
+
+                                        <input type="text" value="{{companyOfUser.trainingMatricFormID}}"
+                                            #traningMatForm class="form-control valid" id="trainingMatrixInput"
+                                            [disabled]='toggleButton' (blur)="onBlurTraining(traningMatForm.value)">
+                                    </span>
+                                </div>
+                                <div class="col-2 text-center" (click)="enable()">
+                                    <a class="link-action" title="Edit">
+                                        <i class="fa fa-edit red-color" aria-hidden="true" *ngIf="editShowTraining"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </mat-card>
+
+                <mat-card class="card department-col mb_25">
+                    <div class="row margin5">
+                        <div class="col-md-10 col-9">
+                            <div>
+                                <h4 class="card-title red-color">{{'Departments'|translate}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-3 text-center" (click)="openDepartmentModal()">
+                            <div>
+                                <button mat-button class="add-btn">
+                                    <i class="fal fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="no-scroll k-grid k-widget telerik-blazor">
+                                <div class="k-grid-container">
+                                    <div class="k-grid-content k-virtual-content">
+                                        <div style="position: relative;">
+                                            <div class="k-virtual-position">
+                                                <!-- departments -->
+                                                <table mat-table [dataSource]="dataSource"
+                                                    class="mat-elevation-z8 custom_table table_head_not">
+
+                                                    <!--- Note that these columns can be defined in any order.
+                                                              The actual rendered columns are set as a property on the row definition" -->
+
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="name">
+                                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                                    </ng-container>
+
+                                                    <!-- Symbol Column -->
+
+
+                                                    <!-- Symbol Column -->
+                                                    <ng-container matColumnDef="edit">
+                                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <i class="fa fa-pencil" aria-hidden="true"
+                                                                (click)="editDepartments(element.companyDepartmentID)"></i>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="delete">
+                                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                                        <td mat-cell *matCellDef="let element"> <i class="fa fa-trash"
+                                                                aria-hidden="true"
+                                                                (click)="deleteDepartments(element.companyDepartmentID)"></i>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                        <div class="k-height-container">
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </mat-card>
+                <mat-card class="card department-col mb_25">
+                    <div class="row margin5">
+                        <div class="col-md-10 col-9 ">
+                            <div>
+                                <h4 class="card-title red-color">{{'AdminControls'|translate}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-3 text-center ">
+                            <div>
+                                <button mat-button class="add-btn" (click)="openModal()">
+                                    <i class="fal fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="no-scroll k-grid k-widget telerik-blazor">
+                                <div class="k-grid-container">
+                                    <div class="k-grid-content k-virtual-content">
+                                        <div style="position: relative;">
+                                            <div class="k-virtual-position">
+                                                <!-- admin control -->
+                                                <table mat-table [dataSource]="dataSourceAdmin"
+                                                    class="custom_table table_head_not">
+                                                    <!--- Note that these columns can be defined in any order.
+                                                              The actual rendered columns are set as a property on the row definition" -->
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="firstName">
+                                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.firstName}}
+                                                            {{element.lastName}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <!-- Symbol Column -->
+                                                    <ng-container matColumnDef="delete">
+                                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                                        <td mat-cell *matCellDef="let element"> <i class="fa fa-trash"
+                                                                aria-hidden="true"
+                                                                (click)="deleteAdminControls(element)"></i></td>
+                                                    </ng-container>
+
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsAdmin"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsAdmin;">
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </mat-card>
+            </div>
+            <!--  -->
+            <div class="col-lg-9">
+                <mat-card class="card course mb_25 bo" *ngIf="PurchasedCustomCoursesCreator">
+                    <div class="row align-items-center mt-2 box_shdownone">
+                        <div class="col-md-6">
+                            <div style="float:left">
+                                <h4 class="card-title red-color">{{'CustomCourses3'|translate}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6 actv_bxbtn">
+                            <div style="float:right" class="active_btnn">
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="customCoursesActive"
+                                        (ngModelChange)="onCustomCoursesSelection()">
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div style="float:right" class="course-edit">
+                                <i class="fa fa-edit" routerLink="/companyadmin/customcourses"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row tp-sp">
+                        <!--  -->
+                        <table mat-table [dataSource]="dataSourceCustomCourses"
+                            class="custom_table cours_tble courses_table_data">
+                            <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="course">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element"> {{element.course[lang]}} </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="frequency">
+                                <th mat-header-cell *matHeaderCellDef> {{'Frequency'|translate}} </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="frequency_fleld">
+                                        <mat-form-field>
+                                            <mat-select [(ngModel)]="element.frequency"
+                                                (ngModelChange)="onCustomCoursesFrequancyChange(element,'Custom')">
+                                                <mat-option *ngFor="let data of frequencyData" [value]="data.text">
+                                                    {{data.text}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <input type="number" class="form-control" min=0 id="id_{{element.courseID}}"
+                                            *ngIf="hideCustomTextBoxForCustomCourses == element.courseID"
+                                            placeholder="add months" #customFrequancyCourse
+                                            (blur)="saveCustomFrequancy(element,customFrequancyCourse.value)">
+                                    </div>
+                                    <mat-error *ngIf="checkCustomFrequancyId">Frequancy is required.</mat-error>
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="dueDateFromStartDate">
+                                <th mat-header-cell *matHeaderCellDef>{{'DaysUntilCoursesDue'|translate}}</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-form-field>
+                                        <input matInput type="number" [value]="element.dueDateFromStartDate"
+                                            #customDueDate min="0"
+                                            (blur)="updateCustomCourseDueDate(element,customDueDate.value,'custom')">
+                                    </mat-form-field>
+                                </td>
+
+                            </ng-container>
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="delete">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <i class="fa fa-trash" aria-hidden="true" *ngIf="!hidetickCustom"
+                                        (click)="deleteCompanyCourses(element.companyCourseID,'delete','custom')"></i>
+                                    <i class="fa fa-check" aria-hidden="true" *ngIf="hidetickCustom"
+                                        (click)="deleteCompanyCourses(element.companyCourseID,'restore','custom')"></i>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="customCoursesColumnsDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: customCoursesColumnsDisplay;"></tr>
+                        </table>
+
+                    </div>
+                </mat-card>
+
+                <mat-card class="card course mb_25" *ngIf="!PurchasedCustomCoursesCreator">
+                    <div class="row align-items-center" *ngIf="!PurchasedCustomCoursesCreator">
+                        <h2 class="createCourses mt-2 pt-1 c_pointer">
+                            {{'WantToAddYourOwnTrainingVideosHandoutsTestsAndCustomCertificates?'|translate}}<br>
+                            {{'PurchaseTheCustomCoursesCreatorAddOnTodayToUnlockTheseFeatures!'|translate}}</h2>
+                    </div>
+                    <!-- <div class="row align-items-center" *ngIf="!PurchasedCustomCoursesCreator" routerLink="/companyadmin/customcourses" >
+                        <h2 class="createCourses mt-2 pt-1 c_pointer">{{'WantToAddYourOwnTrainingVideosHandoutsTestsAndCustomCertificates?'|translate}}<br>
+                          {{'PurchaseTheCustomCoursesCreatorAddOnTodayToUnlockTheseFeatures!'|translate}}</h2>
+                    </div> -->
+                </mat-card>
+                <!-- myex courses -->
+                <mat-card class="card course mb_25">
+                    <div class="row align-items-center mt-2">
+                        <div class="col-md-6">
+                            <div style="float:left">
+                                <h4 class="card-title red-color">{{'MyEXCourses'|translate}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6 actv_bxbtn">
+                            <div style="float:right" class="active_btnn">
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="myexCoursesActive"
+                                        (ngModelChange)="onMyexCoursesSelection()">
+                                        <mat-option [value]="'Active'">{{'Active'|translate}}</mat-option>
+                                        <mat-option [value]="'InActive'">{{'InActive'|translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div style="float:right" class="course-edit">
+                                <i class="fa fa-edit"></i>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row tp-sp">
+                        <table mat-table [dataSource]="dataSourceMyexCourses"
+                            class="custom_table cours_tble courses_table_data">
+                            <!--- Note that these columns can be defined in any order.
+                                          The actual rendered columns are set as a property on the row definition" -->
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="course">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element"> {{element.course[lang]}} </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="frequency">
+                                <th mat-header-cell *matHeaderCellDef> Frequency </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="frequency_fleld">
+                                        <mat-form-field>
+                                            <mat-select [(ngModel)]="element.frequency"
+                                                (ngModelChange)="onCustomCoursesFrequancyChange(element,'Myex')">
+                                                <mat-option *ngFor="let data of frequencyData" [value]="data.text">
+                                                    {{data.text}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <input type="number" min=0 id="id_{{element.courseID}}"
+                                            *ngIf="hideCustomTextBox == element.courseID" class="form-control"
+                                            placeholder="add months" #customFrequancy
+                                            (blur)="saveCustomFrequancy(element,customFrequancy.value)">
+                                    </div>
+                                    <!-- <mat-error *ngIf="checkFrequancyId">Frequancy is required.</mat-error> -->
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="dueDateFromStartDate">
+                                <th mat-header-cell *matHeaderCellDef> {{'DaysUntilCoursesDue'|translate}}</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-form-field>
+                                        <input matInput type="number" [value]="element.dueDateFromStartDate"
+                                            #myExDueDate min="0"
+                                            (blur)="updateCustomCourseDueDate(element,myExDueDate.value,'myex')">
+                                    </mat-form-field>
+                                </td>
+
+                            </ng-container>
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="delete">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <i class="fa fa-trash" aria-hidden="true" *ngIf="!hideTickMyExCourses"
+                                        (click)="deleteCompanyCourses(element.companyCourseID,'delete','myExCourse')"></i>
+                                    <i class="fa fa-check" aria-hidden="true" *ngIf="hideTickMyExCourses"
+                                        (click)="deleteCompanyCourses(element.companyCourseID,'restore','myExCourse')"></i>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="customCoursesColumnsDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: customCoursesColumnsDisplay;"></tr>
+                        </table>
+                        <!-- <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+                            showFirstLastButtons></mat-paginator> -->
+                    </div>
+                </mat-card>
+
+            </div>
+            <!-- my ex courses -->
+
+        </div>
+
+        <!-- Modal for departments -->
+        <div class="modal cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing " #addDepDiv>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="pop-up-title">
+                            <i class="fa fa-clipboard-user" aria-hidden="true"></i>
+                            Add Department
+                        </h2>
+                        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="Name" class="col-sm-4 col-form-label">{{'Name'|translate}}</label>
+                            <div class="col-sm-8">
+                                <input aria-disabled="false" aria-invalid="false" #saveDeparment
+                                    [(ngModel)]="editDepValue"
+                                    class="k-textbox form-control k-state-valid telerik-blazor" tabindex="0">
+                                <mat-error *ngIf="addDepartments">{{'Nameisrequired'|translate}}</mat-error>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="btn-sec modal-footer">
+                        <button class="Update-btn" mat-raised-button color="primary"
+                            (click)="saveAndUpdateDepartment(saveDeparment.value)">
+                            <span *ngIf="!editDepartmentsCheck">Add</span> <span
+                                *ngIf="editDepartmentsCheck">Update</span>
+                        </button>
+                        <button class="Discard-btn m-0" mat-raised-button (click)="close()">
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

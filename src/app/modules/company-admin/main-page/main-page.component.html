@@ -1,0 +1,92 @@
+<section class="home_sec ">
+	<div class="container ">
+		<div class="row admin-header">
+			<div class="col-md-4 col-xl-2">
+				<h2 style="cursor:pointer " class="mt-0" routerLink="/companyadmin/main-page">
+					<i class="fa fa-database" aria-hidden="true"></i> {{'Modules'|translate}}
+				</h2>
+			</div>
+		</div>
+		<!-- <app-middle-layout-calibration></app-middle-layout-calibration> -->
+		<div class="row admin-header"> </div>
+		<div class="row calibration_row">
+			<div class="col-md-4">
+				<div class="disabled-card" *ngIf="!roleUser && (roleRead || roleSupplier)"></div>
+				<div class="card border shadow-lg p-3 mb-5 bg-white rounded ">
+					<a (click)="navigateToTrainingDashboard()">
+						<div class="img_holder"><img src="../../../../../assets/images/Training_Pic.png" class="card-img-top-image"
+								alt="training-development">
+						</div>
+					</a>
+					<div class="card-body rounded forTitle">
+						<p class="card-title H4cardtitle">{{'Training'|translate}}
+						<p>
+						<div class="info" *ngIf="roleAdmin">
+							<a class="aLeft">{{'EmployeesOverdue'|translate}}</a>
+							<a class="aright">{{companyStats?.usersWithCoursesOverdue}}</a>
+						</div>
+						<div class="info" *ngIf="!roleAdmin">
+							<a class="aLeft">{{'CoursesOverdue'|translate}}</a>
+							<a class="aright">{{overDueCount}}</a>
+						</div>
+					</div>
+				</div>
+				<div class="logo-image" *ngIf="!companyData.purchasedTraining" (click)="openShoppingModal()">
+					<a><img src="../../../../../assets/images/buy-now-png-file.png"></a>
+				</div>
+			</div>
+
+			<div class="col-md-4 calibration-middle">
+				<div *ngIf="roleSupplier || roleRead" class="disabled-card"></div>
+				<div class="card border shadow-lg p-3 mb-5 bg-white rounded  ">
+					<a>
+						<div class="img_holder">
+							<img src="../../../../../assets/images/SupplierManagementPic.png" class="card-img-top-image"
+								alt="training-development">
+						</div>
+					</a>
+					<div class="card-body rounded forTitle">
+						<p class="card-title H4cardtitle">{{'SupplierManagement'|translate}}
+						<p>
+						<div class="info">
+							<a class="aLeft">{{'SuppliersOverdue'|translate}}</a>
+							<a class="aright">0</a>
+						</div>
+					</div>
+
+				</div>
+				<div *ngIf="!roleSupplier && !roleRead" class="logo-image " (click)="openShoppingModal()">
+					<a><img src="../../../../../assets/images/coming_soon.png"></a>
+				</div>
+				<!--  *ngIf="!companyData.purchasedSupplierPro" -->
+
+			</div>
+			<div class="col-md-4 calibration-middle">
+				<div *ngIf="!roleSupplier && !roleRead && !roleAdmin" class="disabled-card"></div>
+				<a (click)="navigateToCalibrationDashboard()">
+					
+					<div class="card border shadow-lg p-3 mb-5 bg-white rounded">
+						<a>
+							<div class="img_holder">
+								<img src="../../../../../assets/images/CalibrationPic.png" class="card-img-top-image"
+									alt="training-development">
+							</div>
+						</a>
+						<div class="card-body rounded forTitle">
+							<p class="card-title H4cardtitle">{{'Calibration'|translate}}
+							<p>
+							<div class="info">
+								<a class="aLeft">{{'GaugesOverdue'|translate}}</a>
+								<a class="aright">{{companygaugeoverDue}}</a>
+							</div>
+						</div>
+					</div>
+				</a>
+				<div *ngIf="!companyData.purchasedCalibration  && !companyData.purchasedCalibrationEnterprise"
+					class="logo-image" (click)="openShoppingModal()">
+					<a><img src="../../../../../assets/images/buy-now-png-file.png"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

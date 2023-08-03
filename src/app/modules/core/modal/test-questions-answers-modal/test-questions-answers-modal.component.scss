@@ -1,0 +1,11 @@
+.angFormStyle ::ng-deep.mat-select .mat-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    width: 100%;
+}
+.angFormStyle ::ng-deep.mat-select {
+    display: flex;
+    align-items: center;
+}

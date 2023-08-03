@@ -1,0 +1,76 @@
+<div class="container">
+    <div>
+        <div class="add-title">
+            <h1 mat-dialog-title style="color: #FA8060;">
+                {{buttontext}} <span *ngIf="buttontext !== 'Update'">{{'New'|translate}}</span> {{'Record'|translate}}
+            </h1>
+        </div>
+        <div>
+            <form [formGroup]="TestForm" (ngSubmit)="Save()">
+                <mat-grid-list cols="1" rowHeight="95px">
+
+                    <mat-grid-tile>
+                        <div class="text-inside">
+                            <mat-form-field>
+                                <input type="number" matInput formControlName="numberOfQuestions"
+                                placeholder="{{'NumberOfQuestions'|translate}}"
+                                    [ngClass]="{ 'is-invalid': f.numberOfQuestions.touched && f.numberOfQuestions.errors }">
+                                <div *ngIf="f.numberOfQuestions.touched && f.numberOfQuestions.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="f.numberOfQuestions.errors.required"> {{'ThisFieldisrequired'|translate}}</div>
+                                </div>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                      <div class="text-inside">
+                          <mat-form-field>
+                              <input type="text" matInput formControlName="question"
+                              placeholder="Enter question"
+                                  [ngClass]="{ 'is-invalid': f.question.touched && f.question.errors }">
+                              <div *ngIf="f.question.touched && f.question.errors"
+                                  class="invalid-feedback">
+                                  <div *ngIf="f.question.errors.required"> {{'ThisFieldisrequired'|translate}}</div>
+                              </div>
+                          </mat-form-field>
+                      </div>
+                  </mat-grid-tile>
+                  <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="text" matInput formControlName="answer"
+                            placeholder="Enter answer"
+                                [ngClass]="{ 'is-invalid': f.answer.touched && f.answer.errors }">
+                            <div *ngIf="f.answer.touched && f.answer.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="f.answer.errors.required"> {{'ThisFieldisrequired'|translate}}</div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="text-inside">
+                            <label class="text-muted">{{'Course'|translate}}</label>
+                            <mat-form-field appearance="fill">
+                                <mat-label>{{'Chooseatestquestion'|translate}}</mat-label>
+                                <mat-select [(ngModel)]="selectedId"  formControlName="courseID"  [ngClass]="{ 'is-invalid': f.courseID.touched && f.courseID.errors }">
+                                    <mat-option *ngFor="let data of listData" [value]="data.value" >
+                                        {{data.text}} {{data.value}}</mat-option>
+                                </mat-select>
+                                <div *ngIf="coursesValid" style="color: #E15361;">
+                                    {{'ThisFieldisrequired'|translate}}
+                                </div>
+
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <div class="btn-sec">
+                    <button mat-raised-button type="submit" color="primary" class="Update-btn">{{buttontext}}</button>
+                    <button mat-raised-button type="button" class="Discard-btn" (click)="ModalClose()">{{'Cancel'|translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

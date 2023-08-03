@@ -1,0 +1,32 @@
+<div class="row admin-header">
+    <div class="col-lg-3 col-xl-2">
+        <h2 style="cursor:pointer " routerLink="/companyadmin/main-page">
+            <i class="fa fa-database" aria-hidden="true"></i> {{'Modules'|translate}}
+        </h2>
+    </div>
+    <div class="col-lg-9 col-xl-10 mt-2 mt-lg-0">
+        <div class="example-button-row">
+            <button mat-button  >
+                <a routerLink="/companyadmin/dashboard" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                    true}" >
+                    <i class="fas fa-tachometer-alt" aria-hidden="true"> </i>  <span class="example-button-row"> {{'Dashboard'|translate}}</span>
+                </a> </button>
+
+            <button *ngIf="showAddEmployee" mat-button color="primary" (click)="openModal()"><a  class="nav-link" >
+                <i class="far fa-user-plus" aria-hidden="true"> </i>  <span class="example-button-row"> {{'AddNewEmployee'|translate}}</span>
+            </a></button>
+            <button mat-button color="primary">
+                <a routerLink="/companyadmin/reportAndSetting" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                    true}" >
+                    <i class="far fa-cog" aria-hidden="true"> </i>  <span class="example-button-row"> {{'ReportsandSettings'|translate}}</span>
+                </a>  </button>
+            <button mat-button color="primary">
+                <a routerLink="/companyadmin/assesment" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+                    true}" >
+                    <i class="far fa-diploma" aria-hidden="true"> </i>  <span class="example-button-row"> {{'Assessments'|translate}}</span>
+                </a>
+                </button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,21 @@
+.disabled-card {
+  background-color: gray;
+  filter: alpha(opacity=50); /* IE */
+  opacity: 0.5; /* Safari, Opera */
+  -moz-opacity: 0.5; /* FireFox */
+  z-index: 20;
+  height: 91%;
+  width: 95%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 0px;
+  left: 12px;
+}
+@media (max-width: 767px) {
+  .disabled-card {
+    height: 87%;
+    width: 90%;
+    left: 17px;
+  }
+}

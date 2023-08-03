@@ -1,0 +1,20 @@
+h2.term-page-title {
+    color: #FA8060;
+    font-size: 30px;
+    margin: 30px 0;
+}
+.terms-uses {
+    height: calc(100vh - 480px);
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-bottom: 50px;
+}
+.terms-uses h5 {
+    color: #5f5f5f;
+    font-size: 20px;
+    font-weight: 600;
+}
+.terms-uses p {
+    font-size: 15px;
+    color: #5f5f5f;
+}

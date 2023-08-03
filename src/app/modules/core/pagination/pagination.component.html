@@ -1,0 +1,6 @@
+<ul class="pagination">
+  <li class="page-item" (click)="onClickPage(activePage - 1)"><a class="page-link" href="javascript:void(0);">«</a></li>
+  <li class="page-item" [ngClass]="{'active': activePage === item}" *ngFor="let item of pages;let indexOfelement=index;"
+    (click)="onClickPage(item)"><a *ngIf="indexOfelement <= 5" class="page-link" href="javascript:void(0);">{{item}}</a></li>
+  <li class="page-item" (click)="onClickPage(activePage + 1)"><a class="page-link" href="javascript:void(0);">»</a></li>
+</ul>
